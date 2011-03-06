@@ -7,7 +7,8 @@ namespace Fitgy {
         mDisplay = NULL;
     }
     
-    int Application::execute(){
+    int 
+    Application::execute(){
         mRunning = true;
         
         if (init() == false){
@@ -29,7 +30,8 @@ namespace Fitgy {
         return 0;
     }
     
-    bool Application::init(){
+    bool 
+    Application::init(){
         if (SDL_Init(SDL_INIT_EVERYTHING) < 0){
             return false;
         }
@@ -38,26 +40,31 @@ namespace Fitgy {
         return true;
     }
     
-    void Application::loop(){
+    void 
+    Application::loop(){
 
     }
     
-    void Application::render(){
+    void 
+    Application::render(){
         for(int i = 0; i < mEntities.size(); i++){
             mEntities[i]->onRender(mDisplay);
         }
     }
     
-    void Application::cleanup(){
+    void 
+    Application::cleanup(){
             
     }
 
-    void Application::onEvent(SDL_Event* event)
+    void 
+    Application::onEvent(SDL_Event* event)
     {
         EventHandler::onEvent(event);
     }
 
-    void Application::onExit(){
+    void 
+    Application::onExit(){
         mRunning = false;
     }
 }

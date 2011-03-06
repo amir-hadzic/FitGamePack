@@ -10,11 +10,13 @@ namespace Fitgy {
         onCleanup();
     }
 
-    void Entity::onCleanup(){
+    void 
+    Entity::onCleanup(){
         SDL_FreeSurface(entitySurface);
     }
 
-    void Entity::drawToSurface(SDL_Surface* surface){
+    void 
+    Entity::drawToSurface(SDL_Surface* surface){
         SDL_Rect rect;
         rect.x = x;
         rect.y = y;
@@ -24,11 +26,13 @@ namespace Fitgy {
         SDL_BlitSurface(entitySurface, NULL, surface, &rect);
     }
 
-    void Entity::onLoop(){
+    void 
+    Entity::onLoop(){
 
     }
 
-    void Entity::onRender(Entity* entity){
+    void 
+    Entity::onRender(Entity* entity){
 
     }
 }
