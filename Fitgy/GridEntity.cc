@@ -1,0 +1,78 @@
+#include "GridEntity.h"
+#include "assert.h"
+
+namespace Fitgy {
+    GridEntity::GridEntity(int width, int height, int dimension)
+        : Entity::Entity()
+    {
+        assert(dimension > 0);
+
+        mDimension = dimension;
+        mFieldWidth = width / dimension;
+        mFieldHeight = height / dimension;
+
+        mBackgroundColor = {0xaa, 0xaa, 0xaa, 0x0};
+        mBackgroundImage = NULL;
+
+        this->width = width;
+        this->height = height;
+
+        entitySurface = SDL_CreateRGBSurface(
+            SDL_HWSURFACE, width, height, 32, 0, 0, 0, 0
+        );
+    }
+
+    GridEntity::~GridEntity()
+    {
+        // Delete each entity and call their destructors.
+        mFields.clear();
+        onCleanup();
+    }
+
+    void
+    GridEntity::onRender(Entity* entity){
+        SDL_FillRect(
+            entitySurface,
+            NULL,
+            SDL_MapRGB(
+                entitySurface->format,
+                mBackgroundColor.r,
+                mBackgroundColor.g,
+                mBackgroundColor.b
+            )
+        );
+
+        if (mBackgroundImage != NULL){
+            mBackgroundImage->onRender(this);
+        }
+
+        std::map<int, Entity*>::iterator it;
+        for(it = mFields.begin(); it != mFields.end(); it++){
+            (*it).second->onRender(this);
+        }
+
+        drawToEntity(entity);
+    }
+
+    void
+    GridEntity::addEntity(Entity* entity, int field){
+        entity->x = (field % mDimension) * mFieldWidth;
+        entity->y = (field / mDimension) * mFieldHeight;
+        mFields[field] = entity;
+    }
+
+    void
+    GridEntity::removeEntity(int field){
+        mFields.erase(field);
+    }
+
+    void
+    GridEntity::setBackground(SDL_Color color){
+        mBackgroundColor = color;
+    }
+
+    void
+    GridEntity::setBackground(ImageEntity* imageEntity){
+        mBackgroundImage = imageEntity;
+    }
+}

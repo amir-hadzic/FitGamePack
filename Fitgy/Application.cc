@@ -22,7 +22,7 @@ namespace Fitgy {
             }
 
             loop();
-            render();
+            startRender();
         }
         
         cleanup();
@@ -42,9 +42,20 @@ namespace Fitgy {
     
     void 
     Application::loop(){
-
+        for(int i = 0; i < mEntities.size(); i++){
+            mEntities[i]->onLoop();
+        }
     }
     
+    void
+    Application::startRender(){
+        SDL_FillRect(mDisplay->entitySurface, NULL, 0);
+
+        render();
+
+        SDL_Flip(mDisplay->entitySurface);
+    }
+
     void 
     Application::render(){
         for(int i = 0; i < mEntities.size(); i++){

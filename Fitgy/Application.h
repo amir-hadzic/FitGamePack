@@ -12,18 +12,21 @@ namespace Fitgy {
     class Application : public EventHandler {
         private:
             bool mRunning;
-            Display* mDisplay;
+
+        protected:
             std::vector<Entity*> mEntities;
+            Display* mDisplay;
+            void startRender();
             
         public:
             Application();
             int execute();
-            bool init();
-            void loop();
-            void render();
-            void cleanup();
-            void onExit();
-            void onEvent(SDL_Event* event);
+            virtual bool init();
+            virtual void loop();
+            virtual void render();
+            virtual void cleanup();
+            virtual void onExit();
+            virtual void onEvent(SDL_Event* event);
     };
 }
 

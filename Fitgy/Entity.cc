@@ -16,14 +16,12 @@ namespace Fitgy {
     }
 
     void 
-    Entity::drawToSurface(SDL_Surface* surface){
+    Entity::drawToEntity(Entity* entity){
         SDL_Rect rect;
         rect.x = x;
         rect.y = y;
-        rect.w = width;
-        rect.h = height;
 
-        SDL_BlitSurface(entitySurface, NULL, surface, &rect);
+        SDL_BlitSurface(entitySurface, NULL, entity->entitySurface, &rect);
     }
 
     void 

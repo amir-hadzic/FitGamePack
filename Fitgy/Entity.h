@@ -8,7 +8,7 @@ namespace Fitgy {
 
     class Entity {
         protected:
-            void drawToSurface(SDL_Surface* surface);
+            void drawToEntity(Entity* entity);
 
         public:
             float x;
