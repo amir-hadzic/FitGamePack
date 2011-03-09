@@ -14,8 +14,8 @@ TicTacToe::init()
     Fitgy::GridEntity* gridEntity = new Fitgy::GridEntity(300, 300, 3);
 
     gridEntity->setBackground(new Fitgy::ImageEntity("gfx/Sample.bmp"));
-    gridEntity->x = 10;
-    gridEntity->y = 10;
+    gridEntity->position.setX(10);
+    gridEntity->position.setY(10);
 
     gridEntity->addEntity(new Fitgy::ImageEntity("gfx/B100.bmp"), 0);
     gridEntity->addEntity(new Fitgy::ImageEntity("gfx/B100.bmp"), 1);

@@ -2,6 +2,7 @@
 #define FITGY_H
 
 #include <SDL/SDL.h>
+#include "Point.h"
 #include "Entity.h"
 #include "GridEntity.h"
 #include "Display.h"

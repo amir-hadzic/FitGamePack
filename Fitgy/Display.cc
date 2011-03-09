@@ -5,8 +5,6 @@ namespace Fitgy {
     Display::Display(int width,int height)
         : Entity::Entity()
     {
-        x = 0;
-        y = 0;
         this->width = width;
         this->height = height;
 

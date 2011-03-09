@@ -2,8 +2,9 @@
 
 namespace Fitgy {
 
-    Entity::Entity(){
+    Entity::Entity(Entity* parent){
         entitySurface = NULL;
+        this->parent = parent;
     }
 
     Entity::~Entity(){
@@ -18,8 +19,8 @@ namespace Fitgy {
     void 
     Entity::drawToEntity(Entity* entity){
         SDL_Rect rect;
-        rect.x = x;
-        rect.y = y;
+        rect.x = position.getX();
+        rect.y = position.getY();
 
         SDL_BlitSurface(entitySurface, NULL, entity->entitySurface, &rect);
     }

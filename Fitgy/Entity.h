@@ -3,6 +3,7 @@
 
 #include <SDL/SDL.h>
 #include <vector>
+#include "Point.h"
 
 namespace Fitgy {
 
@@ -11,13 +12,13 @@ namespace Fitgy {
             void drawToEntity(Entity* entity);
 
         public:
-            float x;
-            float y;
+            Point position;
             int width;
             int height;
             SDL_Surface* entitySurface;
+            Entity* parent;
 
-            Entity();
+            Entity(Entity* parent = NULL);
             virtual ~Entity();
             virtual void onLoop();
             virtual void onRender(Entity* entity);

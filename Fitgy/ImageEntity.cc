@@ -4,9 +4,6 @@ namespace Fitgy {
     ImageEntity::ImageEntity(char *filename, short opacity)
         : Entity::Entity()
     {
-        x = 0;
-        y = 0;
-
         SDL_Surface* surfOriginal = NULL;
 
         if ((surfOriginal = SDL_LoadBMP(filename)) == NULL){

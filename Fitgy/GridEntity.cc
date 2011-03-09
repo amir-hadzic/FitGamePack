@@ -56,8 +56,8 @@ namespace Fitgy {
 
     void
     GridEntity::addEntity(Entity* entity, int field){
-        entity->x = (field % mDimension) * mFieldWidth;
-        entity->y = (field / mDimension) * mFieldHeight;
+        entity->position.setX((field % mDimension) * mFieldWidth);
+        entity->position.setY((field / mDimension) * mFieldHeight);
         mFields[field] = entity;
     }
 
