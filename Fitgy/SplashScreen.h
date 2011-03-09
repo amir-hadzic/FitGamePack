@@ -11,20 +11,20 @@ namespace Fitgy {
             SplashScreen(
                 Entity* parent,
                 char* splashImage,
-                int animDuration = 2500,
-                int postDuration = 1000
+                unsigned int animDuration = 2500,
+                unsigned int postDuration = 1000
             );
             bool isFinished();
             void onLoop();
 
         private:
-            short mCurrentOpacity;
-            int mAnimDuration;
-            int mPostDuration;
-            int mLastFrameTime;
-            int mPostTicks;
-            int mPostStart;
-            int mFrameRate;
+            unsigned short mCurrentOpacity;
+            unsigned int mAnimDuration;
+            unsigned int mPostDuration;
+            unsigned int mLastFrameTime;
+            unsigned int mPostTicks;
+            unsigned int mPostStart;
+            unsigned int mFrameRate;
             bool mReverse;
 
             bool isAnimFinished();

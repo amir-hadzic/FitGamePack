@@ -46,7 +46,7 @@ namespace Fitgy {
     
     void 
     Application::loop(){
-        for(int i = 0; i < mEntities.size(); i++){
+        for(unsigned int i = 0; i < mEntities.size(); i++){
             mEntities[i]->onLoop();
         }
     }
@@ -62,7 +62,7 @@ namespace Fitgy {
 
     void 
     Application::render(){
-        for(int i = 0; i < mEntities.size(); i++){
+        for(unsigned int i = 0; i < mEntities.size(); i++){
             mEntities[i]->onRender(mDisplay);
         }
     }

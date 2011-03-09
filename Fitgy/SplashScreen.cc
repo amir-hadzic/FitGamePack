@@ -2,7 +2,11 @@
 
 namespace Fitgy {
     SplashScreen::SplashScreen(
-            Entity* parent, char* splashImage, int animDuration, int postDuration)
+            Entity* parent,
+            char* splashImage,
+            unsigned int animDuration,
+            unsigned int postDuration
+    )
         : ImageEntity::ImageEntity(parent, splashImage, 0)
     {
         mAnimDuration = animDuration;

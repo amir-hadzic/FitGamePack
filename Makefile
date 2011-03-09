@@ -10,7 +10,7 @@ SDL_ARGS = `pkg-config --cflags --libs sdl`
 all:	TicTacToe
 
 TicTacToe: ${FITGY_SOURCES} ${TICTACTOE_SOURCES}
-	${COMPILER} -Wall -Wextra -pedantic ${SDL_ARGS} -lSDL_ttf -o Play_TicTacToe ${TICTACTOE_SOURCES} ${FITGY_SOURCES} 
+	${COMPILER} -Wall -Wextra -pedantic -Wno-write-strings -std=c++0x ${SDL_ARGS} -lSDL_ttf -o Play_TicTacToe ${TICTACTOE_SOURCES} ${FITGY_SOURCES} 
 
 clean:
 	rm Play_TicTacToe

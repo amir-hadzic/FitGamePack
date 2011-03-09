@@ -29,8 +29,9 @@ TicTacToe::init()
 
     TTF_Font* textFont = TTF_OpenFont("fonts/DroidSansMono.ttf", 16);
     Fitgy::TextEntity *textEntity = new Fitgy::TextEntity(
-        mDisplay, "Hello World!", textFont, {0xff, 0xff, 0xff}
+        mDisplay, "Hello World!", textFont, {0xff, 0xff, 0xff, 0x00}
     );
+
     textEntity->position.setX(310);
     textEntity->position.setY(300);
 
@@ -66,7 +67,7 @@ void TicTacToe::loop(){
 
 
 int
-main(int argc, char** argv){
+main(void){
     TicTacToe game;
 
     return game.execute();

@@ -31,7 +31,7 @@ namespace Fitgy {
     }
 
     void 
-    Entity::onRender(Entity* entity){
+    Entity::onRender(Entity*){
 
     }
 
