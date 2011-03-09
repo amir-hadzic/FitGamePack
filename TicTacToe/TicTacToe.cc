@@ -27,8 +27,15 @@ TicTacToe::init()
     gridEntity->addEntity(new Fitgy::ImageEntity(gridEntity, "gfx/B100.bmp"), 7);
     gridEntity->addEntity(new Fitgy::ImageEntity(gridEntity, "gfx/B100.bmp"), 8);
 
+    TTF_Font* textFont = TTF_OpenFont("fonts/DroidSansMono.ttf", 16);
+    Fitgy::TextEntity *textEntity = new Fitgy::TextEntity(
+        mDisplay, "Hello World!", textFont, {0xff, 0xff, 0xff}
+    );
+    textEntity->position.setX(310);
+    textEntity->position.setY(300);
 
     mEntities.push_back(gridEntity);
+    mEntities.push_back(textEntity);
 
     return true;
 }

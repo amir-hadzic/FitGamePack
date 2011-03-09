@@ -5,6 +5,7 @@
 #include "SDL_ttf.h"
 #include "Point.h"
 #include "Entity.h"
+#include "TextEntity.h"
 #include "GridEntity.h"
 #include "Display.h"
 #include "ImageEntity.h"

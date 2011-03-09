@@ -36,6 +36,10 @@ namespace Fitgy {
             return false;
         }
 
+        if (TTF_Init() < 0){
+            return false;
+        }
+
         mDisplay = new Display(640, 480);
         return true;
     }

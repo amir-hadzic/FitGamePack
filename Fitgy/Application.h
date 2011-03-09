@@ -2,6 +2,7 @@
 #define FITGY_APPLICATION_H
 
 #include <SDL/SDL.h>
+#include "SDL_ttf.h"
 #include "EventHandler.h"
 #include "Entity.h"
 #include "Display.h"
