@@ -8,7 +8,7 @@ namespace Fitgy {
     
     class ImageEntity : public Entity {
         public:
-            ImageEntity(char *filename, short opacity = SDL_ALPHA_OPAQUE);
+            ImageEntity(Entity* parent, char *filename, short opacity = SDL_ALPHA_OPAQUE);
             void onRender(Entity *entity);
     };
 }

@@ -23,6 +23,9 @@ namespace Fitgy {
             virtual void onLoop();
             virtual void onRender(Entity* entity);
             virtual void onCleanup();
+
+            Point getAbsPosition();
+            bool isWithinBounds(Point point);
     };
 }
 

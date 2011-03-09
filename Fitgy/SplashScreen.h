@@ -9,6 +9,7 @@ namespace Fitgy {
     class SplashScreen : public ImageEntity{
         public:
             SplashScreen(
+                Entity* parent,
                 char* splashImage,
                 int animDuration = 2500,
                 int postDuration = 1000

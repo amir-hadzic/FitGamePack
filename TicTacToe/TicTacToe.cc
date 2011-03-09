@@ -8,24 +8,24 @@ TicTacToe::init()
     }
 
     mSplashScreen = new Fitgy::SplashScreen(
-        "gfx/TicTacToe_Splash.bmp", 2000
+        mDisplay, "gfx/TicTacToe_Splash.bmp", 2000
     );
 
-    Fitgy::GridEntity* gridEntity = new Fitgy::GridEntity(300, 300, 3);
+    Fitgy::GridEntity* gridEntity = new Fitgy::GridEntity(mDisplay, 300, 300, 3);
 
-    gridEntity->setBackground(new Fitgy::ImageEntity("gfx/Sample.bmp"));
+    gridEntity->setBackground(new Fitgy::ImageEntity(gridEntity, "gfx/Sample.bmp"));
     gridEntity->position.setX(10);
     gridEntity->position.setY(10);
 
-    gridEntity->addEntity(new Fitgy::ImageEntity("gfx/B100.bmp"), 0);
-    gridEntity->addEntity(new Fitgy::ImageEntity("gfx/B100.bmp"), 1);
-    gridEntity->addEntity(new Fitgy::ImageEntity("gfx/X.bmp"), 2);
-    gridEntity->addEntity(new Fitgy::ImageEntity("gfx/B100.bmp"), 3);
-    gridEntity->addEntity(new Fitgy::ImageEntity("gfx/B100.bmp"), 4);
-    gridEntity->addEntity(new Fitgy::ImageEntity("gfx/B100.bmp"), 5);
-    gridEntity->addEntity(new Fitgy::ImageEntity("gfx/O.bmp"), 6);
-    gridEntity->addEntity(new Fitgy::ImageEntity("gfx/B100.bmp"), 7);
-    gridEntity->addEntity(new Fitgy::ImageEntity("gfx/B100.bmp"), 8);
+    gridEntity->addEntity(new Fitgy::ImageEntity(gridEntity, "gfx/B100.bmp"), 0);
+    gridEntity->addEntity(new Fitgy::ImageEntity(gridEntity, "gfx/B100.bmp"), 1);
+    gridEntity->addEntity(new Fitgy::ImageEntity(gridEntity, "gfx/X.bmp"), 2);
+    gridEntity->addEntity(new Fitgy::ImageEntity(gridEntity, "gfx/B100.bmp"), 3);
+    gridEntity->addEntity(new Fitgy::ImageEntity(gridEntity, "gfx/B100.bmp"), 4);
+    gridEntity->addEntity(new Fitgy::ImageEntity(gridEntity, "gfx/B100.bmp"), 5);
+    gridEntity->addEntity(new Fitgy::ImageEntity(gridEntity, "gfx/O.bmp"), 6);
+    gridEntity->addEntity(new Fitgy::ImageEntity(gridEntity, "gfx/B100.bmp"), 7);
+    gridEntity->addEntity(new Fitgy::ImageEntity(gridEntity, "gfx/B100.bmp"), 8);
 
 
     mEntities.push_back(gridEntity);

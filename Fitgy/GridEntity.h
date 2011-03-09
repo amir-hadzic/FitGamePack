@@ -19,7 +19,7 @@ namespace Fitgy {
             ImageEntity *mBackgroundImage;
 
         public:
-            GridEntity(int width, int height, int dimension);
+            GridEntity(Entity* parent, int width, int height, int dimension);
             ~GridEntity();
 
             void onRender(Entity* entity);

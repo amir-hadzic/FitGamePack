@@ -1,8 +1,8 @@
 #include "ImageEntity.h"
 
 namespace Fitgy {
-    ImageEntity::ImageEntity(char *filename, short opacity)
-        : Entity::Entity()
+    ImageEntity::ImageEntity(Entity* parent, char *filename, short opacity)
+        : Entity::Entity(parent)
     {
         SDL_Surface* surfOriginal = NULL;
 

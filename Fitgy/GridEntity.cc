@@ -2,8 +2,8 @@
 #include "assert.h"
 
 namespace Fitgy {
-    GridEntity::GridEntity(int width, int height, int dimension)
-        : Entity::Entity()
+    GridEntity::GridEntity(Entity* parent, int width, int height, int dimension)
+        : Entity::Entity(parent)
     {
         assert(dimension > 0);
 
