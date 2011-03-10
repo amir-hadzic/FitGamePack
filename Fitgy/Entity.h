@@ -11,7 +11,7 @@ namespace Fitgy {
     class Entity : public EventHandler {
         protected:
             void drawToEntity(Entity* entity);
-
+            bool mMouseOver;
         public:
             Point position;
             int width;
@@ -29,7 +29,11 @@ namespace Fitgy {
             Point getAbsPosition();
             bool isWithinBounds(Point point);
 
-            void onMouseButtonDown(SDL_Event* event, Point point);
+            void onMouseButtonDown(void* sender, SDL_Event* event, Point point);
+            void onMouseButtonUp(void* sender, SDL_Event* event, Point point);
+            void onMouseMove(void* sender, SDL_Event* event, Point point, Point relPoint);
+            void onMouseEnter(void* sender, SDL_Event* event);
+            void onMouseLeave(void* sender, SDL_Event* event);
     };
 }
 

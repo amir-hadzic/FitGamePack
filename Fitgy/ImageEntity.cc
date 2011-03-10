@@ -4,6 +4,20 @@ namespace Fitgy {
     ImageEntity::ImageEntity(Entity* parent, char *filename, short opacity)
         : Entity::Entity(parent)
     {
+        setImage(filename, opacity);
+    }
+
+    void
+    ImageEntity::onRender(Entity* entity){
+        drawToEntity(entity);
+    }
+
+    void
+    ImageEntity::setImage(char* filename, short opacity){
+        if (entitySurface != NULL){
+            SDL_FreeSurface(entitySurface);
+        }
+
         SDL_Surface* surfOriginal = NULL;
 
         if ((surfOriginal = SDL_LoadBMP(filename)) == NULL){
@@ -23,10 +37,5 @@ namespace Fitgy {
 
         width = entitySurface->w;
         height = entitySurface->h;
-    }
-
-    void
-    ImageEntity::onRender(Entity* entity){
-        drawToEntity(entity);
     }
 }

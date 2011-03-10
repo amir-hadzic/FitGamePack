@@ -9,6 +9,7 @@
 #include "GridEntity.h"
 #include "Display.h"
 #include "ImageEntity.h"
+#include "FieldImageEntity.h"
 #include "SplashScreen.h"
 #include "Application.h"
 

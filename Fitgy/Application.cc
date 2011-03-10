@@ -1,7 +1,6 @@
 #include "Application.h"
 
 namespace Fitgy {
-
     Application::Application(){
         mRunning = false;
         mDisplay = NULL;
@@ -18,7 +17,7 @@ namespace Fitgy {
         SDL_Event event;
         while(mRunning){
             while(SDL_PollEvent(&event)){
-                onEvent(&event);
+                onEvent(this, &event);
             }
 
             loop();
@@ -73,12 +72,12 @@ namespace Fitgy {
     }
 
     void 
-    Application::onEvent(SDL_Event* event)
+    Application::onEvent(void* sender, SDL_Event* event)
     {
-        EventHandler::onEvent(event);
+        EventHandler::onEvent(sender, event);
 
         for (unsigned int i = 0; i < mEntities.size(); i++){
-            mEntities[i]->onEvent(event);
+            mEntities[i]->onEvent(mEntities[i], event);
         }
     }
 

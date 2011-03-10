@@ -5,7 +5,7 @@ namespace Fitgy {
     Entity::Entity(Entity* parent){
         entitySurface = NULL;
         externalEventHandler = NULL;
-
+        mMouseOver = false;
         this->parent = parent;
     }
 
@@ -65,9 +65,57 @@ namespace Fitgy {
     }
 
     void
-    Entity::onMouseButtonDown(SDL_Event* event, Point point){
-        if (isWithinBounds(point) && externalEventHandler != NULL){
-            externalEventHandler->onMouseButtonDown(event, point);
+    Entity::onMouseButtonDown(void*, SDL_Event* event, Point point){
+        if (isWithinBounds(point)){
+            EventHandler::onMouseButtonDown(this, event, point);
+
+            if (externalEventHandler != NULL){
+                externalEventHandler->onMouseButtonDown(this, event, point);
+            }
+        }
+    }
+
+    void
+    Entity::onMouseButtonUp(void*, SDL_Event* event, Point point){
+        if (isWithinBounds(point)){
+            EventHandler::onMouseButtonUp(this, event, point);
+
+            if (externalEventHandler != NULL){
+                externalEventHandler->onMouseButtonUp(this, event, point);
+            }
+        }
+    }
+
+    void
+    Entity::onMouseMove(void*, SDL_Event* event, Point point, Point relPoint){
+        if (isWithinBounds(point + relPoint)){
+            if (externalEventHandler != NULL){
+                externalEventHandler->onMouseMove(this, event, point, relPoint);
+            }
+
+            if(mMouseOver == false){
+                mMouseOver = true;
+                onMouseEnter(this, event);
+            }
+        } else {
+            if (mMouseOver == true){
+                mMouseOver = false;
+                onMouseLeave(this, event);
+            }
+        }
+    }
+
+    void
+    Entity::onMouseEnter(void*, SDL_Event* event){
+        if(externalEventHandler != NULL){
+            externalEventHandler->onMouseEnter(this, event);
+        }
+    }
+
+    void
+    Entity::onMouseLeave(void*, SDL_Event* event){
+        if(externalEventHandler != NULL){
+            externalEventHandler->onMouseLeave(this, event);
         }
     }
 }

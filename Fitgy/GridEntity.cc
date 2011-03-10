@@ -75,4 +75,14 @@ namespace Fitgy {
     GridEntity::setBackground(ImageEntity* imageEntity){
         mBackgroundImage = imageEntity;
     }
+
+    void
+    GridEntity::onEvent(void* sender, SDL_Event *event){
+        Entity::onEvent(sender, event);
+
+        std::map<int, Entity*>::iterator it;
+        for(it = mFields.begin(); it != mFields.end(); it++){
+            (*it).second->onEvent((*it).second, event);
+        }
+    }
 }

@@ -10,45 +10,25 @@ namespace Fitgy {
     }
 
     void
-    EventHandler::onEvent(SDL_Event* event){
+    EventHandler::onEvent(void* sender, SDL_Event* event){
         switch(event->type){
             case SDL_QUIT:
                 onExit();
                 break;
             case SDL_MOUSEBUTTONDOWN: {
                 Point point(event->button.x, event->button.y);
-                onMouseButtonDown(event, point);
-
-                switch(event->button.button){
-                    case SDL_BUTTON_LEFT:
-                        onLMouseButtonDown(event, point);
-                        break;
-                    case SDL_BUTTON_RIGHT:
-                        onRMouseButtonDown(event, point);
-                        break;
-                    case SDL_BUTTON_MIDDLE:
-                        onMMouseButtonDown(event, point);
-                        break;
-                }
-
+                onMouseButtonDown(sender, event, point);
                 break;
             }
             case SDL_MOUSEBUTTONUP: {
                 Point point(event->button.x, event->button.y);
-                onMouseButtonUp(event, point);
-
-                switch(event->button.button){
-                    case SDL_BUTTON_LEFT:
-                        onLMouseButtonUp(event, point);
-                        break;
-                    case SDL_BUTTON_RIGHT:
-                        onRMouseButtonUp(event, point);
-                        break;
-                    case SDL_BUTTON_MIDDLE:
-                        onMMouseButtonUp(event, point);
-                        break;
-                }
-
+                onMouseButtonUp(sender, event, point);
+                break;
+            }
+            case SDL_MOUSEMOTION: {
+                Point point(event->motion.x, event->motion.y);
+                Point relPoint(event->motion.xrel, event->motion.yrel);
+                onMouseMove(sender, event, point, relPoint);
                 break;
             }
         }
@@ -60,42 +40,77 @@ namespace Fitgy {
     }
 
     void
-    EventHandler::onMouseButtonDown(SDL_Event*, Point){
+    EventHandler::onMouseButtonDown(void* sender, SDL_Event* event, Point point){
+        switch(event->button.button){
+            case SDL_BUTTON_LEFT:
+                onLMouseButtonDown(sender, event, point);
+                break;
+            case SDL_BUTTON_RIGHT:
+                onRMouseButtonDown(sender, event, point);
+                break;
+            case SDL_BUTTON_MIDDLE:
+                onMMouseButtonDown(sender, event, point);
+                break;
+        }
+    }
+
+    void
+    EventHandler::onLMouseButtonDown(void*, SDL_Event*, Point){
 
     }
 
     void
-    EventHandler::onLMouseButtonDown(SDL_Event*, Point){
+    EventHandler::onRMouseButtonDown(void*, SDL_Event*, Point){
 
     }
 
     void
-    EventHandler::onRMouseButtonDown(SDL_Event*, Point){
+    EventHandler::onMMouseButtonDown(void*, SDL_Event*, Point){
 
     }
 
     void
-    EventHandler::onMMouseButtonDown(SDL_Event*, Point){
+    EventHandler::onMouseButtonUp(void* sender, SDL_Event* event, Point point){
+        switch(event->button.button){
+            case SDL_BUTTON_LEFT:
+                onLMouseButtonUp(sender, event, point);
+                break;
+            case SDL_BUTTON_RIGHT:
+                onRMouseButtonUp(sender, event, point);
+                break;
+            case SDL_BUTTON_MIDDLE:
+                onMMouseButtonUp(sender, event, point);
+                break;
+        }
+    }
+
+    void
+    EventHandler::onLMouseButtonUp(void*, SDL_Event*, Point){
 
     }
 
     void
-    EventHandler::onMouseButtonUp(SDL_Event*, Point){
+    EventHandler::onRMouseButtonUp(void*, SDL_Event*, Point){
 
     }
 
     void
-    EventHandler::onLMouseButtonUp(SDL_Event*, Point){
+    EventHandler::onMMouseButtonUp(void*, SDL_Event*, Point){
 
     }
 
     void
-    EventHandler::onRMouseButtonUp(SDL_Event*, Point){
+    EventHandler::onMouseMove(void*, SDL_Event*, Point, Point){
 
     }
 
     void
-    EventHandler::onMMouseButtonUp(SDL_Event*, Point){
+    EventHandler::onMouseEnter(void*, SDL_Event*){
+
+    }
+
+    void
+    EventHandler::onMouseLeave(void*, SDL_Event*){
 
     }
 }

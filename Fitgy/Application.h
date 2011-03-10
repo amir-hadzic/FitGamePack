@@ -27,7 +27,7 @@ namespace Fitgy {
             virtual void render();
             virtual void cleanup();
             virtual void onExit();
-            virtual void onEvent(SDL_Event* event);
+            virtual void onEvent(void* sender, SDL_Event* event);
     };
 }
 

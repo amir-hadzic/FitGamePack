@@ -10,6 +10,7 @@ namespace Fitgy {
         public:
             ImageEntity(Entity* parent, char *filename, short opacity = SDL_ALPHA_OPAQUE);
             void onRender(Entity *entity);
+            void setImage(char* filename, short opacity = SDL_ALPHA_OPAQUE);
     };
 }
 
