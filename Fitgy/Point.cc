@@ -43,4 +43,11 @@ namespace Fitgy {
         Point result(getX() - point.getX(), getY() - point.getY());
         return result;
     }
+
+    Point::operator std::string() const {
+        std::stringstream ss;
+        ss << "(" << mX << ", " << mY << ")";
+
+        return ss.str();
+    }
 }

@@ -76,6 +76,10 @@ namespace Fitgy {
     Application::onEvent(SDL_Event* event)
     {
         EventHandler::onEvent(event);
+
+        for (unsigned int i = 0; i < mEntities.size(); i++){
+            mEntities[i]->onEvent(event);
+        }
     }
 
     void 

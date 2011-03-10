@@ -2,6 +2,7 @@
 #define FITGY_EVENTHANDLER_H
 
 #include <SDL/SDL.h>
+#include "Point.h"
 
 namespace Fitgy {
 
@@ -11,6 +12,7 @@ namespace Fitgy {
             virtual ~EventHandler();
             virtual void onEvent(SDL_Event* event);
             virtual void onExit();
+            virtual void onMouseButtonDown(SDL_Event* event, Point point);
     };
 }
 

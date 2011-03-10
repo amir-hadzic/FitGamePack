@@ -1,5 +1,12 @@
 #include "TicTacToe.h"
 
+TicTacToe game;
+
+void onGridMouseDown(void*, SDL_Event *event){
+    Fitgy::Point point(event->button.x, event->button.y);
+    game.textEntity->setText(point);
+}
+
 bool
 TicTacToe::init()
 {
@@ -11,7 +18,7 @@ TicTacToe::init()
         mDisplay, "gfx/TicTacToe_Splash.bmp", 2000
     );
 
-    Fitgy::GridEntity* gridEntity = new Fitgy::GridEntity(mDisplay, 300, 300, 3);
+    gridEntity = new Fitgy::GridEntity(mDisplay, 300, 300, 3);
 
     gridEntity->setBackground(new Fitgy::ImageEntity(gridEntity, "gfx/Sample.bmp"));
     gridEntity->position.setX(10);
@@ -26,14 +33,15 @@ TicTacToe::init()
     gridEntity->addEntity(new Fitgy::ImageEntity(gridEntity, "gfx/O.bmp"), 6);
     gridEntity->addEntity(new Fitgy::ImageEntity(gridEntity, "gfx/B100.bmp"), 7);
     gridEntity->addEntity(new Fitgy::ImageEntity(gridEntity, "gfx/B100.bmp"), 8);
+    gridEntity->onMouseButtonDownCallback = onGridMouseDown;
 
     TTF_Font* textFont = TTF_OpenFont("fonts/DroidSansMono.ttf", 16);
-    Fitgy::TextEntity *textEntity = new Fitgy::TextEntity(
+    textEntity = new Fitgy::TextEntity(
         mDisplay, "Hello World!", textFont, {0xff, 0xff, 0xff, 0x00}
     );
 
     textEntity->position.setX(310);
-    textEntity->position.setY(300);
+    textEntity->position.setY(10);
 
     mEntities.push_back(gridEntity);
     mEntities.push_back(textEntity);
@@ -60,15 +68,14 @@ TicTacToe::render(){
 void TicTacToe::loop(){
     if (mSplashScreen != NULL){
         mSplashScreen->onLoop();
-    } else {
+} else {
         Application::loop();
     }
 }
 
-
 int
 main(void){
-    TicTacToe game;
+
 
     return game.execute();
 }

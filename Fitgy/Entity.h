@@ -4,10 +4,14 @@
 #include <SDL/SDL.h>
 #include <vector>
 #include "Point.h"
+#include "EventHandler.h"
+
+#define EVENT_CALLBACK(e) void (*e)(void* sender, SDL_Event* event)
+#define FIRE_EVENT(e) if(e != NULL) { e((void*)this, event); }
 
 namespace Fitgy {
 
-    class Entity {
+    class Entity : public EventHandler {
         protected:
             void drawToEntity(Entity* entity);
 
@@ -26,6 +30,10 @@ namespace Fitgy {
 
             Point getAbsPosition();
             bool isWithinBounds(Point point);
+
+            void onMouseButtonDown(SDL_Event* event, Point point);
+
+            EVENT_CALLBACK(onMouseButtonDownCallback);
     };
 }
 
