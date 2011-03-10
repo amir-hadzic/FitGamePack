@@ -4,7 +4,7 @@ namespace Fitgy {
 
     Entity::Entity(Entity* parent){
         entitySurface = NULL;
-        onMouseButtonDownCallback = NULL;
+        externalEventHandler = NULL;
 
         this->parent = parent;
     }
@@ -16,6 +16,9 @@ namespace Fitgy {
     void 
     Entity::onCleanup(){
         SDL_FreeSurface(entitySurface);
+        if (externalEventHandler != NULL){
+            delete externalEventHandler;
+        }
     }
 
     void 
@@ -63,8 +66,8 @@ namespace Fitgy {
 
     void
     Entity::onMouseButtonDown(SDL_Event* event, Point point){
-        if (isWithinBounds(point)){
-            FIRE_EVENT(onMouseButtonDownCallback);
+        if (isWithinBounds(point) && externalEventHandler != NULL){
+            externalEventHandler->onMouseButtonDown(event, point);
         }
     }
 }

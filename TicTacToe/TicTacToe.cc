@@ -2,10 +2,12 @@
 
 TicTacToe game;
 
-void onGridMouseDown(void*, SDL_Event *event){
-    Fitgy::Point point(event->button.x, event->button.y);
-    game.textEntity->setText(point);
-}
+class GridEventHandler : public Fitgy::EventHandler {
+    public:
+        void onMouseButtonDown(SDL_Event*, Fitgy::Point point){
+            game.textEntity->setText(point);
+        }
+};
 
 bool
 TicTacToe::init()
@@ -33,7 +35,7 @@ TicTacToe::init()
     gridEntity->addEntity(new Fitgy::ImageEntity(gridEntity, "gfx/O.bmp"), 6);
     gridEntity->addEntity(new Fitgy::ImageEntity(gridEntity, "gfx/B100.bmp"), 7);
     gridEntity->addEntity(new Fitgy::ImageEntity(gridEntity, "gfx/B100.bmp"), 8);
-    gridEntity->onMouseButtonDownCallback = onGridMouseDown;
+    gridEntity->externalEventHandler = new GridEventHandler();
 
     TTF_Font* textFont = TTF_OpenFont("fonts/DroidSansMono.ttf", 16);
     textEntity = new Fitgy::TextEntity(

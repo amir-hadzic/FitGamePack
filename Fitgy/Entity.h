@@ -6,9 +6,6 @@
 #include "Point.h"
 #include "EventHandler.h"
 
-#define EVENT_CALLBACK(e) void (*e)(void* sender, SDL_Event* event)
-#define FIRE_EVENT(e) if(e != NULL) { e((void*)this, event); }
-
 namespace Fitgy {
 
     class Entity : public EventHandler {
@@ -21,6 +18,7 @@ namespace Fitgy {
             int height;
             SDL_Surface* entitySurface;
             Entity* parent;
+            EventHandler* externalEventHandler;
 
             Entity(Entity* parent = NULL);
             virtual ~Entity();
@@ -32,8 +30,6 @@ namespace Fitgy {
             bool isWithinBounds(Point point);
 
             void onMouseButtonDown(SDL_Event* event, Point point);
-
-            EVENT_CALLBACK(onMouseButtonDownCallback);
     };
 }
 
