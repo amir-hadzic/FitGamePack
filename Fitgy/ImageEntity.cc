@@ -38,4 +38,9 @@ namespace Fitgy {
         width = entitySurface->w;
         height = entitySurface->h;
     }
+    
+    void
+    ImageEntity::setOpacity(short opacity){
+        SDL_SetAlpha(entitySurface, SDL_SRCALPHA, opacity);
+    }
 }

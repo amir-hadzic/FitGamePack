@@ -18,6 +18,15 @@ namespace TicTacToe {
     Game::Game(){
         xPlays = true;
         for (int i = 0; i < 9; fields[i++] = FieldType::Free);
+        gridEntity = NULL;
+
+        txtPlaying = NULL;
+        txtWinsO = NULL;
+        txtWinsX = NULL;
+        imgPlayerX = NULL;
+        imgPlayerO = NULL;
+        winsX = 0;
+        winsO = 0;
     }
 
     bool
@@ -31,11 +40,47 @@ namespace TicTacToe {
             mDisplay, "gfx/TicTacToe_Splash.bmp", 2000
         );
 
-        gridEntity = new Fitgy::GridEntity(mDisplay, 300, 300, 3);
+        TTF_Font* droidSansMono22px = TTF_OpenFont("fonts/DroidSans.ttf", 22);
 
+        gridEntity = new Fitgy::GridEntity(mDisplay, 300, 300, 3);
         gridEntity->setBackground(new Fitgy::ImageEntity(gridEntity, "gfx/Sample.bmp"));
         gridEntity->position.setX(10);
         gridEntity->position.setY(10);
+
+        txtWinsO = new Fitgy::TextEntity(
+            mDisplay,
+            "0",
+            droidSansMono22px,
+            {0xff, 0xff, 0xff, 0x00}
+        );
+        txtWinsO->position.setX(429);
+        txtWinsO->position.setY(260);
+
+        txtWinsX = new Fitgy::TextEntity(
+            mDisplay,
+            "0",
+            droidSansMono22px,
+            {0xff, 0xff, 0xff, 0x00}
+        );
+        txtWinsX->position.setX(549);
+        txtWinsX->position.setY(260);
+
+        txtPlaying = new Fitgy::TextEntity(
+            mDisplay,
+            "Currently playing:",
+            droidSansMono22px,
+            {0xff, 0xff, 0xff, 0x00}
+        );
+        txtPlaying->position.setX(388);
+        txtPlaying->position.setY(29);
+
+        imgPlayerO = new Fitgy::ImageEntity(mDisplay, "gfx/PlayerO.bmp", SDL_ALPHA_OPAQUE/2);
+        imgPlayerO->position.setX(390);
+        imgPlayerO->position.setY(80);
+
+        imgPlayerX = new Fitgy::ImageEntity(mDisplay, "gfx/PlayerX.bmp", SDL_ALPHA_OPAQUE);
+        imgPlayerX->position.setX(510);
+        imgPlayerX->position.setY(80);
 
         GridFieldEventHandler* gridFieldEventHandler = new GridFieldEventHandler();
         for (int i = 0; i < 9; i++){
@@ -44,18 +89,12 @@ namespace TicTacToe {
             gridEntity->addEntity(field, i);
         }
 
-        gridEntity->externalEventHandler = new GridEventHandler();
-
-        TTF_Font* textFont = TTF_OpenFont("fonts/DroidSansMono.ttf", 16);
-        textEntity = new Fitgy::TextEntity(
-            mDisplay, "Hello World!", textFont, {0xff, 0xff, 0xff, 0x00}
-        );
-
-        textEntity->position.setX(310);
-        textEntity->position.setY(10);
-
         mEntities.push_back(gridEntity);
-        mEntities.push_back(textEntity);
+        mEntities.push_back(txtWinsO);
+        mEntities.push_back(txtWinsX);
+        mEntities.push_back(txtPlaying);
+        mEntities.push_back(imgPlayerO);
+        mEntities.push_back(imgPlayerX);
 
         return true;
     }
@@ -85,6 +124,48 @@ namespace TicTacToe {
     }
 
     void Game::nextPlayer(){
+        checkForWin();
         xPlays = !xPlays;
+        
+        if (xPlays){
+            imgPlayerX->setOpacity(SDL_ALPHA_OPAQUE);
+            imgPlayerO->setOpacity(SDL_ALPHA_OPAQUE/2);
+        } else {
+            imgPlayerX->setOpacity(SDL_ALPHA_OPAQUE/2);
+            imgPlayerO->setOpacity(SDL_ALPHA_OPAQUE);
+        }
+    }
+
+    void Game::checkForWin(){
+        bool horizontalHit1 = IS_ROW_HIT(0, 1, 2);
+        bool horizontalHit2 = IS_ROW_HIT(3, 4, 5);
+        bool horizontalHit3 = IS_ROW_HIT(6, 7, 8);
+
+        bool verticalHit1 = IS_ROW_HIT(0, 3, 6);
+        bool verticalHit2 = IS_ROW_HIT(1, 4, 7);
+        bool verticalHit3 = IS_ROW_HIT(2, 5, 8);
+
+        bool diagonalHit1 = IS_ROW_HIT(6, 4, 2);
+        bool diagonalHit2 = IS_ROW_HIT(0, 4, 8);
+
+        if (
+            horizontalHit1 || horizontalHit2 || horizontalHit3 ||
+            verticalHit1 || verticalHit2 || verticalHit3 ||
+            diagonalHit1 || diagonalHit2
+        ){
+            announceWin();
+        }
+    }
+
+    void Game::announceWin(){
+        std::stringstream ss;
+        if (xPlays){
+            ss << ++winsX;
+            txtWinsX->setText(ss.str());
+        } else {
+            ss << ++winsO;
+            txtWinsO->setText(ss.str());
+        }
+
     }
 }

@@ -3,6 +3,10 @@
 
 #include "../Fitgy/Fitgy.h"
 #include "assert.h"
+#include <sstream>
+
+#define IS_ROW_HIT(f1, f2, f3) fields[f1] == fields[f2]\
+&& fields[f2] == fields[f3] && fields[f3] != FieldType::Free
 
 namespace TicTacToe {
 
@@ -13,7 +17,10 @@ namespace TicTacToe {
             Game(Game const&){};
             Game& operator=(Game const&){ return *this; };
             static Game* mInstance;
-
+            int winsX;
+            int winsO;
+            void checkForWin();
+            void announceWin();
         public:
             enum FieldType {
                 Free = 0,
@@ -23,7 +30,13 @@ namespace TicTacToe {
 
             static Game* getInstance();
             Fitgy::GridEntity* gridEntity;
-            Fitgy::TextEntity* textEntity;
+            Fitgy::TextEntity* txtWinsX;
+            Fitgy::TextEntity* txtWinsO;
+            Fitgy::TextEntity* txtPlaying;
+
+            Fitgy::ImageEntity* imgPlayerX;
+            Fitgy::ImageEntity* imgPlayerO;
+
             FieldType fields[9];
             bool xPlays;
 
