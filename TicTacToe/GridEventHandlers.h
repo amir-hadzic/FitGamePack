@@ -10,6 +10,10 @@ namespace TicTacToe {
                 Fitgy::FieldImageEntity* imgField = (Fitgy::FieldImageEntity*)sender;
                 Game* game = Game::getInstance();
 
+                if (game->gameOver){
+                	return;
+                }
+
                 if (game->fields[imgField->getField()] == Game::FieldType::Free){
                         imgField->setImage("gfx/B100_Hover.bmp");
                 }
@@ -19,6 +23,10 @@ namespace TicTacToe {
                 Fitgy::FieldImageEntity* imgField = (Fitgy::FieldImageEntity*)sender;
                 Game* game = Game::getInstance();
 
+                if (game->gameOver){
+					return;
+				}
+
                 if (game->fields[imgField->getField()] == Game::FieldType::Free){
                     imgField->setImage("gfx/B100.bmp");
                 }
@@ -27,6 +35,10 @@ namespace TicTacToe {
             void onLMouseButtonDown(void* sender, SDL_Event*, Fitgy::Point){
                 Fitgy::FieldImageEntity* imgField = (Fitgy::FieldImageEntity*)sender;
                 Game* game = Game::getInstance();
+
+                if (game->gameOver){
+					return;
+				}
 
                 if (game->fields[imgField->getField()] == Game::FieldType::Free){
                     if (game->xPlays){

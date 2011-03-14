@@ -39,10 +39,11 @@ namespace TicTacToe {
 
             FieldType fields[9];
             bool xPlays;
-
+            bool gameOver;
             bool init();
             void render();
             void loop();
+            void restart();
 
             void nextPlayer();
     };

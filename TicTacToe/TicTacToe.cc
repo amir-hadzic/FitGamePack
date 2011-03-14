@@ -27,6 +27,7 @@ namespace TicTacToe {
         imgPlayerO = NULL;
         winsX = 0;
         winsO = 0;
+        gameOver = false;
     }
 
     bool
@@ -76,6 +77,7 @@ namespace TicTacToe {
             droidSansMono22px,
             colorWhite
         );
+
         txtPlaying->position.setX(388);
         txtPlaying->position.setY(29);
 
@@ -87,13 +89,6 @@ namespace TicTacToe {
         imgPlayerX->position.setX(510);
         imgPlayerX->position.setY(80);
 
-        GridFieldEventHandler* gridFieldEventHandler = new GridFieldEventHandler();
-        for (int i = 0; i < 9; i++){
-            Fitgy::ImageEntity* field = new Fitgy::FieldImageEntity(gridEntity, "gfx/B100.bmp", i);
-            field->externalEventHandler = gridFieldEventHandler;
-            gridEntity->addEntity(field, i);
-        }
-
         mEntities.push_back(gridEntity);
         mEntities.push_back(txtWinsO);
         mEntities.push_back(txtWinsX);
@@ -101,6 +96,7 @@ namespace TicTacToe {
         mEntities.push_back(imgPlayerO);
         mEntities.push_back(imgPlayerX);
 
+        restart();
         return true;
     }
 
@@ -172,5 +168,20 @@ namespace TicTacToe {
             txtWinsO->setText(ss.str());
         }
 
+        restart();
+    }
+
+    void Game::restart(){
+    	for (int i = 0; i < 9; fields[i++] = FieldType::Free);
+
+    	GridFieldEventHandler* gridFieldEventHandler = new GridFieldEventHandler();
+		for (int i = 0; i < 9; i++){
+			Fitgy::ImageEntity* field = new Fitgy::FieldImageEntity(gridEntity, "gfx/B100.bmp", i);
+			field->externalEventHandler = gridFieldEventHandler;
+			gridEntity->removeEntity(i);
+			gridEntity->addEntity(field, i);
+		}
+
+    	gameOver = false;
     }
 }
