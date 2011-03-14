@@ -3,7 +3,7 @@
 
 namespace Fitgy {
     GridEntity::GridEntity(Entity* parent, int width, int height, int dimension)
-        : Entity::Entity(parent)
+        : Entity(parent)
     {
         assert(dimension > 0);
 
@@ -11,7 +11,9 @@ namespace Fitgy {
         mFieldWidth = width / dimension;
         mFieldHeight = height / dimension;
 
-        mBackgroundColor = {0xaa, 0xaa, 0xaa, 0x0};
+        mBackgroundColor.r = 0xaa;
+        mBackgroundColor.g = 0xaa;
+        mBackgroundColor.b = 0xaa;
         mBackgroundImage = NULL;
 
         this->width = width;

@@ -1,9 +1,9 @@
 #ifndef FITGY_GRIDENTITY_H
 #define FITGY_GRIDENTITY_H
 
-#include <SDL/SDL.h>
 #include <vector>
 #include <map>
+#include "LibSDL.h"
 #include "Entity.h"
 #include "ImageEntity.h"
 

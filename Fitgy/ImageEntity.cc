@@ -2,7 +2,7 @@
 
 namespace Fitgy {
     ImageEntity::ImageEntity(Entity* parent, char *filename, short opacity)
-        : Entity::Entity(parent)
+        : Entity(parent)
     {
         setImage(filename, opacity);
     }

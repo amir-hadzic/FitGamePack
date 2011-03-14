@@ -1,8 +1,7 @@
 #ifndef FITGY_H
 #define FITGY_H
 
-#include <SDL/SDL.h>
-#include "SDL_ttf.h"
+#include "LibSDL.h"
 #include "Point.h"
 #include "Entity.h"
 #include "TextEntity.h"

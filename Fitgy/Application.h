@@ -1,8 +1,7 @@
 #ifndef FITGY_APPLICATION_H
 #define FITGY_APPLICATION_H
 
-#include <SDL/SDL.h>
-#include "SDL_ttf.h"
+#include "LibSDL.h"
 #include "EventHandler.h"
 #include "Entity.h"
 #include "Display.h"

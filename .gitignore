@@ -1,2 +1,7 @@
-.cproject
-.project
+*.cproject
+*.project
+*.sdf
+*.opensdf
+*.suo
+*.vcxproj.user
+ipch

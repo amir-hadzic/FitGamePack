@@ -3,7 +3,7 @@
 namespace Fitgy {
 
     Display::Display(int width,int height)
-        : Entity::Entity()
+        : Entity()
     {
         this->width = width;
         this->height = height;

@@ -1,7 +1,7 @@
 #ifndef FITGY_IMAGEENTITY_C
 #define FITGY_IMAGEENTITY_C
 
-#include <SDL/SDL.h>
+#include "LibSDL.h"
 #include "Entity.h"
 
 namespace Fitgy {

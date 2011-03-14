@@ -1,7 +1,7 @@
 #ifndef FITGY_SPLASHSCREEN_H
 #define FITGY_SPLASHSCREEN_H
 
-#include <SDL/SDL.h>
+#include "LibSDL.h"
 #include "ImageEntity.h"
 
 namespace Fitgy {

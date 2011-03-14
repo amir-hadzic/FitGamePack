@@ -47,11 +47,16 @@ namespace TicTacToe {
         gridEntity->position.setX(10);
         gridEntity->position.setY(10);
 
+        SDL_Color colorWhite;
+        colorWhite.r = 0xff;
+        colorWhite.g = 0xff;
+        colorWhite.b = 0xff;
+
         txtWinsO = new Fitgy::TextEntity(
             mDisplay,
             "0",
             droidSansMono22px,
-            {0xff, 0xff, 0xff, 0x00}
+            colorWhite
         );
         txtWinsO->position.setX(429);
         txtWinsO->position.setY(260);
@@ -60,7 +65,7 @@ namespace TicTacToe {
             mDisplay,
             "0",
             droidSansMono22px,
-            {0xff, 0xff, 0xff, 0x00}
+            colorWhite
         );
         txtWinsX->position.setX(549);
         txtWinsX->position.setY(260);
@@ -69,7 +74,7 @@ namespace TicTacToe {
             mDisplay,
             "Currently playing:",
             droidSansMono22px,
-            {0xff, 0xff, 0xff, 0x00}
+            colorWhite
         );
         txtPlaying->position.setX(388);
         txtPlaying->position.setY(29);

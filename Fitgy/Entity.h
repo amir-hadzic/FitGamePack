@@ -1,7 +1,7 @@
 #ifndef FITGY_ENTITY_H
 #define FITGY_ENTITY_H
 
-#include <SDL/SDL.h>
+#include "LibSDL.h"
 #include <vector>
 #include "Point.h"
 #include "EventHandler.h"

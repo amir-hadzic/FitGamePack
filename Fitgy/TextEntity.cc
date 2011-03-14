@@ -5,7 +5,7 @@ namespace Fitgy {
     TextEntity::TextEntity(
             Entity* parent, std::string text, TTF_Font* font, SDL_Color color
     )
-        : Entity::Entity(parent)
+        : Entity(parent)
     {
         mText = text;
         mColor = color;

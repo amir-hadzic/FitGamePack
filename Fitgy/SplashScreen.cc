@@ -7,7 +7,7 @@ namespace Fitgy {
             unsigned int animDuration,
             unsigned int postDuration
     )
-        : ImageEntity::ImageEntity(parent, splashImage, 0)
+        : ImageEntity(parent, splashImage, 0)
     {
         mAnimDuration = animDuration;
         mPostDuration = postDuration;

@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FADD50D3-734A-4514-880F-30AC5779F338}</ProjectGuid>
+    <RootNamespace>FitGamePack</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\Users\schmrz\Desktop\fitgamepack\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\schmrz\Desktop\fitgamepack\library;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\Users\schmrz\Desktop\fitgamepack;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>SDL.lib SDLmain.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>SDLmain.lib;SDL.lib;SDL_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
+      <IgnoreSpecificDefaultLibraries>MSVCRT.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="Fitgy\Application.h" />
+    <ClInclude Include="Fitgy\Display.h" />
+    <ClInclude Include="Fitgy\Entity.h" />
+    <ClInclude Include="Fitgy\EventHandler.h" />
+    <ClInclude Include="Fitgy\FieldImageEntity.h" />
+    <ClInclude Include="Fitgy\Fitgy.h" />
+    <ClInclude Include="Fitgy\GridEntity.h" />
+    <ClInclude Include="Fitgy\ImageEntity.h" />
+    <ClInclude Include="Fitgy\LibSDL.h" />
+    <ClInclude Include="Fitgy\Point.h" />
+    <ClInclude Include="Fitgy\SplashScreen.h" />
+    <ClInclude Include="Fitgy\TextEntity.h" />
+    <ClInclude Include="SDL\begin_code.h" />
+    <ClInclude Include="SDL\close_code.h" />
+    <ClInclude Include="SDL\SDL.h" />
+    <ClInclude Include="SDL\SDL_active.h" />
+    <ClInclude Include="SDL\SDL_audio.h" />
+    <ClInclude Include="SDL\SDL_byteorder.h" />
+    <ClInclude Include="SDL\SDL_cdrom.h" />
+    <ClInclude Include="SDL\SDL_config.h" />
+    <ClInclude Include="SDL\SDL_config_amiga.h" />
+    <ClInclude Include="SDL\SDL_config_dreamcast.h" />
+    <ClInclude Include="SDL\SDL_config_macos.h" />
+    <ClInclude Include="SDL\SDL_config_macosx.h" />
+    <ClInclude Include="SDL\SDL_config_minimal.h" />
+    <ClInclude Include="SDL\SDL_config_nds.h" />
+    <ClInclude Include="SDL\SDL_config_os2.h" />
+    <ClInclude Include="SDL\SDL_config_symbian.h" />
+    <ClInclude Include="SDL\SDL_config_win32.h" />
+    <ClInclude Include="SDL\SDL_copying.h" />
+    <ClInclude Include="SDL\SDL_cpuinfo.h" />
+    <ClInclude Include="SDL\SDL_endian.h" />
+    <ClInclude Include="SDL\SDL_error.h" />
+    <ClInclude Include="SDL\SDL_events.h" />
+    <ClInclude Include="SDL\SDL_getenv.h" />
+    <ClInclude Include="SDL\SDL_joystick.h" />
+    <ClInclude Include="SDL\SDL_keyboard.h" />
+    <ClInclude Include="SDL\SDL_keysym.h" />
+    <ClInclude Include="SDL\SDL_loadso.h" />
+    <ClInclude Include="SDL\SDL_main.h" />
+    <ClInclude Include="SDL\SDL_mouse.h" />
+    <ClInclude Include="SDL\SDL_mutex.h" />
+    <ClInclude Include="SDL\SDL_name.h" />
+    <ClInclude Include="SDL\SDL_opengl.h" />
+    <ClInclude Include="SDL\SDL_platform.h" />
+    <ClInclude Include="SDL\SDL_quit.h" />
+    <ClInclude Include="SDL\SDL_rwops.h" />
+    <ClInclude Include="SDL\SDL_stdinc.h" />
+    <ClInclude Include="SDL\SDL_syswm.h" />
+    <ClInclude Include="SDL\SDL_thread.h" />
+    <ClInclude Include="SDL\SDL_timer.h" />
+    <ClInclude Include="SDL\SDL_ttf.h" />
+    <ClInclude Include="SDL\SDL_types.h" />
+    <ClInclude Include="SDL\SDL_version.h" />
+    <ClInclude Include="SDL\SDL_video.h" />
+    <ClInclude Include="TicTacToe\GridEventHandlers.h" />
+    <ClInclude Include="TicTacToe\TicTacToe.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Fitgy\Application.cc" />
+    <ClCompile Include="Fitgy\Display.cc" />
+    <ClCompile Include="Fitgy\Entity.cc" />
+    <ClCompile Include="Fitgy\EventHandler.cc" />
+    <ClCompile Include="Fitgy\FieldImageEntity.cc" />
+    <ClCompile Include="Fitgy\GridEntity.cc" />
+    <ClCompile Include="Fitgy\ImageEntity.cc" />
+    <ClCompile Include="Fitgy\Point.cc" />
+    <ClCompile Include="Fitgy\SplashScreen.cc" />
+    <ClCompile Include="Fitgy\TextEntity.cc" />
+    <ClCompile Include="TicTacToe\main.cc" />
+    <ClCompile Include="TicTacToe\TicTacToe.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="SDL.lib" />
+    <Library Include="SDLmain.lib" />
+    <Library Include="SDL_ttf.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="gfx\A100.bmp">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="gfx\B100.bmp">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="gfx\B100_Hover.bmp">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="gfx\O.bmp">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="gfx\PlayerO.bmp">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="gfx\PlayerX.bmp">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="gfx\Sample.bmp">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="gfx\sdl.bmp">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="gfx\TicTacToe_Splash.bmp">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="gfx\X.bmp">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

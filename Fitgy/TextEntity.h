@@ -1,8 +1,7 @@
 #ifndef FITGY_TEXTENTITY_H
 #define FITGY_TEXTENTITY_H
 
-#include <SDL/SDL.h>
-#include "SDL_ttf.h"
+#include "LibSDL.h"
 #include "Entity.h"
 #include <string>
 
