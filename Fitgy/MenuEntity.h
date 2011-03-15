@@ -1,0 +1,5 @@
+#ifndef FITGY_MENUENTITY_H
+#define FITGY_MENUENTITY_H
+
+
+#endif

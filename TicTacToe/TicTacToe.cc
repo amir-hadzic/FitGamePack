@@ -53,6 +53,16 @@ namespace TicTacToe {
         colorWhite.g = 0xff;
         colorWhite.b = 0xff;
 
+        SDL_Color colorBlack;
+        colorBlack.r = 0x00;
+        colorBlack.g = 0x00;
+        colorBlack.b = 0x00;
+
+        SDL_Color colorBlue;
+        colorBlue.r = 0x00;
+        colorBlue.g = 0x00;
+        colorBlue.b = 0xff;
+
         txtWinsO = new Fitgy::TextEntity(
             mDisplay,
             "0",
@@ -89,12 +99,28 @@ namespace TicTacToe {
         imgPlayerX->position.setX(510);
         imgPlayerX->position.setY(80);
 
+        Fitgy::MenuItemEntity* menuItem = new Fitgy::MenuItemEntity(
+            mDisplay,
+            "menuItem",
+            "Test item - 1",
+            droidSansMono22px
+        );
+
+        menuItem->setPadding(5);
+        menuItem->setBackgroundColor(colorBlack);
+        menuItem->setBackgroundHoverColor(colorBlue);
+        menuItem->setForegroundColor(colorWhite);
+
+        menuItem->position.setX(400);
+        menuItem->position.setY(200);
+
         mEntities.push_back(gridEntity);
         mEntities.push_back(txtWinsO);
         mEntities.push_back(txtWinsX);
         mEntities.push_back(txtPlaying);
         mEntities.push_back(imgPlayerO);
         mEntities.push_back(imgPlayerX);
+        mEntities.push_back(menuItem);
 
         restart();
         return true;

@@ -4,4 +4,9 @@
 *.opensdf
 *.suo
 *.vcxproj.user
+*.cmake
+*.a
+CMakeFiles
+CMakeCache.txt
+Makefile
 ipch

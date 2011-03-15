@@ -35,8 +35,8 @@ namespace Fitgy {
         // Free resources taken by the old surface.
         SDL_FreeSurface(surfOriginal);
 
-        width = entitySurface->w;
-        height = entitySurface->h;
+        mWidth = entitySurface->w;
+        mHeight = entitySurface->h;
     }
     
     void

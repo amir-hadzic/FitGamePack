@@ -22,8 +22,8 @@ namespace Fitgy {
         }
 
         entitySurface = TTF_RenderUTF8_Blended(mFont, mText.c_str(), mColor);
-        width = entitySurface->w;
-        height = entitySurface->h;
+        mWidth = entitySurface->w;
+        mHeight = entitySurface->h;
     }
 
     void

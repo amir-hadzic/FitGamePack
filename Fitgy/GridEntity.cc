@@ -16,8 +16,8 @@ namespace Fitgy {
         mBackgroundColor.b = 0xaa;
         mBackgroundImage = NULL;
 
-        this->width = width;
-        this->height = height;
+        mWidth = width;
+        mHeight = height;
 
         entitySurface = SDL_CreateRGBSurface(
             SDL_HWSURFACE, width, height, 32, 0, 0, 0, 0
@@ -33,6 +33,8 @@ namespace Fitgy {
 
     void
     GridEntity::onRender(Entity* entity){
+        // TODO: Maybe the surface shouldn't be refilled each time
+        // render() is called.
         SDL_FillRect(
             entitySurface,
             NULL,

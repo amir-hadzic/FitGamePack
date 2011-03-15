@@ -5,8 +5,8 @@ namespace Fitgy {
     Display::Display(int width,int height)
         : Entity()
     {
-        this->width = width;
-        this->height = height;
+        mWidth = width;
+        mHeight = height;
 
         entitySurface = SDL_SetVideoMode(
             width, height, 32, SDL_HWSURFACE | SDL_DOUBLEBUF

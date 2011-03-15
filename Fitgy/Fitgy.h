@@ -10,6 +10,7 @@
 #include "ImageEntity.h"
 #include "FieldImageEntity.h"
 #include "SplashScreen.h"
+#include "MenuItemEntity.h"
 #include "Application.h"
 
 #endif

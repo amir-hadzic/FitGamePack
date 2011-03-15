@@ -1,0 +1,16 @@
+add_library(Fitgy
+    Fitgy
+    Application
+    Display
+    Entity
+    EventHandler
+    FieldImageEntity
+    GridEntity
+    ImageEntity
+    LibSDL
+    MenuEntity
+    MenuItemEntity
+    Point
+    SplashScreen
+    TextEntity
+)

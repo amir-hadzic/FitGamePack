@@ -12,10 +12,11 @@ namespace Fitgy {
         protected:
             void drawToEntity(Entity* entity);
             bool mMouseOver;
+            int mWidth;
+            int mHeight;
+
         public:
             Point position;
-            int width;
-            int height;
             SDL_Surface* entitySurface;
             Entity* parent;
             EventHandler* externalEventHandler;
@@ -34,6 +35,12 @@ namespace Fitgy {
             void onMouseMove(void* sender, SDL_Event* event, Point point, Point relPoint);
             void onMouseEnter(void* sender, SDL_Event* event);
             void onMouseLeave(void* sender, SDL_Event* event);
+
+            virtual void setHeight(int height);
+            virtual void setWidth(int width);
+
+            virtual int getHeight();
+            virtual int getWidth();
     };
 }
 

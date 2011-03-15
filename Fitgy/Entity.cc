@@ -54,7 +54,7 @@ namespace Fitgy {
         Point localPoint = point - this->position;
 
         bool leftOfBounds = localPoint.getX() < 0 || localPoint.getY() < 0;
-        bool rightOfBounds = localPoint.getX() > width || localPoint.getY() > height;
+        bool rightOfBounds = localPoint.getX() > getWidth() || localPoint.getY() > getHeight();
 
         if (leftOfBounds || rightOfBounds){
             return false;
@@ -118,4 +118,25 @@ namespace Fitgy {
             externalEventHandler->onMouseLeave(this, event);
         }
     }
+
+    void
+    Entity::setHeight(int height){
+        mHeight = height;
+    }
+
+    void
+    Entity::setWidth(int width){
+        mWidth = width;
+    }
+
+    int
+    Entity::getHeight(){
+        return mHeight;
+    }
+
+    int
+    Entity::getWidth(){
+        return mWidth;
+    }
+
 }
