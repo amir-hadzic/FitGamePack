@@ -10,6 +10,9 @@ namespace Fitgy {
     {
         mIdentifier = identifier;
         mFont = font;
+        mForegroundColor.r = 0xff;
+        mForegroundColor.g = 0xff;
+        mForegroundColor.b = 0xff;
         mTextEntity = new TextEntity(this, text, font, mForegroundColor);
         mPadding = 0;
         mWidth = mTextEntity->getWidth();
@@ -29,7 +32,11 @@ namespace Fitgy {
             SDL_HWSURFACE | SDL_SRCALPHA,
             getWidth(),
             getHeight(),
-            32, 0, 0, 0, 0
+            parent->entitySurface->format->BitsPerPixel,
+            parent->entitySurface->format->Rmask,
+            parent->entitySurface->format->Gmask,
+            parent->entitySurface->format->Bmask,
+            parent->entitySurface->format->Amask
         );
 
         SDL_FillRect(
@@ -42,12 +49,25 @@ namespace Fitgy {
                 mCurrentBackgroundColor.b
             )
         );
+
+        mTextEntity->onRender(this);
     }
 
     void
     MenuItemEntity::onRender(Entity* entity){
-        mTextEntity->onRender(this);
         drawToEntity(entity);
+    }
+
+    void
+    MenuItemEntity::onMouseEnter(void* sender, SDL_Event* event){
+        mCurrentBackgroundColor = mBackgroundColor;
+        redraw();
+    }
+
+    void
+    MenuItemEntity::onMouseLeave(void* sender, SDL_Event* event){
+        mCurrentBackgroundColor = mBackgroundHoverColor;
+        redraw();
     }
 
     void
@@ -134,6 +154,6 @@ namespace Fitgy {
 
     int
     MenuItemEntity::getHeight(){
-        return mHeight;
+        return mHeight + (mPadding * 2);
     }
 }
