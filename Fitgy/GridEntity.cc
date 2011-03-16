@@ -83,10 +83,27 @@ namespace Fitgy {
     void
     GridEntity::onEvent(void* sender, SDL_Event *event){
         Entity::onEvent(sender, event);
+		
+		/*
+		While iterating through entities and calling onEvent
+	    it is possible that one of the or all entities are going
+		to be deleted and the iterators will be left invalid. For
+		example, TicTacToe deletes all grid entities when a player
+		has won. That is why we can't call onEvent while using iterators.
+		TODO: find a better solution and deny any public access to grid
+			  entities.  
+		*/
 
+		std::vector<Entity*> entityList;
         std::map<int, Entity*>::iterator it;
         for(it = mFields.begin(); it != mFields.end(); it++){
-            (*it).second->onEvent((*it).second, event);
+			entityList.push_back((*it).second);
         }
+
+		for(int i = 0; i < entityList.size(); i++){
+			if (entityList[i] != NULL){
+				entityList[i]->onEvent(sender, event);
+			}
+		}
     }
 }
