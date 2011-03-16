@@ -11,6 +11,7 @@
 #include "FieldImageEntity.h"
 #include "SplashScreen.h"
 #include "MenuItemEntity.h"
+#include "MenuEntity.h"
 #include "Application.h"
 
 #endif

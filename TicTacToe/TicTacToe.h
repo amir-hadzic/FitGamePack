@@ -2,6 +2,8 @@
 #define TICTACTOE_H
 
 #include "../Fitgy/Fitgy.h"
+#include <map>
+#include <string>
 #include "assert.h"
 #include <sstream>
 
@@ -30,12 +32,15 @@ namespace TicTacToe {
 
             static Game* getInstance();
             Fitgy::GridEntity* gridEntity;
+
             Fitgy::TextEntity* txtWinsX;
             Fitgy::TextEntity* txtWinsO;
             Fitgy::TextEntity* txtPlaying;
 
             Fitgy::ImageEntity* imgPlayerX;
             Fitgy::ImageEntity* imgPlayerO;
+
+            Fitgy::MenuEntity* mnuMain;
 
             FieldType fields[9];
             bool xPlays;

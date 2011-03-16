@@ -1,5 +1,6 @@
 #include "TicTacToe.h"
 #include "GridEventHandlers.h"
+#include "MenuEventHandlers.h"
 
 namespace TicTacToe {
     Game* Game::mInstance = 0;
@@ -63,6 +64,11 @@ namespace TicTacToe {
         colorRed.g = 0x00;
         colorRed.b = 0x00;
 
+        SDL_Color colorDarkRed;
+        colorDarkRed.r = 0xaa;
+        colorDarkRed.g = 0x00;
+        colorDarkRed.b = 0x00;
+
         txtWinsO = new Fitgy::TextEntity(
             mDisplay,
             "0",
@@ -100,19 +106,19 @@ namespace TicTacToe {
         imgPlayerX->position.setX(510);
         imgPlayerX->position.setY(80);
 
-        Fitgy::MenuItemEntity* menuItem = new Fitgy::MenuItemEntity(
-            mDisplay,
-            "menuItem",
-            "Test item",
-            droidSansMono22px
-        );
+        std::map<std::string, std::string> menuItems;
+        menuItems["quit"] = "Quit";
+        menuItems["restart"] = "Start new game";
 
-        menuItem->setBackgroundColor(colorRed);
-        menuItem->setBackgroundHoverColor(colorBlack);
-        menuItem->setForegroundColor(colorWhite);
-        menuItem->setPadding(5);
-        menuItem->position.setX(400);
-        menuItem->position.setY(400);
+
+        mnuMain = new Fitgy::MenuEntity(mDisplay, menuItems, droidSansMono22px);
+        mnuMain->setBackgroundColor(colorDarkRed);
+        mnuMain->setBackgroundHoverColor(colorRed);
+        mnuMain->setForegroundColor(colorWhite);
+        mnuMain->setPadding(5);
+        mnuMain->position.setX(20);
+        mnuMain->position.setY(346);
+        mnuMain->setEventHandler(new MenuEventHandler());
 
         mEntities.push_back(gridEntity);
         mEntities.push_back(txtWinsO);
@@ -120,7 +126,7 @@ namespace TicTacToe {
         mEntities.push_back(txtPlaying);
         mEntities.push_back(imgPlayerO);
         mEntities.push_back(imgPlayerX);
-        mEntities.push_back(menuItem);
+        mEntities.push_back(mnuMain);
 
         restart();
         return true;
@@ -201,12 +207,12 @@ namespace TicTacToe {
     	for (int i = 0; i < 9; fields[i++] = FieldType::Free);
 
     	GridFieldEventHandler* gridFieldEventHandler = new GridFieldEventHandler();
-		for (int i = 0; i < 9; i++){
-			Fitgy::ImageEntity* field = new Fitgy::FieldImageEntity(gridEntity, "gfx/B100.bmp", i);
-			field->externalEventHandler = gridFieldEventHandler;
-			gridEntity->removeEntity(i);
-			gridEntity->addEntity(field, i);
-		}
+        for (int i = 0; i < 9; i++){
+            Fitgy::ImageEntity* field = new Fitgy::FieldImageEntity(gridEntity, "gfx/B100.bmp", i);
+            field->setEventHandler(gridFieldEventHandler);
+            gridEntity->removeEntity(i);
+            gridEntity->addEntity(field, i);
+        }
 
     	gameOver = false;
     }

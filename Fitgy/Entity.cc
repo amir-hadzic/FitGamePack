@@ -4,8 +4,8 @@ namespace Fitgy {
 
     Entity::Entity(Entity* parent){
         entitySurface = NULL;
-        externalEventHandler = NULL;
-        mMouseOver = false;
+        mExternalEventHandler = NULL;
+        mMouseOver = true;
         this->parent = parent;
     }
 
@@ -16,8 +16,8 @@ namespace Fitgy {
     void 
     Entity::onCleanup(){
         SDL_FreeSurface(entitySurface);
-        if (externalEventHandler != NULL){
-            delete externalEventHandler;
+        if (mExternalEventHandler != NULL){
+            delete mExternalEventHandler;
         }
     }
 
@@ -51,7 +51,7 @@ namespace Fitgy {
 
     bool
     Entity::isWithinBounds(Point point){
-        Point localPoint = point - this->position;
+        Point localPoint = point - this->getAbsPosition();
 
         bool leftOfBounds = localPoint.getX() < 0 || localPoint.getY() < 0;
         bool rightOfBounds = localPoint.getX() > getWidth() || localPoint.getY() > getHeight();
@@ -69,8 +69,8 @@ namespace Fitgy {
         if (isWithinBounds(point)){
             EventHandler::onMouseButtonDown(this, event, point);
 
-            if (externalEventHandler != NULL){
-                externalEventHandler->onMouseButtonDown(this, event, point);
+            if (mExternalEventHandler != NULL){
+                mExternalEventHandler->onMouseButtonDown(this, event, point);
             }
         }
     }
@@ -80,8 +80,8 @@ namespace Fitgy {
         if (isWithinBounds(point)){
             EventHandler::onMouseButtonUp(this, event, point);
 
-            if (externalEventHandler != NULL){
-                externalEventHandler->onMouseButtonUp(this, event, point);
+            if (mExternalEventHandler != NULL){
+                mExternalEventHandler->onMouseButtonUp(this, event, point);
             }
         }
     }
@@ -89,8 +89,8 @@ namespace Fitgy {
     void
     Entity::onMouseMove(void*, SDL_Event* event, Point point, Point relPoint){
         if (isWithinBounds(point + relPoint)){
-            if (externalEventHandler != NULL){
-                externalEventHandler->onMouseMove(this, event, point, relPoint);
+            if (mExternalEventHandler != NULL){
+                mExternalEventHandler->onMouseMove(this, event, point, relPoint);
             }
 
             if(mMouseOver == false){
@@ -107,15 +107,15 @@ namespace Fitgy {
 
     void
     Entity::onMouseEnter(void*, SDL_Event* event){
-        if(externalEventHandler != NULL){
-            externalEventHandler->onMouseEnter(this, event);
+        if(mExternalEventHandler != NULL){
+            mExternalEventHandler->onMouseEnter(this, event);
         }
     }
 
     void
     Entity::onMouseLeave(void*, SDL_Event* event){
-        if(externalEventHandler != NULL){
-            externalEventHandler->onMouseLeave(this, event);
+        if(mExternalEventHandler != NULL){
+            mExternalEventHandler->onMouseLeave(this, event);
         }
     }
 
@@ -137,6 +137,16 @@ namespace Fitgy {
     int
     Entity::getWidth(){
         return mWidth;
+    }
+
+    void
+    Entity::setEventHandler(EventHandler* handler){
+        mExternalEventHandler = handler;
+    }
+
+    EventHandler*
+    Entity::getEventHandler(){
+        return mExternalEventHandler;
     }
 
 }

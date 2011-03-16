@@ -14,12 +14,13 @@ namespace Fitgy {
             bool mMouseOver;
             int mWidth;
             int mHeight;
+            EventHandler* mExternalEventHandler;
 
         public:
             Point position;
             SDL_Surface* entitySurface;
             Entity* parent;
-            EventHandler* externalEventHandler;
+
 
             Entity(Entity* parent = NULL);
             virtual ~Entity();
@@ -41,6 +42,9 @@ namespace Fitgy {
 
             virtual int getHeight();
             virtual int getWidth();
+
+            virtual void setEventHandler(EventHandler* handler);
+            virtual EventHandler* getEventHandler();
     };
 }
 

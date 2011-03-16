@@ -6,5 +6,7 @@ find_package(SDL_ttf)
 
 add_definitions(-Wall -Wextra -pedantic -Wno-write-strings -std=c++0x)
 
+set(CMAKE_BUILD_TYPE Debug)
+
 add_subdirectory(Fitgy)
 add_subdirectory(TicTacToe)

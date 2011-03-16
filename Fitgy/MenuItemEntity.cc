@@ -32,11 +32,7 @@ namespace Fitgy {
             SDL_HWSURFACE | SDL_SRCALPHA,
             getWidth(),
             getHeight(),
-            parent->entitySurface->format->BitsPerPixel,
-            parent->entitySurface->format->Rmask,
-            parent->entitySurface->format->Gmask,
-            parent->entitySurface->format->Bmask,
-            parent->entitySurface->format->Amask
+            32, 0, 0, 0, 0
         );
 
         SDL_FillRect(
@@ -60,14 +56,16 @@ namespace Fitgy {
 
     void
     MenuItemEntity::onMouseEnter(void* sender, SDL_Event* event){
-        mCurrentBackgroundColor = mBackgroundColor;
+        mCurrentBackgroundColor = mBackgroundHoverColor;
         redraw();
+        Entity::onMouseEnter(sender, event);
     }
 
     void
     MenuItemEntity::onMouseLeave(void* sender, SDL_Event* event){
-        mCurrentBackgroundColor = mBackgroundHoverColor;
+        mCurrentBackgroundColor = mBackgroundColor;
         redraw();
+        Entity::onMouseLeave(sender, event);
     }
 
     void
