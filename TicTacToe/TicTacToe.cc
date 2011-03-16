@@ -38,6 +38,8 @@ namespace TicTacToe {
             return false;
         }
 
+        mDisplay->setTitle("Fitgy::TicTacToe", "TicTacToe");
+
         mSplashScreen = new Fitgy::SplashScreen(
             mDisplay, "gfx/TicTacToe_Splash.bmp", 2000
         );

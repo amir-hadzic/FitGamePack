@@ -16,4 +16,9 @@ namespace Fitgy {
             throw "Display couldn't be initialized.";
         }
     }
+
+    void
+    Display::setTitle(char* windowTitle, char* iconTitle){
+        SDL_WM_SetCaption(windowTitle, iconTitle);
+    }
 }
