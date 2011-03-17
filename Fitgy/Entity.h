@@ -5,6 +5,7 @@
 #include <vector>
 #include "Point.h"
 #include "EventHandler.h"
+#include "EventHub.h"
 
 namespace Fitgy {
 
@@ -15,7 +16,8 @@ namespace Fitgy {
             int mWidth;
             int mHeight;
             EventHandler* mExternalEventHandler;
-
+            Entity(Entity const&){};
+            Entity& operator=(Entity const&){ return *this; };
         public:
             Point position;
             SDL_Surface* entitySurface;

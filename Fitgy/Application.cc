@@ -17,6 +17,7 @@ namespace Fitgy {
         SDL_Event event;
         while(mRunning){
             while(SDL_PollEvent(&event)){
+                EventHub::broadcast(&event);
                 onEvent(this, &event);
             }
 
@@ -69,16 +70,6 @@ namespace Fitgy {
     void 
     Application::cleanup(){
             
-    }
-
-    void 
-    Application::onEvent(void* sender, SDL_Event* event)
-    {
-        EventHandler::onEvent(sender, event);
-
-        for (unsigned int i = 0; i < mEntities.size(); i++){
-            mEntities[i]->onEvent(mEntities[i], event);
-        }
     }
 
     void 

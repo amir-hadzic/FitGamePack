@@ -23,7 +23,6 @@ namespace Fitgy {
             ~GridEntity();
 
             void onRender(Entity* entity);
-            void onEvent(void* sender, SDL_Event* event);
 
             void addEntity(Entity* entity, int field);
             void removeEntity(int field);

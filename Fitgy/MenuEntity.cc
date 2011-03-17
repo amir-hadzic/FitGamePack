@@ -96,15 +96,6 @@ namespace Fitgy {
     }
 
     void
-    MenuEntity::onEvent(void* sender, SDL_Event* event){
-        Entity::onEvent(sender, event);
-
-        for(unsigned int i = 0; i < mMenuItems.size(); i++){
-            mMenuItems[i]->onEvent(sender, event);
-        }
-    }
-
-    void
     MenuEntity::setBackgroundColor(SDL_Color color){
         mBackgroundColor = color;
         redraw();

@@ -4,6 +4,7 @@
 #include "LibSDL.h"
 #include "Point.h"
 #include "Entity.h"
+#include "EventHub.h"
 #include "TextEntity.h"
 #include "GridEntity.h"
 #include "Display.h"

@@ -3,7 +3,7 @@
 #include "MenuEventHandlers.h"
 
 namespace TicTacToe {
-    Game* Game::mInstance = 0;
+    Game* Game::mInstance = NULL;
     const int FIELD_FREE = 0;
     const int FIELD_X = 1;
     const int FIELD_O = 2;
@@ -208,9 +208,9 @@ namespace TicTacToe {
     void Game::restart(){
     	for (int i = 0; i < 9; fields[i++] = FieldType::Free);
 
-    	GridFieldEventHandler* gridFieldEventHandler = new GridFieldEventHandler();
         for (int i = 0; i < 9; i++){
-            Fitgy::ImageEntity* field = new Fitgy::FieldImageEntity(gridEntity, "gfx/B100.bmp", i);
+            GridFieldEventHandler* gridFieldEventHandler = new GridFieldEventHandler();
+            Fitgy::FieldImageEntity* field = new Fitgy::FieldImageEntity(gridEntity, "gfx/B100.bmp", i);
             field->setEventHandler(gridFieldEventHandler);
             gridEntity->removeEntity(i);
             gridEntity->addEntity(field, i);

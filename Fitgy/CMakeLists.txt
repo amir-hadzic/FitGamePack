@@ -4,6 +4,7 @@ add_library(Fitgy
     Display
     Entity
     EventHandler
+    EventHub
     FieldImageEntity
     GridEntity
     ImageEntity

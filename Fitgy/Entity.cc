@@ -7,6 +7,8 @@ namespace Fitgy {
         mExternalEventHandler = NULL;
         mMouseOver = true;
         this->parent = parent;
+
+        EventHub::subscribe(this);
     }
 
     Entity::~Entity(){
@@ -15,9 +17,11 @@ namespace Fitgy {
 
     void 
     Entity::onCleanup(){
+        EventHub::unsubscribe(this);
         SDL_FreeSurface(entitySurface);
         if (mExternalEventHandler != NULL){
             delete mExternalEventHandler;
+            mExternalEventHandler = NULL;
         }
     }
 

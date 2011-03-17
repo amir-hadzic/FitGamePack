@@ -3,6 +3,7 @@
 
 #include "LibSDL.h"
 #include "EventHandler.h"
+#include "EventHub.h"
 #include "Entity.h"
 #include "Display.h"
 #include <vector>
@@ -26,7 +27,6 @@ namespace Fitgy {
             virtual void render();
             virtual void cleanup();
             virtual void onExit();
-            virtual void onEvent(void* sender, SDL_Event* event);
     };
 }
 

@@ -28,7 +28,6 @@ namespace Fitgy {
             void setPadding(short padding);
             void setEventHandler(EventHandler* handler);
             void onRender(Entity* entity);
-            void onEvent(void* sender, SDL_Event* event);
     };
 }
 
