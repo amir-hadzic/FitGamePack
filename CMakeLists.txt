@@ -18,3 +18,4 @@ set(CMAKE_BUILD_TYPE Debug)
 
 add_subdirectory(Fitgy)
 add_subdirectory(TicTacToe)
+add_subdirectory(Typer)
