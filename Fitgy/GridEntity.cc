@@ -26,8 +26,11 @@ namespace Fitgy {
 
     GridEntity::~GridEntity()
     {
-        // Delete each entity and call their destructors.
-        mFields.clear();
+        // Destroy created entities.
+        std::map<int, Entity*>::iterator it;
+        for(it = mFields.begin(); it != mFields.end(); it++){
+            delete (*it).second;
+        }
         onCleanup();
     }
 
