@@ -72,8 +72,9 @@ namespace Fitgy {
             
     }
 
-    void 
+    bool
     Application::onExit(){
         mRunning = false;
+        return false;
     }
 }

@@ -28,7 +28,12 @@ namespace Fitgy {
 
         while (it != mListeners.end()){
             if ((*it).isActive){
-                (*it).handler->onEvent(NULL, event);
+                bool handled = (*it).handler->onEvent(NULL, event);
+
+                if (handled){
+                    break;
+                }
+
                 ++it;
             } else {
                 it = mListeners.erase(it);

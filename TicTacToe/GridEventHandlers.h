@@ -6,39 +6,31 @@
 namespace TicTacToe {
     class GridFieldEventHandler : public Fitgy::EventHandler {
         public:
-            void onMouseEnter(void* sender, SDL_Event*){
+            bool onMouseEnter(void* sender, SDL_Event*){
                 Fitgy::FieldImageEntity* imgField = (Fitgy::FieldImageEntity*)sender;
                 Game* game = Game::getInstance();
-
-                if (game->gameOver){
-                	return;
-                }
 
                 if (game->fields[imgField->getField()] == Game::FieldType::Free){
-                        imgField->setImage("gfx/B100_Hover.bmp");
+                    imgField->setImage("gfx/B100_Hover.bmp");
                 }
+
+                return false;
             }
 
-            void onMouseLeave(void* sender, SDL_Event*){
+            bool onMouseLeave(void* sender, SDL_Event*){
                 Fitgy::FieldImageEntity* imgField = (Fitgy::FieldImageEntity*)sender;
                 Game* game = Game::getInstance();
-
-                if (game->gameOver){
-					return;
-				}
 
                 if (game->fields[imgField->getField()] == Game::FieldType::Free){
                     imgField->setImage("gfx/B100.bmp");
                 }
+
+                return false;
             }
 
-            void onLMouseButtonDown(void* sender, SDL_Event*, Fitgy::Point){
+            bool onLMouseButtonDown(void* sender, SDL_Event*, Fitgy::Point){
                 Fitgy::FieldImageEntity* imgField = (Fitgy::FieldImageEntity*)sender;
                 Game* game = Game::getInstance();
-
-                if (game->gameOver){
-					return;
-				}
 
                 if (game->fields[imgField->getField()] == Game::FieldType::Free){
                     if (game->xPlays){
@@ -51,6 +43,8 @@ namespace TicTacToe {
 
                     game->nextPlayer();
                 }
+
+                return true;
             }
     };
 }

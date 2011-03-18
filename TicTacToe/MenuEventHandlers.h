@@ -5,7 +5,7 @@
 
 namespace TicTacToe {
     class MenuEventHandler : public Fitgy::EventHandler {
-        void onLMouseButtonUp(void* sender, SDL_Event*, Fitgy::Point){
+        bool onLMouseButtonUp(void* sender, SDL_Event*, Fitgy::Point){
             Fitgy::MenuItemEntity* menuItem = (Fitgy::MenuItemEntity*)sender;
             Game* game = Game::getInstance();
 
@@ -14,6 +14,8 @@ namespace TicTacToe {
             } else if (menuItem->getIdentifier() == "restart") {
                 game->restart();
             }
+
+            return true;
         }
     };
 }

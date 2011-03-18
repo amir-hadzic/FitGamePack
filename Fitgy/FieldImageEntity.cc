@@ -10,4 +10,12 @@ namespace Fitgy {
     int FieldImageEntity::getField(){
         return mField;
     }
+
+    bool FieldImageEntity::onMouseMove(void* sender, SDL_Event* event, Point point, Point relPoint){
+        return ImageEntity::onMouseMove(sender, event, point, relPoint);
+    }
+
+    bool FieldImageEntity::onMouseEnter(void* sender, SDL_Event* event){
+        return ImageEntity::onMouseEnter(sender, event);
+    }
 }

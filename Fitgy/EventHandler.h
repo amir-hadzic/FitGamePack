@@ -10,23 +10,24 @@ namespace Fitgy {
         public:
             EventHandler();
             virtual ~EventHandler();
-            virtual void onEvent(void* sender, SDL_Event* event);
-            virtual void onExit();
 
             /* Event definitions */
-            virtual void onMouseButtonDown(void* sender, SDL_Event* event, Point point);
-            virtual void onLMouseButtonDown(void* sender, SDL_Event* event, Point point);
-            virtual void onRMouseButtonDown(void* sender, SDL_Event* event, Point point);
-            virtual void onMMouseButtonDown(void* sender, SDL_Event* event, Point point);
+            virtual bool onEvent(void* sender, SDL_Event* event);
+            virtual bool onExit();
 
-            virtual void onMouseButtonUp(void* sender, SDL_Event* event, Point point);
-            virtual void onLMouseButtonUp(void* sender, SDL_Event* event, Point point);
-            virtual void onRMouseButtonUp(void* sender, SDL_Event* event, Point point);
-            virtual void onMMouseButtonUp(void* sender, SDL_Event* event, Point point);
+            virtual bool onMouseButtonDown(void* sender, SDL_Event* event, Point point);
+            virtual bool onLMouseButtonDown(void* sender, SDL_Event* event, Point point);
+            virtual bool onRMouseButtonDown(void* sender, SDL_Event* event, Point point);
+            virtual bool onMMouseButtonDown(void* sender, SDL_Event* event, Point point);
 
-            virtual void onMouseMove(void* sender, SDL_Event* event, Point point, Point relPoint);
-            virtual void onMouseEnter(void* sender, SDL_Event* event);
-            virtual void onMouseLeave(void* sender, SDL_Event* event);
+            virtual bool onMouseButtonUp(void* sender, SDL_Event* event, Point point);
+            virtual bool onLMouseButtonUp(void* sender, SDL_Event* event, Point point);
+            virtual bool onRMouseButtonUp(void* sender, SDL_Event* event, Point point);
+            virtual bool onMMouseButtonUp(void* sender, SDL_Event* event, Point point);
+
+            virtual bool onMouseMove(void* sender, SDL_Event* event, Point point, Point relPoint);
+            virtual bool onMouseEnter(void* sender, SDL_Event* event);
+            virtual bool onMouseLeave(void* sender, SDL_Event* event);
     };
 }
 

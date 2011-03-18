@@ -46,8 +46,8 @@ namespace Fitgy {
             void setHeight(int height);
             int getHeight();
 
-            void onMouseEnter(void* sender, SDL_Event* event);
-            void onMouseLeave(void* sender, SDL_Event* event);
+            bool onMouseEnter(void* sender, SDL_Event* event);
+            bool onMouseLeave(void* sender, SDL_Event* event);
     };
 }
 

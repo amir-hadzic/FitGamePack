@@ -68,59 +68,74 @@ namespace Fitgy {
 
     }
 
-    void
+    bool
     Entity::onMouseButtonDown(void*, SDL_Event* event, Point point){
         if (isWithinBounds(point)){
             EventHandler::onMouseButtonDown(this, event, point);
 
             if (mExternalEventHandler != NULL){
-                mExternalEventHandler->onMouseButtonDown(this, event, point);
+                return mExternalEventHandler->onMouseButtonDown(this, event, point);
             }
         }
+
+        return false;
     }
 
-    void
+    bool
     Entity::onMouseButtonUp(void*, SDL_Event* event, Point point){
         if (isWithinBounds(point)){
             EventHandler::onMouseButtonUp(this, event, point);
 
             if (mExternalEventHandler != NULL){
-                mExternalEventHandler->onMouseButtonUp(this, event, point);
+                return mExternalEventHandler->onMouseButtonUp(this, event, point);
             }
         }
+
+        return false;
     }
 
-    void
+    bool
     Entity::onMouseMove(void*, SDL_Event* event, Point point, Point relPoint){
         if (isWithinBounds(point + relPoint)){
+            bool handled = false;
             if (mExternalEventHandler != NULL){
-                mExternalEventHandler->onMouseMove(this, event, point, relPoint);
+                handled = mExternalEventHandler->onMouseMove(this, event, point, relPoint);
+            }
+
+            if (handled){
+                return true;
             }
 
             if(mMouseOver == false){
                 mMouseOver = true;
-                onMouseEnter(this, event);
+                return onMouseEnter(this, event);
             }
         } else {
             if (mMouseOver == true){
                 mMouseOver = false;
-                onMouseLeave(this, event);
+                return onMouseLeave(this, event);
             }
         }
+
+        return false;
     }
 
-    void
+    bool
     Entity::onMouseEnter(void*, SDL_Event* event){
         if(mExternalEventHandler != NULL){
-            mExternalEventHandler->onMouseEnter(this, event);
+            return mExternalEventHandler->onMouseEnter(this, event);
         }
+
+        return false;
     }
 
-    void
+    bool
     Entity::onMouseLeave(void*, SDL_Event* event){
         if(mExternalEventHandler != NULL){
-            mExternalEventHandler->onMouseLeave(this, event);
+            return mExternalEventHandler->onMouseLeave(this, event);
         }
+
+        return false;
     }
 
     void

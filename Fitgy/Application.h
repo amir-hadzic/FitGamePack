@@ -26,7 +26,7 @@ namespace Fitgy {
             virtual void loop();
             virtual void render();
             virtual void cleanup();
-            virtual void onExit();
+            virtual bool onExit();
     };
 }
 

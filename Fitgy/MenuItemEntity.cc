@@ -54,18 +54,20 @@ namespace Fitgy {
         drawToEntity(entity);
     }
 
-    void
+    bool
     MenuItemEntity::onMouseEnter(void* sender, SDL_Event* event){
         mCurrentBackgroundColor = mBackgroundHoverColor;
         redraw();
-        Entity::onMouseEnter(sender, event);
+
+        return Entity::onMouseEnter(sender, event);
     }
 
-    void
+    bool
     MenuItemEntity::onMouseLeave(void* sender, SDL_Event* event){
         mCurrentBackgroundColor = mBackgroundColor;
         redraw();
-        Entity::onMouseLeave(sender, event);
+
+        return Entity::onMouseLeave(sender, event);
     }
 
     void
