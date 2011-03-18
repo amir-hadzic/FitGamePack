@@ -1,7 +1,7 @@
 #include "TicTacToe.h"
 
 int
-main(int argc, char** argv){
+main(void){
     TicTacToe::Game* game = TicTacToe::Game::getInstance();
     return game->execute();
 }
