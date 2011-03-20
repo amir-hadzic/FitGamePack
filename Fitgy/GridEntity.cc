@@ -28,10 +28,15 @@ namespace Fitgy {
     {
         // Destroy created entities.
         std::map<int, Entity*>::iterator it;
-        for(it = mFields.begin(); it != mFields.end(); it++){
+        for(it = mFields.begin(); it != mFields.end();){
             delete (*it).second;
+            (*it).second = NULL;
+            it = mFields.erase(it);
         }
-        onCleanup();
+
+        if (mBackgroundImage != NULL){
+            delete mBackgroundImage;
+        }
     }
 
     void
