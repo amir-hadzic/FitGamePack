@@ -4,20 +4,9 @@ namespace Fitgy {
     Application::Application(){
         mRunning = false;
         mDisplay = NULL;
-        EventHub::subscribe(this);
     }
     
     Application::~Application(){
-        EventHub::unsubscribe(this);
-
-        delete mDisplay;
-        EntityIterator it = mEntities.begin();
-
-        while(it != mEntities.end()){
-            delete (*it);
-            *it = NULL;
-            mEntities.erase(it);
-        }
     }
 
     Display*
@@ -113,8 +102,11 @@ namespace Fitgy {
 
         while(it != mEntities.end()){
             delete (*it);
-            ++it;
+            *it = NULL;
+            it = mEntities.erase(it);
         }
+
+        delete mDisplay;
     }
 
     bool
