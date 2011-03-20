@@ -24,6 +24,7 @@ namespace Fitgy {
             
         public:
             Application();
+            ~Application();
             int execute();
             Display* getDisplay();
             void addEntity(Entity* entity);
