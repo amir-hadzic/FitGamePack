@@ -122,13 +122,13 @@ namespace TicTacToe {
         mnuMain->position.setY(346);
         mnuMain->setEventHandler(new MenuEventHandler());
 
-        mEntities.push_back(gridEntity);
-        mEntities.push_back(txtWinsO);
-        mEntities.push_back(txtWinsX);
-        mEntities.push_back(txtPlaying);
-        mEntities.push_back(imgPlayerO);
-        mEntities.push_back(imgPlayerX);
-        mEntities.push_back(mnuMain);
+        addEntity(gridEntity);
+        addEntity(txtWinsO);
+        addEntity(txtWinsX);
+        addEntity(txtPlaying);
+        addEntity(imgPlayerO);
+        addEntity(imgPlayerX);
+        addEntity(mnuMain);
 
         restart();
         return true;
