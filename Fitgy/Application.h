@@ -7,9 +7,12 @@
 #include "Entity.h"
 #include "Display.h"
 #include <vector>
+#include <algorithm>
 
 namespace Fitgy {
-    
+    typedef std::vector<Entity*> EntityContainer;
+    typedef EntityContainer::iterator EntityIterator;
+
     class Application : public EventHandler {
         private:
             bool mRunning;
@@ -22,6 +25,10 @@ namespace Fitgy {
         public:
             Application();
             int execute();
+            Display* getDisplay();
+            void addEntity(Entity* entity);
+            void removeEntity(Entity* entity);
+
             virtual bool init();
             virtual void loop();
             virtual void render();

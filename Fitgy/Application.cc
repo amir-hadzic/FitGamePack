@@ -6,6 +6,26 @@ namespace Fitgy {
         mDisplay = NULL;
     }
     
+    Display*
+    Application::getDisplay(){
+        return mDisplay;
+    }
+
+    void
+    Application::addEntity(Entity* entity){
+        mEntities.push_back(entity);
+    }
+
+    void
+    Application::removeEntity(Entity* entity){
+        EntityIterator it = std::find(mEntities.begin(), mEntities.end(), entity);
+
+        if (it != mEntities.end()){
+            delete (*it);
+            mEntities.erase(it);
+        }
+    }
+
     int 
     Application::execute(){
         mRunning = true;
@@ -46,8 +66,11 @@ namespace Fitgy {
     
     void 
     Application::loop(){
-        for(unsigned int i = 0; i < mEntities.size(); i++){
-            mEntities[i]->onLoop();
+        EntityIterator it = mEntities.begin();
+
+        while(it != mEntities.end()){
+            (*it)->onLoop();
+            ++it;
         }
     }
     
@@ -62,14 +85,22 @@ namespace Fitgy {
 
     void 
     Application::render(){
-        for(unsigned int i = 0; i < mEntities.size(); i++){
-            mEntities[i]->onRender(mDisplay);
+        EntityIterator it = mEntities.begin();
+
+        while(it != mEntities.end()){
+            (*it)->onRender(mDisplay);
+            ++it;
         }
     }
     
     void 
     Application::cleanup(){
-            
+        EntityIterator it = mEntities.begin();
+
+        while(it != mEntities.end()){
+            delete (*it);
+            ++it;
+        }
     }
 
     bool
