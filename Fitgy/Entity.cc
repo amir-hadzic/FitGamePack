@@ -18,7 +18,12 @@ namespace Fitgy {
     void 
     Entity::onCleanup(){
         EventHub::unsubscribe(this);
-        SDL_FreeSurface(entitySurface);
+
+        if (entitySurface != NULL){
+            SDL_FreeSurface(entitySurface);
+            entitySurface = NULL;
+        }
+
         if (mExternalEventHandler != NULL){
             delete mExternalEventHandler;
             mExternalEventHandler = NULL;
