@@ -1,6 +1,6 @@
 #include "Typer.h"
 
-int main(void){
+int main(int argc, char** argv){
     Typer::Game* game = Typer::Game::getInstance();
     return game->execute();
 }
