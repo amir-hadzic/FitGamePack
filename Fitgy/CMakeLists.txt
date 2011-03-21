@@ -1,6 +1,7 @@
 add_library(Fitgy
     Fitgy
     Application
+    Color
     Display
     Entity
     EventHandler

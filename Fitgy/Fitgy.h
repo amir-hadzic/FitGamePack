@@ -14,5 +14,6 @@
 #include "MenuItemEntity.h"
 #include "MenuEntity.h"
 #include "Application.h"
+#include "Color.h"
 
 #endif
