@@ -26,6 +26,7 @@ namespace Fitgy {
                 std::string text,
                 TTF_Font* font
             );
+            ~MenuItemEntity();
             void redraw();
             void setPadding(short padding);
             short getPadding();

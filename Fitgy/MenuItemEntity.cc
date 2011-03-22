@@ -21,6 +21,11 @@ namespace Fitgy {
         redraw();
     }
 
+    MenuItemEntity::~MenuItemEntity(){
+        delete mTextEntity;
+        mTextEntity = NULL;
+    }
+
     void
     MenuItemEntity::redraw(){
         if (entitySurface != NULL){
