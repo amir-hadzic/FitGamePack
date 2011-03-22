@@ -48,8 +48,8 @@ namespace TicTacToe {
 
         gridEntity = new Fitgy::GridEntity(mDisplay, 300, 300, 3);
         gridEntity->setBackground(new Fitgy::ImageEntity(gridEntity, "gfx/Sample.bmp"));
-        gridEntity->position.setX(10);
-        gridEntity->position.setY(10);
+        gridEntity->position.x = 10;
+        gridEntity->position.y = 10;
 
         SDL_Color colorWhite;
         colorWhite.r = 0xff;
@@ -77,8 +77,8 @@ namespace TicTacToe {
             droidSansMono22px,
             colorWhite
         );
-        txtWinsO->position.setX(429);
-        txtWinsO->position.setY(260);
+        txtWinsO->position.x = 429;
+        txtWinsO->position.y = 260;
 
         txtWinsX = new Fitgy::TextEntity(
             mDisplay,
@@ -86,8 +86,8 @@ namespace TicTacToe {
             droidSansMono22px,
             colorWhite
         );
-        txtWinsX->position.setX(549);
-        txtWinsX->position.setY(260);
+        txtWinsX->position.x = 549;
+        txtWinsX->position.y = 260;
 
         txtPlaying = new Fitgy::TextEntity(
             mDisplay,
@@ -96,25 +96,25 @@ namespace TicTacToe {
             colorWhite
         );
 
-        txtPlaying->position.setX(388);
-        txtPlaying->position.setY(29);
+        txtPlaying->position.x = 388;
+        txtPlaying->position.y = 29;
         txtPlaying->setColor(colorWhite);
 
         imgPlayerO = new Fitgy::ImageEntity(mDisplay, "gfx/PlayerO.bmp", SDL_ALPHA_OPAQUE/2);
-        imgPlayerO->position.setX(390);
-        imgPlayerO->position.setY(80);
+        imgPlayerO->position.x = 390;
+        imgPlayerO->position.y = 80;
 
         imgPlayerX = new Fitgy::ImageEntity(mDisplay, "gfx/PlayerX.bmp", SDL_ALPHA_OPAQUE);
-        imgPlayerX->position.setX(510);
-        imgPlayerX->position.setY(80);
+        imgPlayerX->position.x = 510;
+        imgPlayerX->position.y = 80;
 
         mnuMain = new Fitgy::MenuEntity(mDisplay, droidSansMono22px);
         mnuMain->setBackgroundColor(colorDarkRed);
         mnuMain->setBackgroundHoverColor(colorRed);
         mnuMain->setForegroundColor(colorWhite);
         mnuMain->setPadding(5);
-        mnuMain->position.setX(20);
-        mnuMain->position.setY(346);
+        mnuMain->position.x = 20;
+        mnuMain->position.y = 346;
         mnuMain->addItem("restart", "Start new game");
         mnuMain->addItem("quit", "Quit");
         mnuMain->setEventHandler(new MenuEventHandler());

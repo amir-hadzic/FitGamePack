@@ -3,6 +3,7 @@
 
 #include "LibSDL.h"
 #include "Point.h"
+#include "Vector.h"
 #include "Entity.h"
 #include "EventHub.h"
 #include "TextEntity.h"

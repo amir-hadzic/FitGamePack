@@ -72,8 +72,8 @@ namespace Fitgy {
             return;
         }
 
-        entity->position.setX((field % mDimension) * mFieldWidth);
-        entity->position.setY((field / mDimension) * mFieldHeight);
+        entity->position.x = (field % mDimension) * mFieldWidth;
+        entity->position.y = (field / mDimension) * mFieldHeight;
         mFields[field] = entity;
     }
 

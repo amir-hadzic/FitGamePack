@@ -7,7 +7,8 @@ namespace Fitgy {
         mExternalEventHandler = NULL;
         mMouseOver = true;
         this->parent = parent;
-
+        mLastLoopTime = 0;
+        mSpeed = 0;
         EventHub::subscribe(this);
     }
 
@@ -28,15 +29,27 @@ namespace Fitgy {
     void 
     Entity::drawToEntity(Entity* entity){
         SDL_Rect rect;
-        rect.x = position.getX();
-        rect.y = position.getY();
+        rect.x = position.x;
+        rect.y = position.y;
 
         SDL_BlitSurface(entitySurface, NULL, entity->entitySurface, &rect);
     }
 
     void 
     Entity::onLoop(){
+        float speed = getSpeed();
 
+        if (direction != Vector::zero && speed != 0.0f && mLastLoopTime != 0){
+            // Move the entity based on its direction and speed.
+            unsigned int milisSinceLastLoop = SDL_GetTicks() - mLastLoopTime;
+            float speedPerMilisecond = speed / 1000.0f;
+            float distance = speedPerMilisecond * milisSinceLastLoop;
+
+            position.x += direction.x * distance;
+            position.y += direction.y * distance;
+        }
+
+        mLastLoopTime = SDL_GetTicks();
     }
 
     void 
@@ -57,8 +70,8 @@ namespace Fitgy {
     Entity::isWithinBounds(Point point){
         Point localPoint = point - this->getAbsPosition();
 
-        bool leftOfBounds = localPoint.getX() < 0 || localPoint.getY() < 0;
-        bool rightOfBounds = localPoint.getX() > getWidth() || localPoint.getY() > getHeight();
+        bool leftOfBounds = localPoint.x < 0 || localPoint.y < 0;
+        bool rightOfBounds = localPoint.x > getWidth() || localPoint.y > getHeight();
 
         if (leftOfBounds || rightOfBounds){
             return false;
@@ -156,6 +169,16 @@ namespace Fitgy {
     int
     Entity::getWidth(){
         return mWidth;
+    }
+
+    float
+    Entity::getSpeed(){
+        return mSpeed;
+    }
+
+    void
+    Entity::setSpeed(float speed){
+        mSpeed = speed;
     }
 
     void

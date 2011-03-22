@@ -4,6 +4,7 @@
 #include "LibSDL.h"
 #include <vector>
 #include "Point.h"
+#include "Vector.h"
 #include "EventHandler.h"
 #include "EventHub.h"
 
@@ -15,12 +16,15 @@ namespace Fitgy {
             bool mMouseOver;
             int mWidth;
             int mHeight;
+            float mSpeed;
+            unsigned int mLastLoopTime;
             EventHandler* mExternalEventHandler;
             Entity(Entity const&){};
             Entity& operator=(Entity const&){ return *this; };
         public:
             Point position;
             SDL_Surface* entitySurface;
+            Vector direction;
             Entity* parent;
 
 
@@ -44,6 +48,9 @@ namespace Fitgy {
 
             virtual int getHeight();
             virtual int getWidth();
+
+            virtual void setSpeed(float speed);
+            virtual float getSpeed();
 
             virtual void setEventHandler(EventHandler* handler);
             virtual EventHandler* getEventHandler();

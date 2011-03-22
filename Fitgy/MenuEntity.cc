@@ -68,7 +68,7 @@ namespace Fitgy {
         // Align menu items in a single column.
         for(unsigned int i = 0; i < mMenuItems.size(); i++){
             MenuItemEntity* menuItem = mMenuItems[i];
-            menuItem->position.setY(menuItem->getHeight() * i);
+            menuItem->position.y = menuItem->getHeight() * i;
         }
     }
 

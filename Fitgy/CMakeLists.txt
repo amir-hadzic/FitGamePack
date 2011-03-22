@@ -15,4 +15,5 @@ add_library(Fitgy
     Point
     SplashScreen
     TextEntity
+    Vector
 )

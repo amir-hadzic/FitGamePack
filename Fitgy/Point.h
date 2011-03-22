@@ -7,19 +7,14 @@
 namespace Fitgy {
 
     class Point {
-        private:
-            float mX;
-            float mY;
+
 
         public:
+            float x;
+            float y;
+
             Point();
             Point(float x, float y);
-
-            void setY(float value);
-            float getY();
-
-            void setX(float value);
-            float getX();
 
             Point operator+(const Point point);
             Point operator-(const Point point);

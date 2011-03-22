@@ -78,8 +78,8 @@ namespace Fitgy {
     void
     MenuItemEntity::setPadding(short padding){
         mPadding = padding;
-        mTextEntity->position.setX(padding);
-        mTextEntity->position.setY(padding);
+        mTextEntity->position.x = padding;
+        mTextEntity->position.y = padding;
         redraw();
     }
 
