@@ -31,6 +31,14 @@ namespace Fitgy {
                 return onMouseMove(sender, event, point, relPoint);
                 break;
             }
+            case SDL_KEYDOWN:
+                return onKeyDown(event->key.keysym.sym, event->key.keysym.mod,
+                        event->key.keysym.unicode);
+                break;
+            case SDL_KEYUP:
+                return onKeyUp(event->key.keysym.sym, event->key.keysym.mod,
+                                    event->key.keysym.unicode);
+                break;
         }
 
         return false;
@@ -117,6 +125,16 @@ namespace Fitgy {
 
     bool
     EventHandler::onMouseLeave(void*, SDL_Event*){
+        return false;
+    }
+
+    bool
+    EventHandler::onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode){
+        return false;
+    }
+
+    bool
+    EventHandler::onKeyUp(SDLKey sym, SDLMod mod, uint16_t unicode){
         return false;
     }
 }

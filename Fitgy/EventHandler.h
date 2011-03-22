@@ -28,6 +28,9 @@ namespace Fitgy {
         virtual bool onMouseMove(void* sender, SDL_Event* event, Point point, Point relPoint);
         virtual bool onMouseEnter(void* sender, SDL_Event* event);
         virtual bool onMouseLeave(void* sender, SDL_Event* event);
+
+        virtual bool onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode);
+        virtual bool onKeyUp(SDLKey sym, SDLMod mod, uint16_t unicode);
     };
 }
 

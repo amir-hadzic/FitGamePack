@@ -59,6 +59,8 @@ namespace Fitgy {
             return false;
         }
 
+        SDL_EnableUNICODE(1);
+
         if (TTF_Init() < 0){
             return false;
         }
