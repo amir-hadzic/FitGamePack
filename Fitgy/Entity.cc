@@ -23,11 +23,6 @@ namespace Fitgy {
             SDL_FreeSurface(entitySurface);
             entitySurface = NULL;
         }
-
-        if (mExternalEventHandler != NULL){
-            delete mExternalEventHandler;
-            mExternalEventHandler = NULL;
-        }
     }
 
     void 

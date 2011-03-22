@@ -208,8 +208,8 @@ namespace TicTacToe {
     void Game::restart(){
     	for (int i = 0; i < 9; fields[i++] = FieldType::Free);
 
+        GridFieldEventHandler* gridFieldEventHandler = new GridFieldEventHandler();
         for (int i = 0; i < 9; i++){
-            GridFieldEventHandler* gridFieldEventHandler = new GridFieldEventHandler();
             Fitgy::FieldImageEntity* field = new Fitgy::FieldImageEntity(gridEntity, "gfx/B100.bmp", i);
             field->setEventHandler(gridFieldEventHandler);
             gridEntity->removeEntity(i);
