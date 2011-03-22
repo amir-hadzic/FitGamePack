@@ -27,11 +27,11 @@ namespace Fitgy {
     GridEntity::~GridEntity()
     {
         // Destroy created entities.
-        std::map<int, Entity*>::iterator it;
-        for(it = mFields.begin(); it != mFields.end();){
+        std::map<int, Entity*>::iterator it = mFields.begin();
+        while(it != mFields.end()){
             delete (*it).second;
             (*it).second = NULL;
-            it = mFields.erase(it);
+            ++it;
         }
 
         if (mBackgroundImage != NULL){
