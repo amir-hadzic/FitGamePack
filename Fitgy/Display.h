@@ -7,9 +7,9 @@
 namespace Fitgy {
 
     class Display: public Entity {
-        public:
-            Display(int width, int height);
-            void setTitle(char* windowTitle, char* iconTitle);
+    public:
+        Display(int width, int height);
+        void setTitle(char* windowTitle, char* iconTitle);
     };
 }
 

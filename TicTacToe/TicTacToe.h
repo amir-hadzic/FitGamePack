@@ -13,44 +13,44 @@
 namespace TicTacToe {
 
     class Game : public Fitgy::Application {
-        private:
-            Fitgy::SplashScreen *mSplashScreen;
-            Game();
-            Game(Game const&){};
-            Game& operator=(Game const&){ return *this; };
-            static Game* mInstance;
-            int winsX;
-            int winsO;
-            void checkForWin();
-            void announceWin();
-        public:
-            enum FieldType {
-                Free = 0,
-                X = 1,
-                O = 2
-            };
+    private:
+        Fitgy::SplashScreen *mSplashScreen;
+        Game();
+        Game(Game const&){};
+        Game& operator=(Game const&){ return *this; };
+        static Game* mInstance;
+        int winsX;
+        int winsO;
+        void checkForWin();
+        void announceWin();
+    public:
+        enum FieldType {
+            Free = 0,
+            X = 1,
+            O = 2
+        };
 
-            static Game* getInstance();
-            Fitgy::GridEntity* gridEntity;
+        static Game* getInstance();
+        Fitgy::GridEntity* gridEntity;
 
-            Fitgy::TextEntity* txtWinsX;
-            Fitgy::TextEntity* txtWinsO;
-            Fitgy::TextEntity* txtPlaying;
+        Fitgy::TextEntity* txtWinsX;
+        Fitgy::TextEntity* txtWinsO;
+        Fitgy::TextEntity* txtPlaying;
 
-            Fitgy::ImageEntity* imgPlayerX;
-            Fitgy::ImageEntity* imgPlayerO;
+        Fitgy::ImageEntity* imgPlayerX;
+        Fitgy::ImageEntity* imgPlayerO;
 
-            Fitgy::MenuEntity* mnuMain;
+        Fitgy::MenuEntity* mnuMain;
 
-            FieldType fields[9];
-            bool xPlays;
-            bool gameOver;
-            bool init();
-            void render();
-            void loop();
-            void restart();
+        FieldType fields[9];
+        bool xPlays;
+        bool gameOver;
+        bool init();
+        void render();
+        void loop();
+        void restart();
 
-            void nextPlayer();
+        void nextPlayer();
     };
 }
 #endif

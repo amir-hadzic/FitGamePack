@@ -10,24 +10,24 @@
 namespace Fitgy {
 
     class GridEntity : public Entity {
-        private:
-            std::map<int, Entity*> mFields;
-            int mFieldWidth;
-            int mFieldHeight;
-            int mDimension;
-            SDL_Color mBackgroundColor;
-            ImageEntity *mBackgroundImage;
+    private:
+        std::map<int, Entity*> mFields;
+        int mFieldWidth;
+        int mFieldHeight;
+        int mDimension;
+        SDL_Color mBackgroundColor;
+        ImageEntity *mBackgroundImage;
 
-        public:
-            GridEntity(Entity* parent, int width, int height, int dimension);
-            ~GridEntity();
+    public:
+        GridEntity(Entity* parent, int width, int height, int dimension);
+        ~GridEntity();
 
-            void onRender(Entity* entity);
+        void onRender(Entity* entity);
 
-            void addEntity(Entity* entity, int field);
-            void removeEntity(int field);
-            void setBackground(SDL_Color color);
-            void setBackground(ImageEntity *imageEntity);
+        void addEntity(Entity* entity, int field);
+        void removeEntity(int field);
+        void setBackground(SDL_Color color);
+        void setBackground(ImageEntity *imageEntity);
     };
 }
 

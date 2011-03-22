@@ -14,27 +14,27 @@ namespace Fitgy {
     typedef EntityContainer::iterator EntityIterator;
 
     class Application : public EventHandler {
-        private:
-            bool mRunning;
+    private:
+        bool mRunning;
 
-        protected:
-            std::vector<Entity*> mEntities;
-            Display* mDisplay;
-            void startRender();
-            
-        public:
-            Application();
-            ~Application();
-            int execute();
-            Display* getDisplay();
-            void addEntity(Entity* entity);
-            void removeEntity(Entity* entity);
+    protected:
+        std::vector<Entity*> mEntities;
+        Display* mDisplay;
+        void startRender();
 
-            virtual bool init();
-            virtual void loop();
-            virtual void render();
-            virtual void cleanup();
-            virtual bool onExit();
+    public:
+        Application();
+        ~Application();
+        int execute();
+        Display* getDisplay();
+        void addEntity(Entity* entity);
+        void removeEntity(Entity* entity);
+
+        virtual bool init();
+        virtual void loop();
+        virtual void render();
+        virtual void cleanup();
+        virtual bool onExit();
     };
 }
 
