@@ -16,12 +16,15 @@ namespace Fitgy {
             SDL_Color mBackgroundColor;
             SDL_Color mBackgroundHoverColor;
             SDL_Color mForegroundColor;
+            TTF_Font* mFont;
+            EventHandler* mItemEventHandler;
             short mPadding;
 
         public:
-            MenuEntity(Entity* parent, std::map<std::string, std::string> items, TTF_Font* font);
+            MenuEntity(Entity* parent, TTF_Font* font);
             ~MenuEntity();
             void redraw();
+            void addItem(std::string identifier, std::string text);
             void setBackgroundColor(SDL_Color color);
             void setBackgroundHoverColor(SDL_Color color);
             void setForegroundColor(SDL_Color color);

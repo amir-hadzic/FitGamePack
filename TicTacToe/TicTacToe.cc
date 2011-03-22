@@ -108,18 +108,15 @@ namespace TicTacToe {
         imgPlayerX->position.setX(510);
         imgPlayerX->position.setY(80);
 
-        std::map<std::string, std::string> menuItems;
-        menuItems["quit"] = "Quit";
-        menuItems["restart"] = "Start new game";
-
-
-        mnuMain = new Fitgy::MenuEntity(mDisplay, menuItems, droidSansMono22px);
+        mnuMain = new Fitgy::MenuEntity(mDisplay, droidSansMono22px);
         mnuMain->setBackgroundColor(colorDarkRed);
         mnuMain->setBackgroundHoverColor(colorRed);
         mnuMain->setForegroundColor(colorWhite);
         mnuMain->setPadding(5);
         mnuMain->position.setX(20);
         mnuMain->position.setY(346);
+        mnuMain->addItem("restart", "Start new game");
+        mnuMain->addItem("quit", "Quit");
         mnuMain->setEventHandler(new MenuEventHandler());
 
         addEntity(gridEntity);

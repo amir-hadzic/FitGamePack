@@ -1,56 +1,53 @@
 #include "MenuEntity.h"
 
 namespace Fitgy {
-    MenuEntity::MenuEntity(Entity* parent, std::map<std::string, std::string> items, TTF_Font* font)
+    MenuEntity::MenuEntity(Entity* parent, TTF_Font* font)
         : Entity(parent)
     {
-
-        std::map<std::string, std::string>::iterator it;
-        for(it = items.begin(); it != items.end(); it++){
-            MenuItemEntity* menuItem = new MenuItemEntity(
-                this,
-                (*it).first,
-                (*it).second,
-                font
-            );
-
-            mMenuItems.push_back(menuItem);
-        }
         mPadding = 0;
-        redraw();
+        mFont = font;
+        mItemEventHandler = NULL;
     }
 
     MenuEntity::~MenuEntity(){
-        mMenuItems.clear();
-        onCleanup();
+        std::vector<MenuItemEntity*>::iterator it = mMenuItems.begin();
+        while(it != mMenuItems.end()){
+            delete (*it);
+            *it = NULL;
+            ++it;
+        }
+
+        delete mItemEventHandler;
     }
 
     void
     MenuEntity::redraw(){
-        assert(mMenuItems.size() > 0);
+        if (mMenuItems.size() == 0){
+            return;
+        }
 
-        // Set menu items properties.
-        for(unsigned int i = 0; i < mMenuItems.size(); i++){
-            MenuItemEntity* menuItem = mMenuItems[i];
+        // Set menu items properties and find the widest menu item.
+        std::vector<MenuItemEntity*>::iterator it = mMenuItems.begin();
+        int maxWidth = 0;
+        while(it != mMenuItems.end()){
+            MenuItemEntity* menuItem = (*it);
             menuItem->setPadding(mPadding);
             menuItem->setBackgroundColor(mBackgroundColor);
             menuItem->setBackgroundHoverColor(mBackgroundHoverColor);
             menuItem->setForegroundColor(mForegroundColor);
-        }
 
-        // Find the widest menu item.
-        int maxWidth = 0;
-        for(unsigned int i = 0; i < mMenuItems.size(); i++){
-           MenuItemEntity* menuItem = mMenuItems[i];
-           if (maxWidth < menuItem->getWidth()){
-               maxWidth = menuItem->getWidth();
-           }
+            if (maxWidth < menuItem->getWidth()){
+                maxWidth = menuItem->getWidth();
+            }
+
+            ++it;
         }
 
         // Equalize width of all menu items to the widest one.
-        for(unsigned int i = 0; i < mMenuItems.size(); i++){
-           MenuItemEntity* menuItem = mMenuItems[i];
-           menuItem->setWidth(maxWidth);
+        it = mMenuItems.begin();
+        while(it != mMenuItems.end()){
+           (*it)->setWidth(maxWidth);
+           ++it;
         }
 
         if (entitySurface != NULL){
@@ -59,7 +56,7 @@ namespace Fitgy {
         }
 
         setWidth(maxWidth);
-        setHeight(mMenuItems[0]->getHeight() * mMenuItems.size());
+        setHeight(mMenuItems.front()->getHeight() * mMenuItems.size());
 
         entitySurface = SDL_CreateRGBSurface(
             SDL_HWSURFACE | SDL_SRCALPHA,
@@ -68,7 +65,7 @@ namespace Fitgy {
             32, 0, 0, 0, 0
         );
 
-        // Align menu items vertically.
+        // Align menu items in a single column.
         for(unsigned int i = 0; i < mMenuItems.size(); i++){
             MenuItemEntity* menuItem = mMenuItems[i];
             menuItem->position.setY(menuItem->getHeight() * i);
@@ -77,6 +74,10 @@ namespace Fitgy {
 
     void
     MenuEntity::onRender(Entity* entity){
+        if (entitySurface == NULL){
+            return;
+        }
+
         SDL_FillRect(
             entitySurface,
             NULL,
@@ -93,6 +94,23 @@ namespace Fitgy {
         }
 
         drawToEntity(entity);
+    }
+
+    void
+    MenuEntity::addItem(std::string identifier, std::string text){
+        MenuItemEntity* item = new MenuItemEntity(
+            this,
+            identifier,
+            text,
+            mFont
+        );
+
+        if (mItemEventHandler != NULL){
+            item->setEventHandler(mItemEventHandler);
+        }
+
+        mMenuItems.push_back(item);
+        redraw();
     }
 
     void
@@ -115,8 +133,12 @@ namespace Fitgy {
 
     void
     MenuEntity::setEventHandler(EventHandler* handler){
-        for(unsigned int i = 0; i < mMenuItems.size(); i++){
-            mMenuItems[i]->setEventHandler(handler);
+        mItemEventHandler = handler;
+
+        std::vector<MenuItemEntity*>::iterator it = mMenuItems.begin();
+        while(it != mMenuItems.end()){
+            (*it)->setEventHandler(handler);
+            ++it;
         }
     }
 
