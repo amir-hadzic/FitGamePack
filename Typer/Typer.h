@@ -2,6 +2,7 @@
 #define TYPER_H
 
 #include "../Fitgy/Fitgy.h"
+#include "TyperWord.h"
 #include <vector>
 #include <fstream>
 #include <algorithm>
@@ -21,7 +22,7 @@ namespace Typer {
         int mPoints;
         TTF_Font* mWordFont;
         std::vector<std::string> mWords;
-        std::map<std::string, Fitgy::TextEntity*> mActiveWords;
+        std::map<std::string, TyperWord*> mActiveWords;
         void readWords(char* filename);
         std::string nextWord();
         void spawnWord();

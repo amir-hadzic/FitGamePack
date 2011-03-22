@@ -1,5 +1,6 @@
 add_executable(Typer
     main
+    TyperWord
     Typer
 )
 target_link_libraries(Typer Fitgy ${SDL_LIBRARY} ${SDLTTF_LIBRARY} )

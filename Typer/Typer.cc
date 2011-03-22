@@ -35,14 +35,6 @@ namespace Typer {
         colorWhite.g = 0xff;
         colorWhite.b = 0xff;
 
-        Fitgy::TextEntity* txtTest = new Fitgy::TextEntity(
-            getDisplay(),
-            nextWord(),
-            mWordFont,
-            colorWhite
-        );
-
-        addEntity(txtTest);
         return true;
     }
 
@@ -58,6 +50,7 @@ namespace Typer {
             delete mSplashScreen;
             mSplashScreen = NULL;
             spawnWord();
+            spawnWord();
         }
 
         Application::render();
@@ -69,6 +62,18 @@ namespace Typer {
             mSplashScreen->onLoop();
     } else {
             Application::loop();
+
+            // Find typed words and delete them.
+            std::map<std::string, TyperWord*>::iterator it;
+            it = mActiveWords.begin();
+            while(it != mActiveWords.end()){
+                if (it->second->isSolved()){
+                    removeEntity(it->second);
+                    it = mActiveWords.erase(it);
+                } else {
+                    ++it;
+                }
+            }
         }
     }
 
@@ -112,21 +117,16 @@ namespace Typer {
     Game::spawnWord(){
         srand(time(0));
         std::string word = nextWord();
-        Fitgy::TextEntity* textEntity = new Fitgy::TextEntity(
-            getDisplay(),
-            word,
-            mWordFont,
-            Fitgy::Color::green()
-        );
+        TyperWord* typerWord = new TyperWord(getDisplay(), word, mWordFont);
 
-        int maxY = getDisplay()->getWidth() - textEntity->getWidth();
-        textEntity->position.y = 0;
-        textEntity->position.x = rand() % (maxY + 1);
-        textEntity->direction = Fitgy::Vector::down;
-        textEntity->setSpeed(200);
+        int maxY = getDisplay()->getWidth() - typerWord->getWidth();
+        typerWord->position.y = 0;
+        typerWord->position.x = rand() % (maxY + 1);
+        typerWord->direction = Fitgy::Vector::down;
+        typerWord->setSpeed(200);
 
-        mActiveWords[word] = textEntity;
-        addEntity(textEntity);
+        mActiveWords[word] = typerWord;
+        addEntity(typerWord);
     }
 
 }
