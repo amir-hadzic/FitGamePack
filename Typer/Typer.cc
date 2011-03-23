@@ -40,7 +40,7 @@ namespace Typer {
         mWordFont = TTF_OpenFont("fonts/DroidSansMono.ttf", 18);
         mLabelFont = TTF_OpenFont("fonts/DroidSans.ttf", 22);
 
-        txtScore = new Fitgy::TextEntity(getDisplay(), "0", mLabelFont,
+        txtScore = new Fitgy::TextEntity(getDisplay(), "Score: 0", mLabelFont,
                 Fitgy::Color::white());
         txtScore->position.x = 10;
         txtScore->position.y = 10;
