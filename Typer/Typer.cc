@@ -69,7 +69,7 @@ namespace Typer {
             while(it != mActiveWords.end()){
                 if (it->second->isSolved()){
                     removeEntity(it->second);
-                    it = mActiveWords.erase(it);
+                    mActiveWords.erase(it++);
                 } else {
                     ++it;
                 }
