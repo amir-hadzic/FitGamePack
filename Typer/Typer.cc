@@ -13,9 +13,9 @@ namespace Typer {
     }
 
     Game::Game()
-        : Fitgy::Application::Application()
+        : Application()
     {
-
+		mScore = 0;
     }
 
     Game::~Game(){

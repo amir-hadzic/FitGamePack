@@ -4,7 +4,7 @@
 namespace Typer {
 
     TyperWord::TyperWord(Fitgy::Entity* parent, std::string word, TTF_Font *font)
-        : Fitgy::Entity::Entity(parent)
+        : Entity(parent)
     {
         mUnfinishedLetters = new Fitgy::TextEntity(parent, word, font,
                 Fitgy::Color::green());
