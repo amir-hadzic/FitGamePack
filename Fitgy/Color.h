@@ -18,6 +18,7 @@ namespace Fitgy {
         static SDL_Color blue();
         static SDL_Color white();
         static SDL_Color black();
+        static SDL_Color yellow();
 
     };
 }

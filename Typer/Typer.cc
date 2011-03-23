@@ -12,7 +12,15 @@ namespace Typer {
         return mInstance;
     }
 
-    Game::Game(){
+    Game::Game()
+        : Fitgy::Application::Application()
+    {
+
+    }
+
+    Game::~Game(){
+        delete mWordFont;
+        delete mLabelFont;
     }
 
     bool
@@ -29,12 +37,24 @@ namespace Typer {
             mDisplay, "gfx/splash.bmp", 2000
         );
 
-        mWordFont = TTF_OpenFont("fonts/DroidSans.ttf", 22);
-        SDL_Color colorWhite;
-        colorWhite.r = 0xff;
-        colorWhite.g = 0xff;
-        colorWhite.b = 0xff;
+        mWordFont = TTF_OpenFont("fonts/DroidSansMono.ttf", 18);
+        mLabelFont = TTF_OpenFont("fonts/DroidSans.ttf", 22);
 
+        txtScore = new Fitgy::TextEntity(getDisplay(), "0", mLabelFont,
+                Fitgy::Color::white());
+        txtScore->position.x = 10;
+        txtScore->position.y = 10;
+
+        imgDanger = new Fitgy::ImageEntity(getDisplay(), "gfx/danger.bmp");
+        imgDanger->position.x = 10;
+        imgDanger->position.y = getDisplay()->getHeight();
+        imgDanger->position.y -= imgDanger->getHeight() + 20;
+
+        mNextSpawnTime = getRandomSpawnTime();
+        srand(time(NULL));
+
+        addEntity(txtScore);
+        addEntity(imgDanger);
         return true;
     }
 
@@ -49,8 +69,6 @@ namespace Typer {
             // Call the destructor to release all resources.
             delete mSplashScreen;
             mSplashScreen = NULL;
-            spawnWord();
-            spawnWord();
         }
 
         Application::render();
@@ -68,11 +86,24 @@ namespace Typer {
             it = mActiveWords.begin();
             while(it != mActiveWords.end()){
                 if (it->second->isSolved()){
+                    mScore++;
                     removeEntity(it->second);
                     mActiveWords.erase(it++);
+                    updateScore();
+                } else if (it->second->position.y - 50> getDisplay()->getWidth()) {
+                    mScore--;
+                    removeEntity(it->second);
+                    mActiveWords.erase(it++);
+                    updateScore();
                 } else {
                     ++it;
                 }
+            }
+
+            // See if we are supposed to spawn a word.
+            if (SDL_GetTicks() >= mNextSpawnTime){
+                spawnWord();
+                mNextSpawnTime = getRandomSpawnTime();
             }
         }
     }
@@ -101,8 +132,7 @@ namespace Typer {
         std::string word = "";
 
         while(word == ""){
-            srand(time(0));
-            unsigned int randIndex = rand() % (mWords.size() + 1);
+            unsigned int randIndex = rand() % (mWords.size());
             std::string foundWord = mWords[randIndex];
 
             if (mActiveWords.find(foundWord) == mActiveWords.end()){
@@ -115,7 +145,6 @@ namespace Typer {
 
     void
     Game::spawnWord(){
-        srand(time(0));
         std::string word = nextWord();
         TyperWord* typerWord = new TyperWord(getDisplay(), word, mWordFont);
 
@@ -123,10 +152,35 @@ namespace Typer {
         typerWord->position.y = 0;
         typerWord->position.x = rand() % (maxY + 1);
         typerWord->direction = Fitgy::Vector::down;
-        typerWord->setSpeed(200);
+        typerWord->setSpeed(getRandomSpeed());
 
         mActiveWords[word] = typerWord;
         addEntity(typerWord);
+    }
+
+    unsigned int
+    Game::getRandomSpawnTime(){
+        // For now we are going to always choose some random time.
+        // TODO: Spawn time should be relative to the current score.
+
+        return SDL_GetTicks() + 300 + (rand() % (1501));
+    }
+
+    unsigned int
+    Game::getRandomSpeed(){
+        // Just take some random speed for now.
+        // TODO: Speed should be relative to the current score.
+
+        return 50 + (rand() % 200);
+    }
+
+    void
+    Game::updateScore(){
+        std::stringstream ss;
+        ss << "Score: " << mScore;
+
+
+        txtScore->setText(ss.str());
     }
 
 }

@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string>
+#include <sstream>
 
 namespace Typer {
 
@@ -17,15 +18,26 @@ namespace Typer {
         Fitgy::SplashScreen *mSplashScreen;
         Game();
         Game(Game const&){};
+        ~Game();
         Game& operator=(Game const&){ return *this; };
         static Game* mInstance;
         int mPoints;
         TTF_Font* mWordFont;
+        TTF_Font* mLabelFont;
+        int mNextSpawnTime;
+        int mScore;
+
         std::vector<std::string> mWords;
         std::map<std::string, TyperWord*> mActiveWords;
+        Fitgy::TextEntity* txtScore;
+        Fitgy::ImageEntity* imgDanger;
+
         void readWords(char* filename);
         std::string nextWord();
         void spawnWord();
+        unsigned int getRandomSpawnTime();
+        unsigned int getRandomSpeed();
+        void updateScore();
 
     public:
         static Game* getInstance();

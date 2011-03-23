@@ -60,4 +60,14 @@ namespace Fitgy {
 
         return color;
     }
+
+    SDL_Color
+    Color::yellow(){
+        SDL_Color color;
+        color.r = 0xff;
+        color.g = 0xff;
+        color.b = 0x00;
+
+        return color;
+    }
 }

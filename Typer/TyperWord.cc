@@ -74,6 +74,7 @@ namespace Typer {
             if (mFinishedCount == 1){
                 mFinishedLetters = new Fitgy::TextEntity(parent, finishedWord,
                         mFont, Fitgy::Color::blue());
+                mUnfinishedLetters->setColor(Fitgy::Color::white());
             }
 
             mFinishedLetters->setText(finishedWord);
@@ -84,11 +85,14 @@ namespace Typer {
                 delete mUnfinishedLetters;
                 mUnfinishedLetters = NULL;
             }
+
+            return true;
         } else {
             mFinishedCount = 0;
             delete mFinishedLetters;
             mFinishedLetters = NULL;
 
+            mUnfinishedLetters->setColor(Fitgy::Color::green());
             mUnfinishedLetters->setText(mWord);
         }
 
