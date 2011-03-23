@@ -19,8 +19,8 @@ namespace Typer {
     }
 
     Game::~Game(){
-        delete mWordFont;
-        delete mLabelFont;
+        TTF_CloseFont(mWordFont);
+        TTF_CloseFont(mLabelFont);
     }
 
     bool

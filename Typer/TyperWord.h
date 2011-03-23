@@ -10,7 +10,7 @@ namespace Typer {
     private:
         Fitgy::TextEntity* mFinishedLetters;
         Fitgy::TextEntity* mUnfinishedLetters;
-        short mFinishedCount;
+        unsigned short mFinishedCount;
         std::string mWord;
         TTF_Font* mFont;
 

@@ -24,7 +24,7 @@ namespace Typer {
         int mPoints;
         TTF_Font* mWordFont;
         TTF_Font* mLabelFont;
-        int mNextSpawnTime;
+        unsigned int mNextSpawnTime;
         int mScore;
 
         std::vector<std::string> mWords;

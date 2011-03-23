@@ -48,7 +48,7 @@ namespace Typer {
     }
 
     void
-    TyperWord::onRender(Entity* entity){
+    TyperWord::onRender(Entity*){
         if (mFinishedLetters != NULL){
             mFinishedLetters->onRender(parent);
         }
@@ -59,7 +59,7 @@ namespace Typer {
     }
 
     bool
-    TyperWord::onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode){
+    TyperWord::onKeyDown(SDLKey, SDLMod, uint16_t unicode){
         bool hit = mWord[mFinishedCount] == (char)unicode;
 
         if (isSolved()){

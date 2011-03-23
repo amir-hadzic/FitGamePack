@@ -129,12 +129,12 @@ namespace Fitgy {
     }
 
     bool
-    EventHandler::onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode){
+    EventHandler::onKeyDown(SDLKey, SDLMod, uint16_t){
         return false;
     }
 
     bool
-    EventHandler::onKeyUp(SDLKey sym, SDLMod mod, uint16_t unicode){
+    EventHandler::onKeyUp(SDLKey, SDLMod, uint16_t){
         return false;
     }
 }
