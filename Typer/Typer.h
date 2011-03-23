@@ -21,7 +21,6 @@ namespace Typer {
         ~Game();
         Game& operator=(Game const&){ return *this; };
         static Game* mInstance;
-        int mPoints;
         TTF_Font* mWordFont;
         TTF_Font* mLabelFont;
         unsigned int mNextSpawnTime;
