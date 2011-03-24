@@ -26,6 +26,9 @@ namespace Fitgy {
         mPadding = 0;
         mFont = font;
         mItemEventHandler = NULL;
+        mForegroundColor = Color::black();
+        mBackgroundColor = Color::red();
+        mBackgroundHoverColor = Color::green();
     }
 
     MenuEntity::~MenuEntity(){
@@ -117,12 +120,7 @@ namespace Fitgy {
 
     void
     MenuEntity::addItem(std::string identifier, std::string text){
-        MenuItemEntity* item = new MenuItemEntity(
-            this,
-            identifier,
-            text,
-            mFont
-        );
+        MenuItemEntity* item = new MenuItemEntity(this, identifier, text, mFont);
 
         if (mItemEventHandler != NULL){
             item->setEventHandler(mItemEventHandler);

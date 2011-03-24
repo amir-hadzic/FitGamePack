@@ -29,6 +29,10 @@
 
 namespace Fitgy {
 
+    /**
+     * MenuEntity is used for displaying multiple MenuItemEntities sorted
+     * vertically.
+     */
     class MenuEntity : public Entity {
     private:
         std::vector<MenuItemEntity*> mMenuItems;
@@ -39,16 +43,74 @@ namespace Fitgy {
         EventHandler* mItemEventHandler;
         short mPadding;
 
-    public:
-        MenuEntity(Entity* parent, TTF_Font* font);
-        ~MenuEntity();
         void redraw();
+    public:
+        /**
+         * Initializes the menu.
+         *
+         * Note that you will have to call addItem() with appropriate parameters
+         * in order to add menu items.
+         *
+         * @param parent is the parent entity.
+         * @param font is the font that will be used by every menu item.
+         */
+        MenuEntity(Entity* parent, TTF_Font* font);
+
+        /**
+         * Destroys the allocated resources such as the internal
+         * MenuItemEntities.
+         */
+        ~MenuEntity();
+
+        /**
+         * Adds another menu item.
+         *
+         * @param identifier the identifier for the menu item.
+         * @param text is the text for the menu item.
+         */
         void addItem(std::string identifier, std::string text);
+
+        /**
+         * Sets the background color.
+         *
+         * @param color is the background color that every menu item will use.
+         */
         void setBackgroundColor(SDL_Color color);
+
+        /**
+         * Sets the background hover color.
+         *
+         * @param color is the background hover color that every menu item
+         * will use.
+         */
         void setBackgroundHoverColor(SDL_Color color);
+
+        /**
+         * Sets the foreground color.
+         *
+         * @param color is the text color of the menu items.
+         */
         void setForegroundColor(SDL_Color color);
+
+        /**
+         * Sets the padding.
+         *
+         * @param padding is the padding for the menu items.
+         */
         void setPadding(short padding);
+
+        /**
+         * Sets the event handler.
+         *
+         * This event handler will be applied to each menu item.
+         *
+         * @param handler is the external EventHandler instance.
+         */
         void setEventHandler(EventHandler* handler);
+
+        /**
+         * Implementation for the onRender() entity method.
+         */
         void onRender(Entity* entity);
     };
 }
