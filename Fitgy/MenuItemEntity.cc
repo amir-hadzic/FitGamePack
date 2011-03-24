@@ -20,18 +20,15 @@
 #include "MenuItemEntity.h"
 
 namespace Fitgy {
-    MenuItemEntity::MenuItemEntity(
-        Entity* parent,
-        std::string identifier,
-        std::string text,
-        TTF_Font *font
-    ) : Entity(parent)
+    MenuItemEntity::MenuItemEntity(Entity* parent, std::string identifier,
+            std::string text, TTF_Font *font)
+    : Entity(parent)
     {
         mIdentifier = identifier;
         mFont = font;
-        mForegroundColor.r = 0xff;
-        mForegroundColor.g = 0xff;
-        mForegroundColor.b = 0xff;
+        mForegroundColor = Color::black();
+        mBackgroundColor = Color::red();
+        mBackgroundHoverColor = Color::green();
         mTextEntity = new TextEntity(this, text, font, mForegroundColor);
         mPadding = 0;
         mWidth = mTextEntity->getWidth();

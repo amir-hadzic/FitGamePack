@@ -22,11 +22,15 @@
 
 #include "LibSDL.h"
 #include "Entity.h"
+#include "Color.h"
 #include "TextEntity.h"
 #include <string>
 
 namespace Fitgy {
 
+    /**
+     * This entity can be used as a standalone button or as a item in a menu.
+     */
     class MenuItemEntity : public Entity {
     private:
         short mPadding;
@@ -38,35 +42,156 @@ namespace Fitgy {
         SDL_Color mForegroundColor;
         TTF_Font *mFont;
 
-    public:
-        MenuItemEntity(
-            Entity* parent,
-            std::string identifier,
-            std::string text,
-            TTF_Font* font
-        );
-        ~MenuItemEntity();
+        /**
+         * Redraws the menu item. This is called when the graphical
+         * representation of this entity is changed.
+         */
         void redraw();
-        void setPadding(short padding);
-        short getPadding();
-        void setText(std::string text);
-        std::string getText();
-        std::string getIdentifier();
+
+    public:
+        /**
+         * Constructor.
+         *
+         * @param parent is the parent entity.
+         * @param identifier is the identifier that can be used in an external
+         * event handler to identify which menu item was clicked when used in a
+         * menu.
+         * @param text is the item text.
+         * @param font is the font that will be used to draw the text.
+         */
+        MenuItemEntity(Entity* parent, std::string identifier, std::string text,
+                TTF_Font* font);
+
+        /**
+         * Deletes the allocated resources such as the internal TextEntity.
+         */
+        ~MenuItemEntity();
+
+        /**
+         * Gets the background color.
+         *
+         * @return the background color of the menu item.
+         */
         SDL_Color getBackgroundColor();
+
+        /**
+         * Sets the background color.
+         *
+         * @param color the color that will be used for the background.
+         */
         void setBackgroundColor(SDL_Color color);
+
+        /**
+         * Gets the background hover color.
+         *
+         * @return the background hover color of the menu item.
+         */
         SDL_Color getBackgroundHoverColor();
+
+        /**
+         * Sets the background hover color.
+         *
+         * @param color the color that will be used for the background while
+         * the mouse is hovering over it.
+         */
         void setBackgroundHoverColor(SDL_Color color);
+
+        /**
+         * Gets the font color.
+         *
+         * @return the font color as SDL_Color.
+         */
         SDL_Color getForegroundColor();
+
+        /**
+         * Sets the font color.
+         *
+         * @param color the color that will be used to draw the text.
+         */
         void setForegroundColor(SDL_Color color);
 
+        /**
+         * onRender() implementation for this entity.
+         */
         void onRender(Entity* entity);
 
+        /**
+         * Implementation for setWidth(). Takes padding into consideration.
+         *
+         * @param width the width of the menu item (with padding).
+         */
         void setWidth(int width);
+
+        /**
+         * Implementation for getWidth(). Takes padding into consideration.
+         *
+         * @return the width of this menu item.
+         */
         int getWidth();
+
+        /**
+         * Implementation for setHeight(). Takes padding into consideration.
+         *
+         * @param height is the height of the menu item (width padding).
+         */
         void setHeight(int height);
+
+        /**
+         * Implementation for getHeight(). Takes padding into consideration.
+         *
+         * @return the height of this menu item.
+         */
         int getHeight();
 
+        /**
+         * Sets the padding.
+         *
+         * @param padding is the padding that will be used when drawing the text.
+         */
+        void setPadding(short padding);
+
+        /**
+         * Gets the padding.
+         *
+         * @return the padding of this menu item.
+         */
+        short getPadding();
+
+        /**
+         * Sets the text.
+         *
+         * @param the text that will be drawn on this menu item.
+         */
+        void setText(std::string text);
+
+        /**
+         * Gets the text.
+         *
+         * @return the text that is drawn on this menu item.
+         */
+        std::string getText();
+
+        /**
+         * Gets the identifier.
+         *
+         * @return the identifier that is set in the constructor.
+         */
+        std::string getIdentifier();
+
+        /**
+         * Implementation for onMouseEnter().
+         *
+         * Changes the background color to background hover color when the mouse
+         * enters.
+         */
         bool onMouseEnter(void* sender, SDL_Event* event);
+
+        /**
+         * Implementation for onMouseLeave().
+         *
+         * Changes the background hover color to background color when the mouse
+         * leaves.
+         */
         bool onMouseLeave(void* sender, SDL_Event* event);
     };
 }
