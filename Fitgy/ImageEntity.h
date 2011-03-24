@@ -25,11 +25,42 @@
 
 namespace Fitgy {
     
+    /**
+     * An entity that represents an image.
+     */
     class ImageEntity : public Entity {
     public:
+        /**
+         * Constructor.
+         *
+         * @param parent is the parent entity.
+         * @param filename is the path to the image file.
+         * @param opacity is the initial opacity of the image. Default is
+         * opaque.
+         */
         ImageEntity(Entity* parent, char *filename, short opacity = SDL_ALPHA_OPAQUE);
+
+        /**
+         * onRender() implementation. The entity simply blits its surface to the
+         * destination surface.
+         */
         void onRender(Entity *entity);
+
+        /**
+         * Sets the image.
+         *
+         * @param fielname is the path to the image file.
+         * @param opacity is the initial opacity of the image. Default is
+         * opaque.
+         */
         void setImage(char* filename, short opacity = SDL_ALPHA_OPAQUE);
+
+        /**
+         * Changes the opacity of the image.
+         *
+         * @param opacity is the image opacity. Minimum value is
+         * SDL_ALPHA_TRANSPARENT and maximum is SDL_ALPHA_OPAQUE.
+         */
         void setOpacity(short opacity);
     };
 }

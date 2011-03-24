@@ -45,6 +45,9 @@ namespace Fitgy {
 
     GridEntity::~GridEntity()
     {
+        // TODO: Grid entity shouldn't destroy the entities in mFields as he's
+        // not the one that created them.
+
         // Destroy created entities.
         std::map<int, Entity*>::iterator it = mFields.begin();
         while(it != mFields.end()){
@@ -98,6 +101,9 @@ namespace Fitgy {
 
     void
     GridEntity::removeEntity(int field){
+        // TODO: The GridEntity shouldn't delete the entity. That should be done
+        // by the same instance that created it.
+
         if (mFields.find(field) != mFields.end()){
             delete mFields[field];
             mFields.erase(field);
