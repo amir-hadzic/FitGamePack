@@ -27,8 +27,17 @@
 
 namespace Fitgy {
 
+    /**
+     * EventHub is used to distribute events across all active Entities or any
+     * other EventHandler instances.
+     */
     class EventHub {
     private:
+        /**
+         * EventListener is a structure that holds the handle of the EventHandler
+         * instance and a state variable that signals the EventHub if it should
+         * delete this EventHandler from it's list of subscribed EventHandlers.
+         */
         struct EventListener
         {
             public:
@@ -36,15 +45,38 @@ namespace Fitgy {
                     isActive = true;
                     this->handler = handler;
                 }
+
                 EventHandler* handler;
                 bool isActive;
         };
+
         static std::vector<EventListener> mListeners;
 
     public:
 
+        /**
+         * Subscribes the specified EventHandler to receive events.
+         *
+         * @param handler is the EventHandler that needs to receive events.
+         */
         static void subscribe(EventHandler* handler);
+
+        /**
+         * Deletes the specified EventHandler from the list of subscribed
+         * EventHandlers. Once unsubscribed the EventHandler will no longer
+         * receive events.
+         *
+         * @param handler is the EventHandler that no longer want to receive
+         * events.
+         */
         static void unsubscribe(EventHandler* handler);
+
+        /**
+         * Sends the specified event to all subscribed EventHandlers. This
+         * method is usually called by the Application.
+         *
+         * @param event is the event that needs to be broadcasted.
+         */
         static void broadcast(SDL_Event* event);
     };
 }

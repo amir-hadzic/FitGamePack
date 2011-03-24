@@ -47,6 +47,9 @@ namespace Fitgy {
 
     void 
     Entity::drawToEntity(Entity* entity){
+        assert(entitySurface != NULL);
+        assert(entity->entitySurface != NULL);
+
         SDL_Rect rect;
         rect.x = position.x;
         rect.y = position.y;
@@ -58,7 +61,7 @@ namespace Fitgy {
     Entity::onLoop(){
         float speed = getSpeed();
 
-        if (direction != Vector::zero && speed != 0.0f && mLastLoopTime != 0){
+        if (direction != Vector::zero && speed > 0.0f && mLastLoopTime != 0){
             // Move the entity based on its direction and speed.
             unsigned int milisSinceLastLoop = SDL_GetTicks() - mLastLoopTime;
             float speedPerMilisecond = speed / 1000.0f;
