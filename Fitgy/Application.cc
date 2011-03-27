@@ -125,10 +125,6 @@ namespace Fitgy {
             return false;
         }
 
-        if (Mix_Init(MIX_INIT_OGG) == 0){
-            return false;
-        }
-
         if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT,
                 MIX_AUDIO_CHANNELS, MIX_CHUNKSIZE) == -1)
         {
