@@ -160,6 +160,15 @@ namespace Fitgy {
          */
         Music* music();
 
+        /**
+         * Initializes the background music from the specified file.
+         *
+         * If there is any background music playing at the time of calling this
+         * functions it's stopped.
+         *
+         * @param filename the path to the specified file.
+         * @param volume the volume to be used for the background music.
+         */
         void setMusic(char* filename, short volume = MIX_MAX_VOLUME);
     };
 }

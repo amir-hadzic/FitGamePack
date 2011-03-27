@@ -28,6 +28,7 @@ namespace Fitgy {
     }
 
     Application::Music::~Music(){
+        stop();
         Mix_FreeMusic(mMixMusic);
     }
 
