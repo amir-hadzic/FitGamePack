@@ -40,6 +40,7 @@ namespace Typer {
     Game::~Game(){
         TTF_CloseFont(mWordFont);
         TTF_CloseFont(mLabelFont);
+        delete typingSound;
     }
 
     bool
@@ -73,6 +74,7 @@ namespace Typer {
         srand(time(NULL));
 
         typingSound = new Fitgy::Sound("sfx/typing.ogg");
+        setMusic("sfx/signal.ogg", MIX_MAX_VOLUME/2);
 
         addEntity(txtScore);
         addEntity(imgDanger);
@@ -90,6 +92,8 @@ namespace Typer {
             // Call the destructor to release all resources.
             delete mSplashScreen;
             mSplashScreen = NULL;
+
+            music()->play();
         }
 
         Application::render();

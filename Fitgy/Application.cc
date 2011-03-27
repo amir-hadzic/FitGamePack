@@ -20,9 +20,49 @@
 #include "Application.h"
 
 namespace Fitgy {
+    Application::Music::Music(char* filename, short volume){
+        mVolume = volume;
+        mMixMusic = Mix_LoadMUS("sfx/signal.ogg");
+        mPaused = false;
+        Mix_VolumeMusic(volume);
+    }
+
+    Application::Music::~Music(){
+        Mix_FreeMusic(mMixMusic);
+    }
+
+    void
+    Application::Music::play(int loops){
+        if (mPaused){
+            Mix_ResumeMusic();
+            mPaused = false;
+        } else {
+            Mix_PlayMusic(mMixMusic, loops);
+        }
+    }
+
+    void
+    Application::Music::pause(){
+        Mix_PauseMusic();
+        mPaused = true;
+    }
+
+    void
+    Application::Music::stop(){
+        Mix_HaltMusic();
+        mPaused = false;
+    }
+
+    void
+    Application::Music::setVolume(short volume){
+        mVolume = volume;
+        Mix_VolumeMusic(volume);
+    }
+
     Application::Application(){
         mRunning = false;
         mDisplay = NULL;
+        mMusic = NULL;
     }
     
     Application::~Application(){
@@ -140,11 +180,27 @@ namespace Fitgy {
         }
 
         delete mDisplay;
+        delete mMusic;
     }
 
     bool
     Application::onExit(){
         mRunning = false;
         return false;
+    }
+
+    Application::Music*
+    Application::music(){
+        return mMusic;
+    }
+
+    void
+    Application::setMusic(char* filename, short volume){
+        if (mMusic != NULL){
+            delete mMusic;
+            mMusic = NULL;
+        }
+
+        mMusic = new Application::Music(filename, volume);
     }
 }

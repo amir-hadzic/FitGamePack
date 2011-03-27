@@ -62,6 +62,24 @@ namespace Fitgy {
         Display* mDisplay;
         void startRender();
 
+        class Music {
+        private:
+            Mix_Music* mMixMusic;
+            short mVolume;
+            bool mPaused;
+
+        public:
+            Music(char* filename, short volume);
+            ~Music();
+
+            void play(int loops = -1);
+            void pause();
+            void stop();
+
+            void setVolume(short volume);
+        };
+
+        Music* mMusic;
     public:
         /**
          * Constructor.
@@ -134,6 +152,15 @@ namespace Fitgy {
          * further.
          */
         virtual bool onExit();
+
+        /**
+         * Gets the pointer to the internal Music class.
+         *
+         * @return pointer to the internal Music handler class.
+         */
+        Music* music();
+
+        void setMusic(char* filename, short volume = MIX_MAX_VOLUME);
     };
 }
 

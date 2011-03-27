@@ -12,6 +12,11 @@ namespace Fitgy {
         Mix_VolumeChunk(mChunk, mVolume);
     }
 
+    Sound::~Sound(){
+        stop();
+        Mix_FreeChunk(mChunk);
+    }
+
     void
     Sound::play(){
         if (mPaused){
