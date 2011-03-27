@@ -72,6 +72,8 @@ namespace Typer {
         mNextSpawnTime = getRandomSpawnTime();
         srand(time(NULL));
 
+        typingSound = new Fitgy::Sound("sfx/typing.ogg");
+
         addEntity(txtScore);
         addEntity(imgDanger);
         return true;
@@ -202,4 +204,9 @@ namespace Typer {
         txtScore->setText(ss.str());
     }
 
+    bool
+    Game::onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode){
+        typingSound->play();
+        return true;
+    }
 }

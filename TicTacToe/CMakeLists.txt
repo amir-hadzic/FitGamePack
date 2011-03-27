@@ -3,4 +3,4 @@ add_executable(TicTacToe
     TicTacToe.cc TicTacToe.h
     GridEventHandlers
 )
-target_link_libraries(TicTacToe Fitgy ${SDL_LIBRARY} ${SDLTTF_LIBRARY} )
+target_link_libraries(TicTacToe Fitgy ${SDL_LIBRARY} ${SDLTTF_LIBRARY} ${SDLMIXER_LIBRARY} )

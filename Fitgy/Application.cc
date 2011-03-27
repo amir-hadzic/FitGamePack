@@ -84,6 +84,18 @@ namespace Fitgy {
             return false;
         }
 
+        if (Mix_Init(MIX_INIT_OGG) == 0){
+            return false;
+        }
+
+        if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT,
+                MIX_AUDIO_CHANNELS, MIX_CHUNKSIZE) == -1)
+        {
+            return false;
+        }
+
+        Mix_AllocateChannels(MIX_NUM_CHANNELS);
+
         mDisplay = new Display(640, 480);
         return true;
     }

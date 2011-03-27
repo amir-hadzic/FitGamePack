@@ -16,4 +16,5 @@ add_library(Fitgy
     SplashScreen
     TextEntity
     Vector
+    Sound
 )

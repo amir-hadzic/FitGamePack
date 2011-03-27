@@ -35,5 +35,6 @@
 #include "MenuEntity.h"
 #include "Application.h"
 #include "Color.h"
+#include "Sound.h"
 
 #endif

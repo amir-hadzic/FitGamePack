@@ -33,6 +33,23 @@ namespace Fitgy {
     typedef EntityContainer::iterator EntityIterator;
 
     /**
+     * Number of channels to allocate for mixing initialy. This can be changed
+     * later on by calling Mix_AllocateChannels(int).
+     */
+    const short MIX_NUM_CHANNELS = 16;
+
+    /**
+     * From the SDL_Mixer documentation: Bytes used per output sample.
+     */
+    const int MIX_CHUNKSIZE = 1024;
+
+    /**
+     * Mono = 1, Stereo = 2
+     */
+    const short MIX_AUDIO_CHANNELS = 2;
+
+
+    /**
      * This is the base class for a Fitgy Application. It handles the entities,
      * event broadcasting and everything else required to run a game.
      */

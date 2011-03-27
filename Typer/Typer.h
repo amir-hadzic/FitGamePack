@@ -49,6 +49,7 @@ namespace Typer {
         std::map<std::string, TyperWord*> mActiveWords;
         Fitgy::TextEntity* txtScore;
         Fitgy::ImageEntity* imgDanger;
+        Fitgy::Sound* typingSound;
 
         void readWords(char* filename);
         std::string nextWord();
@@ -64,6 +65,8 @@ namespace Typer {
         void render();
         void loop();
         void restart();
+
+        bool onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode);
     };
 }
 #endif
