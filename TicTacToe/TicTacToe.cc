@@ -138,6 +138,9 @@ namespace TicTacToe {
         mnuMain->addItem("quit", "Quit");
         mnuMain->setEventHandler(new MenuEventHandler());
 
+        soundDrawX = new Fitgy::Sound("sfx/draw-x.ogg");
+        soundDrawO = new Fitgy::Sound("sfx/draw-o.ogg");
+
         addEntity(gridEntity);
         addEntity(txtWinsO);
         addEntity(txtWinsX);

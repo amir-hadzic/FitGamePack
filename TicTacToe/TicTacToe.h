@@ -61,6 +61,9 @@ namespace TicTacToe {
 
         Fitgy::MenuEntity* mnuMain;
 
+        Fitgy::Sound* soundDrawX;
+        Fitgy::Sound* soundDrawO;
+
         FieldType fields[9];
         bool xPlays;
         bool gameOver;

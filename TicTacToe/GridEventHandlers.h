@@ -55,9 +55,11 @@ namespace TicTacToe {
                     if (game->xPlays){
                         imgField->setImage("gfx/X.bmp");
                         game->fields[imgField->getField()] = Game::FieldType::X;
+                        game->soundDrawX->play();
                     } else {
                         imgField->setImage("gfx/O.bmp");
                         game->fields[imgField->getField()] = Game::FieldType::O;
+                        game->soundDrawO->play();
                     }
 
                     game->nextPlayer();
