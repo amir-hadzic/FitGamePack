@@ -98,7 +98,7 @@ namespace Fitgy {
 
     Vector
     Vector::operator+(const Vector &v) const {
-        return Vector(x + v.x, x + v.y);
+        return Vector(x + v.x, y + v.y);
     }
 
     Vector

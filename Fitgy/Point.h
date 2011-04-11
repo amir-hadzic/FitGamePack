@@ -54,19 +54,20 @@ namespace Fitgy {
         Point(float x, float y);
 
         /**
-         * Implementation for the + operator.
-         */
-        Point operator+(const Point point);
-
-        /**
-         * Implementation for the - operator.
-         */
-        Point operator-(const Point point);
-
-        /**
          * Provides an representation of the Point readable by humans.
          */
         operator std::string() const;
+
+        bool operator==(const Point &v) const;
+        bool operator!=(const Point &v) const;
+        Point operator-(const Point &v) const;
+        Point operator+(const Point &v) const;
+        Point operator*(float scale) const;
+        Point operator/(float divider) const;
+        Point& operator+=(const Point &v);
+        Point& operator-=(const Point &v);
+        Point& operator*=(float f);
+        Point& operator/=(float f);
     };
 }
 
