@@ -85,4 +85,61 @@ namespace Fitgy {
     Vector::operator!=(const Vector &vector) const {
         return !(*this == vector);
     }
+
+    Vector
+    Vector::operator-() const {
+        return Vector::zero - *this;
+    }
+
+    Vector
+    Vector::operator-(const Vector &v) const {
+        return Vector(x - v.x, y - v.y);
+    }
+
+    Vector
+    Vector::operator+(const Vector &v) const {
+        return Vector(x + v.x, x + v.y);
+    }
+
+    Vector
+    Vector::operator*(float scale) const {
+        return Vector(x * scale, y * scale);
+    }
+
+    Vector
+    Vector::operator/(float divider) const {
+        return Vector(x / divider, y / divider);
+    }
+
+    Vector&
+    Vector::operator+=(const Vector &v) {
+        x += v.x;
+        y += v.y;
+
+        return *this;
+    }
+
+    Vector&
+    Vector::operator-=(const Vector &v) {
+        x -= v.x;
+        y -= v.y;
+
+        return *this;
+    }
+
+    Vector&
+    Vector::operator*=(float f) {
+        x *= f;
+        y *= f;
+
+        return *this;
+    }
+
+    Vector&
+    Vector::operator/=(float f) {
+        x /= f;
+        y /= f;
+
+        return *this;
+    }
 }

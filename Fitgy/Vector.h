@@ -126,15 +126,17 @@ namespace Fitgy {
          */
         float angle();
 
-        /**
-         * Implementation for the equal operator.
-         */
         bool operator==(const Vector &v) const;
-
-        /**
-         * Implementation for the inequality operator.
-         */
         bool operator!=(const Vector &v) const;
+        Vector operator-() const;
+        Vector operator-(const Vector &v) const;
+        Vector operator+(const Vector &v) const;
+        Vector operator*(float scale) const;
+        Vector operator/(float divider) const;
+        Vector& operator+=(const Vector &v);
+        Vector& operator-=(const Vector &v);
+        Vector& operator*=(float f);
+        Vector& operator/=(float f);
     };
 }
 
