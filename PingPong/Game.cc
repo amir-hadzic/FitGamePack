@@ -22,7 +22,6 @@
 namespace PingPong {
     Game* Game::mInstance = NULL;
 
-
     Game* Game::getInstance(){
         if (mInstance == NULL){
             mInstance = new Game();
@@ -46,15 +45,15 @@ namespace PingPong {
 
         mScoreFont = TTF_OpenFont("fonts/DroidSans.ttf", 54);
 
-        mSplashScreen = new Fitgy::SplashScreen(getDisplay(), "gfx/Splash.bmp", 2000);
-        mBackgroundImage = new Fitgy::ImageEntity(getDisplay(), "gfx/Background.bmp");
+        mSplashScreen = new Fitgy::SplashScreen(getDisplay(), "gfx/Splash.png", 2000);
+        mBackgroundImage = new Fitgy::ImageEntity(getDisplay(), "gfx/Background.png");
 
-        mPaddleLeft = new Fitgy::ImageEntity(getDisplay(), "gfx/Paddle.bmp");
+        mPaddleLeft = new Fitgy::ImageEntity(getDisplay(), "gfx/Paddle.png");
         mPaddleLeft->position.x = 10;
         mPaddleLeft->position.y = 190;
         mPaddleLeft->setSpeed(PADDLE_SPEED);
 
-        mPaddleRight = new Fitgy::ImageEntity(getDisplay(), "gfx/Paddle.bmp");
+        mPaddleRight = new Fitgy::ImageEntity(getDisplay(), "gfx/Paddle.png");
         mPaddleRight->position.x = 620;
         mPaddleRight->position.y = 190;
         mPaddleRight->setSpeed(PADDLE_SPEED);

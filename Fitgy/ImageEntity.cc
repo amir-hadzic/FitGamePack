@@ -39,7 +39,7 @@ namespace Fitgy {
 
         SDL_Surface* surfOriginal = NULL;
 
-        if ((surfOriginal = SDL_LoadBMP(filename)) == NULL){
+        if ((surfOriginal = IMG_Load(filename)) == NULL){
             throw "File couldn't be read.";
         }
 

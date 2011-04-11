@@ -3,4 +3,10 @@ add_executable(Typer
     TyperWord
     Typer
 )
-target_link_libraries(Typer Fitgy ${SDL_LIBRARY} ${SDLTTF_LIBRARY} ${SDLMIXER_LIBRARY} )
+target_link_libraries(Typer 
+    Fitgy 
+    ${SDL_LIBRARY} 
+    ${SDLTTF_LIBRARY} 
+    ${SDLMIXER_LIBRARY}
+    ${SDLIMAGE_LIBRARY}
+)

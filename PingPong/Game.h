@@ -41,7 +41,7 @@ namespace PingPong {
         TTF_Font* mScoreFont;
 
     public:
-        static const float PADDLE_SPEED = 150;
+        static const float PADDLE_SPEED = 200;
 
         static Game* getInstance();
         bool init();
