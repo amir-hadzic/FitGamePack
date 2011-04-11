@@ -246,6 +246,34 @@ namespace Fitgy {
          * @return the external event handler instance if any is set.
          */
         virtual EventHandler* getEventHandler();
+
+        /**
+         * Gets the top left position of this entity.
+         *
+         * @return top left position of this entity.
+         */
+        Point topLeft();
+
+        /**
+         * Gets the top right position of this entity.
+         *
+         * @return top right position of this entity.
+         */
+        Point topRight();
+
+        /**
+         * Gets the bottom left position of this entity.
+         *
+         * @return bottom left position of this entity.
+         */
+        Point bottomLeft();
+
+        /**
+         * Gets the bottom right position of this entity.
+         *
+         * @return bottom right position of this entity.
+         */
+        Point bottomRight();
     };
 }
 

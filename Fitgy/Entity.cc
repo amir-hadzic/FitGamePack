@@ -213,4 +213,23 @@ namespace Fitgy {
         return mExternalEventHandler;
     }
 
+    Point
+    Entity::topLeft(){
+        return this->position;
+    }
+
+    Point
+    Entity::topRight(){
+        return Point(position.x + getWidth(), position.y);
+    }
+
+    Point
+    Entity::bottomLeft(){
+        return Point(position.x, position.y + getHeight());
+    }
+
+    Point
+    Entity::bottomRight(){
+        return Point(position.x + getWidth(), position.y + getHeight());
+    }
 }
