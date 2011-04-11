@@ -121,7 +121,7 @@ namespace PingPong {
             }
 
             // Floor or ceiling collision detection
-            if (mBall->topRight().y > getDisplay()->getHeight()
+            if (mBall->bottomRight().y > getDisplay()->getHeight()
                     || mBall->position.y <= 0)
             {
                     mBall->direction.y *= -1;
@@ -129,16 +129,22 @@ namespace PingPong {
             }
 
             // Paddle collision detection
+            // angleWidth is a number between 0 and 1 which is going to be used
+            // to determine the final angle at which the ball is going to bounce
+            // back.
+            float angleWidth = (float)rand() / (float)RAND_MAX;
+
             if (mPaddleLeft->isWithinBounds(mBall->position) ||
                     mPaddleLeft->isWithinBounds(mBall->bottomLeft()))
             {
-                mBall->direction.x = 1;
-                mBall->direction.y = 1.0 / ((rand() % 2) + 1);
+                    mBall->direction.setAngle(
+                        ( (1.0/4.0)*M_PI ) - ( angleWidth * (1.0/2.0)*M_PI ));
+
             } else if (mPaddleRight->isWithinBounds(mBall->topRight()) ||
                     mPaddleRight->isWithinBounds(mBall->bottomRight()))
             {
-                mBall->direction.x = -1;
-                mBall->direction.y = 1.0 / ((rand() % 2) + 1);
+                mBall->direction.setAngle(
+                        ( (3.0/4.0)*M_PI ) + ( angleWidth * (5.0/4.0)*M_PI ));
             }
         }
     }

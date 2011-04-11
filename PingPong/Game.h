@@ -23,6 +23,7 @@
 #include "../Fitgy/Fitgy.h"
 #include <sstream>
 #include <stdlib.h>
+#include <cmath>
 
 namespace PingPong {
 

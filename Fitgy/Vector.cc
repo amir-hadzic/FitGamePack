@@ -57,15 +57,20 @@ namespace Fitgy {
     }
 
     float
-    Vector::angle(){
+    Vector::getAngle(){
         return atan2(y, x);
     }
 
     void
+    Vector::setAngle(float angle){
+        x = cos(angle);
+        y = sin(angle);
+    }
+
+    void
     Vector::rotate(float rotationAngle){
-        float angleToSet = angle() + rotationAngle;
-        x = cos(angleToSet);
-        y = sin(angleToSet);
+        float angleToSet = getAngle() + rotationAngle;
+        setAngle(angleToSet);
     }
 
     void

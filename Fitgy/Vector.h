@@ -124,7 +124,14 @@ namespace Fitgy {
          *
          * @see normalize
          */
-        float angle();
+        float getAngle();
+
+        /**
+         * Sets the angle.
+         *
+         * @param angle is the rotation angle of this vector.
+         */
+        void setAngle(float angle);
 
         bool operator==(const Vector &v) const;
         bool operator!=(const Vector &v) const;
