@@ -68,11 +68,22 @@ namespace PingPong {
         mScoreRight->position.x = 340;
         mScoreRight->position.y = 10;
 
+        mBall = new Fitgy::ImageEntity(getDisplay(), "gfx/Ball.png",
+                SDL_ALPHA_OPAQUE, true);
+
+        mBall->position.x = 300;
+        mBall->position.y = 300;
+        mBall->direction = Fitgy::Vector::left;
+        mBall->setSpeed(BALL_SPEED);
+
         addEntity(mBackgroundImage);
         addEntity(mPaddleLeft);
         addEntity(mPaddleRight);
         addEntity(mScoreLeft);
         addEntity(mScoreRight);
+        addEntity(mBall);
+
+        srand(time(NULL));
         return true;
     }
 
@@ -98,6 +109,37 @@ namespace PingPong {
             mSplashScreen->onLoop();
     } else {
             Application::loop();
+
+            // Rudimentary collision detection
+            // First, we are going to check if the ball is out of the screen area.
+            if (mBall->position.y >= 0 && mBall->position.x < 0){
+                rightWins();
+            } else if (mBall->position.y >= 0 &&
+                    mBall->position.x > getDisplay()->getWidth())
+            {
+                leftWins();
+            }
+
+            // Floor or ceiling collision detection
+            if (mBall->topRight().y > getDisplay()->getHeight()
+                    || mBall->position.y <= 0)
+            {
+                    mBall->direction.y *= -1;
+
+            }
+
+            // Paddle collision detection
+            if (mPaddleLeft->isWithinBounds(mBall->position) ||
+                    mPaddleLeft->isWithinBounds(mBall->bottomLeft()))
+            {
+                mBall->direction.x = 1;
+                mBall->direction.y = 1.0 / ((rand() % 2) + 1);
+            } else if (mPaddleRight->isWithinBounds(mBall->topRight()) ||
+                    mPaddleRight->isWithinBounds(mBall->bottomRight()))
+            {
+                mBall->direction.x = -1;
+                mBall->direction.y = 1.0 / ((rand() % 2) + 1);
+            }
         }
     }
 
@@ -143,5 +185,35 @@ namespace PingPong {
         }
 
         return true;
+    }
+
+    void
+    Game::restart(){
+        std::stringstream ss;
+
+        mBall->position.x = 312;
+        mBall->position.y = 232;
+        mBall->direction = Fitgy::Vector::left;
+        mBall->setSpeed(BALL_SPEED);
+
+        ss << mLeftWins;
+        mScoreLeft->setText(ss.str());
+
+        ss.clear();
+        ss.str(std::string());
+        ss << mRightWins;
+        mScoreRight->setText(ss.str());
+    }
+
+    void
+    Game::leftWins(){
+        mLeftWins++;
+        restart();
+    }
+
+    void
+    Game::rightWins(){
+        mRightWins++;
+        restart();
     }
 }

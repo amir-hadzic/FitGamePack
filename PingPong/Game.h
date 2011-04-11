@@ -21,6 +21,8 @@
 #define PINGPONG_GAME_H
 
 #include "../Fitgy/Fitgy.h"
+#include <sstream>
+#include <stdlib.h>
 
 namespace PingPong {
 
@@ -35,13 +37,22 @@ namespace PingPong {
         Fitgy::ImageEntity* mBackgroundImage;
         Fitgy::ImageEntity* mPaddleLeft;
         Fitgy::ImageEntity* mPaddleRight;
+        Fitgy::ImageEntity* mBall;
         Fitgy::TextEntity* mScoreLeft;
         Fitgy::TextEntity* mScoreRight;
 
         TTF_Font* mScoreFont;
 
+        int mLeftWins;
+        int mRightWins;
+
+        void leftWins();
+        void rightWins();
+        void restart();
+
     public:
         static const float PADDLE_SPEED = 200;
+        static const float BALL_SPEED = 220;
 
         static Game* getInstance();
         bool init();
