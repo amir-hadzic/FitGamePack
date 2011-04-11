@@ -20,9 +20,11 @@
 #include "ImageEntity.h"
 
 namespace Fitgy {
-    ImageEntity::ImageEntity(Entity* parent, char *filename, short opacity)
+    ImageEntity::ImageEntity(Entity* parent, char *filename,
+            short opacity, bool imageWithAlpha)
         : Entity(parent)
     {
+        mImageWithAlpha = imageWithAlpha;
         setImage(filename, opacity);
     }
 
@@ -43,13 +45,18 @@ namespace Fitgy {
             throw "File couldn't be read.";
         }
 
-        // Set alpha channel before converting the surface to the display
+        // Set image opacity before converting the surface to the display
         // format, so that we can take advantage of hardware alpha blit
         // acceleration.
         SDL_SetAlpha(surfOriginal, SDL_SRCALPHA, opacity);
 
         // Convert the surface to the display format.
-        entitySurface = SDL_DisplayFormat(surfOriginal);
+        if (mImageWithAlpha){
+            entitySurface = SDL_DisplayFormatAlpha(surfOriginal);
+        } else {
+            entitySurface = SDL_DisplayFormat(surfOriginal);
+        }
+
 
         // Free resources taken by the old surface.
         SDL_FreeSurface(surfOriginal);

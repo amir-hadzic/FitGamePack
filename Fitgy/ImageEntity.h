@@ -29,6 +29,8 @@ namespace Fitgy {
      * An entity that represents an image.
      */
     class ImageEntity : public Entity {
+    private:
+        bool mImageWithAlpha;
     public:
         /**
          * Constructor.
@@ -38,7 +40,8 @@ namespace Fitgy {
          * @param opacity is the initial opacity of the image. Default is
          * opaque.
          */
-        ImageEntity(Entity* parent, char *filename, short opacity = SDL_ALPHA_OPAQUE);
+        ImageEntity(Entity* parent, char *filename,
+                short opacity = SDL_ALPHA_OPAQUE, bool imageWithAlpha = false);
 
         /**
          * onRender() implementation. The entity simply blits its surface to the
