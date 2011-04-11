@@ -129,22 +129,24 @@ namespace PingPong {
             }
 
             // Paddle collision detection
-            // angleWidth is a number between 0 and 1 which is going to be used
-            // to determine the final angle at which the ball is going to bounce
-            // back.
-            float angleWidth = (float)rand() / (float)RAND_MAX;
+            // bounceAngle is the angle (in radians) for which the ball will be
+            // rotated (plus the min. angle) when bounced back from the paddle.
+            float bounceAngle = ( (float)rand() / (float)RAND_MAX ) * (1.0/2.0)*M_PI;
 
             if (mPaddleLeft->isWithinBounds(mBall->position) ||
                     mPaddleLeft->isWithinBounds(mBall->bottomLeft()))
             {
-                    mBall->direction.setAngle(
-                        ( (1.0/4.0)*M_PI ) - ( angleWidth * (1.0/2.0)*M_PI ));
+                // Min. angle is -(1/4)PI
+                // Max. angle is (1/4)PI
+                mBall->direction.setAngle(( (1.0/4.0)*M_PI ) - bounceAngle);
 
             } else if (mPaddleRight->isWithinBounds(mBall->topRight()) ||
                     mPaddleRight->isWithinBounds(mBall->bottomRight()))
             {
-                mBall->direction.setAngle(
-                        ( (3.0/4.0)*M_PI ) + ( angleWidth * (5.0/4.0)*M_PI ));
+
+                // Min. angle is (3/4)PI
+                // Max. angle is (5/4)PI
+                mBall->direction.setAngle(( (3.0/4.0)*M_PI ) + bounceAngle);
             }
         }
     }
