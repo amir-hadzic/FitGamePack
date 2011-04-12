@@ -22,7 +22,7 @@
 namespace Fitgy {
     Application::Music::Music(char* filename, short volume){
         mVolume = volume;
-        mMixMusic = Mix_LoadMUS("sfx/signal.ogg");
+        mMixMusic = Mix_LoadMUS(filename);
         mPaused = false;
         Mix_VolumeMusic(volume);
     }
