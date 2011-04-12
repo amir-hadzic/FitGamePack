@@ -76,6 +76,8 @@ namespace PingPong {
         mBall->direction = Fitgy::Vector::left;
         mBall->setSpeed(BALL_SPEED);
 
+        mPluckSound = new Fitgy::Sound("sfx/pluck.ogg");
+
         addEntity(mBackgroundImage);
         addEntity(mPaddleLeft);
         addEntity(mPaddleRight);
@@ -114,18 +116,21 @@ namespace PingPong {
             // First, we are going to check if the ball is out of the screen area.
             if (mBall->position.y >= 0 && mBall->position.x < 0){
                 rightWins();
+                return;
             } else if (mBall->position.y >= 0 &&
                     mBall->position.x > getDisplay()->getWidth())
             {
                 leftWins();
+                return;
             }
 
             // Floor or ceiling collision detection
             if (mBall->bottomRight().y > getDisplay()->getHeight()
                     || mBall->position.y <= 0)
             {
-                    mBall->direction.y *= -1;
-
+                mBall->direction.y *= -1;
+                mPluckSound->play();
+                return;
             }
 
             // Paddle collision detection
@@ -139,6 +144,7 @@ namespace PingPong {
                 // Min. angle is -(1/4)PI
                 // Max. angle is (1/4)PI
                 mBall->direction.setAngle(( (1.0/4.0)*M_PI ) - bounceAngle);
+                mPluckSound->play();
 
             } else if (mPaddleRight->isWithinBounds(mBall->topRight()) ||
                     mPaddleRight->isWithinBounds(mBall->bottomRight()))
@@ -147,7 +153,10 @@ namespace PingPong {
                 // Min. angle is (3/4)PI
                 // Max. angle is (5/4)PI
                 mBall->direction.setAngle(( (3.0/4.0)*M_PI ) + bounceAngle);
+                mPluckSound->play();
             }
+
+
         }
     }
 

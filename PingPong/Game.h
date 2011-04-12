@@ -46,7 +46,7 @@ namespace PingPong {
         Fitgy::ImageEntity* mBall;
         Fitgy::TextEntity* mScoreLeft;
         Fitgy::TextEntity* mScoreRight;
-
+        Fitgy::Sound* mPluckSound;
         TTF_Font* mScoreFont;
 
         int mLeftWins;
