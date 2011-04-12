@@ -32,6 +32,19 @@ namespace PingPong {
 
     Game::Game(){
         mSplashScreen = NULL;
+        mBackgroundImage = NULL;
+        mPaddleLeft = NULL;
+        mPaddleRight = NULL;
+        mBall = NULL;
+        mScoreLeft = NULL;
+        mScoreRight = NULL;
+        mPluckSound = NULL;
+        mScoreFont = NULL;
+
+
+        mLastSpeedChange = 0;
+        mLeftWins = 0;
+        mRightWins = 0;
     }
 
     bool
@@ -111,6 +124,17 @@ namespace PingPong {
             mSplashScreen->onLoop();
     } else {
             Application::loop();
+
+            if (mLastSpeedChange == 0){
+                mLastSpeedChange = SDL_GetTicks();
+            }
+
+            if (SDL_GetTicks() - mLastSpeedChange >= SPEED_CHANGE_TIME)
+            {
+                mBall->setSpeed( mBall->getSpeed() + (BALL_SPEED / 4) );
+                mLastSpeedChange = SDL_GetTicks();
+            }
+
 
             // Rudimentary collision detection
             // First, we are going to check if the ball is out of the screen area.

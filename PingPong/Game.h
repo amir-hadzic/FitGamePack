@@ -29,8 +29,9 @@
 #include <cmath>
 
 namespace PingPong {
-	const float PADDLE_SPEED = 200;
-	const float BALL_SPEED = 220;
+    const float PADDLE_SPEED = 400;
+    const float BALL_SPEED = 220;
+    const int SPEED_CHANGE_TIME = 3500;
 
     class Game : public Fitgy::Application {
     private:
@@ -49,6 +50,7 @@ namespace PingPong {
         Fitgy::Sound* mPluckSound;
         TTF_Font* mScoreFont;
 
+        unsigned int mLastSpeedChange;
         int mLeftWins;
         int mRightWins;
 
