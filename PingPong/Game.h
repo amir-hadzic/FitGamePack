@@ -23,9 +23,14 @@
 #include "../Fitgy/Fitgy.h"
 #include <sstream>
 #include <stdlib.h>
+#include <time.h>
+
+#define _USE_MATH_DEFINES
 #include <cmath>
 
 namespace PingPong {
+	const float PADDLE_SPEED = 200;
+	const float BALL_SPEED = 220;
 
     class Game : public Fitgy::Application {
     private:
@@ -52,9 +57,6 @@ namespace PingPong {
         void restart();
 
     public:
-        static const float PADDLE_SPEED = 200;
-        static const float BALL_SPEED = 220;
-
         static Game* getInstance();
         bool init();
         void loop();
