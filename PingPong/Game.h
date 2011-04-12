@@ -36,6 +36,8 @@ namespace PingPong {
     class Game : public Fitgy::Application {
     private:
         Game();
+        ~Game();
+
         Game(Game const&){};
         Game& operator=(Game const&){ return *this; };
 

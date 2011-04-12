@@ -41,10 +41,15 @@ namespace PingPong {
         mPluckSound = NULL;
         mScoreFont = NULL;
 
-
         mLastSpeedChange = 0;
         mLeftWins = 0;
         mRightWins = 0;
+    }
+
+    Game::~Game(){
+        delete mPluckSound;
+
+        TTF_CloseFont(mScoreFont);
     }
 
     bool
