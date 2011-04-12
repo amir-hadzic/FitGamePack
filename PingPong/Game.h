@@ -50,6 +50,7 @@ namespace PingPong {
         Fitgy::TextEntity* mScoreLeft;
         Fitgy::TextEntity* mScoreRight;
         Fitgy::Sound* mPluckSound;
+        Fitgy::Sound* mSwipeSound;
         TTF_Font* mScoreFont;
 
         unsigned int mLastSpeedChange;

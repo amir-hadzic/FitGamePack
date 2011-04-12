@@ -39,6 +39,7 @@ namespace PingPong {
         mScoreLeft = NULL;
         mScoreRight = NULL;
         mPluckSound = NULL;
+        mSwipeSound = NULL;
         mScoreFont = NULL;
 
         mLastSpeedChange = 0;
@@ -48,6 +49,7 @@ namespace PingPong {
 
     Game::~Game(){
         delete mPluckSound;
+        delete mSwipeSound;
 
         TTF_CloseFont(mScoreFont);
     }
@@ -95,6 +97,7 @@ namespace PingPong {
         mBall->setSpeed(BALL_SPEED);
 
         mPluckSound = new Fitgy::Sound("sfx/pluck.ogg");
+        mSwipeSound = new Fitgy::Sound("sfx/swipe.ogg", MIX_MAX_VOLUME / 2);
 
         addEntity(mBackgroundImage);
         addEntity(mPaddleLeft);
@@ -144,12 +147,16 @@ namespace PingPong {
             // Rudimentary collision detection
             // First, we are going to check if the ball is out of the screen area.
             if (mBall->position.y >= 0 && mBall->position.x < 0){
+                mSwipeSound->play();
                 rightWins();
+
                 return;
             } else if (mBall->position.y >= 0 &&
                     mBall->position.x > getDisplay()->getWidth())
             {
+                mSwipeSound->play();
                 leftWins();
+
                 return;
             }
 
@@ -184,8 +191,6 @@ namespace PingPong {
                 mBall->direction.setAngle(( (3.0/4.0)*M_PI ) + bounceAngle);
                 mPluckSound->play();
             }
-
-
         }
     }
 
