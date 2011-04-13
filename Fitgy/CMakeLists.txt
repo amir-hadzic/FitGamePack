@@ -18,4 +18,8 @@ add_library(Fitgy
     Vector
     Sound
     Exception/FileNotFound
+    MessageBox
+    MessageBoxGtk
+    MessageBoxWin
+    MessageBoxInt
 )

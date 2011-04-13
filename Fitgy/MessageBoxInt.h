@@ -16,28 +16,40 @@
 *
 *    Author: Amir Hadzic <amir.hadzic@randomshouting.com>
 */
+#ifndef FITGY_MESSAGEBOXINT_H
+#define FITGY_MESSAGEBOXINT_H
 
-#ifndef FITGY_H
-#define FITGY_H
+#include <string>
 
-#include "LibSDL.h"
-#include "Point.h"
-#include "Vector.h"
-#include "Entity.h"
-#include "EventHub.h"
-#include "TextEntity.h"
-#include "GridEntity.h"
-#include "Display.h"
-#include "ImageEntity.h"
-#include "FieldImageEntity.h"
-#include "SplashScreen.h"
-#include "MenuItemEntity.h"
-#include "MenuEntity.h"
-#include "Application.h"
-#include "Color.h"
-#include "Sound.h"
-#include "Exception/FileNotFound.h"
-#include "MessageBox.h"
-#include "MessageBoxInt.h"
+namespace Fitgy {
+
+class MessageBoxInt {
+public:
+    enum DialogResult {
+        ResultOK,
+        ResultYes,
+        ResultNo,
+        ResultCancel
+    };
+
+    enum Type {
+        MessageInfo,
+        MessageWarning,
+        MessageError,
+        MessageQuestion
+    };
+
+    enum Buttons {
+        ButtonOK,
+        ButtonOKCancel,
+        ButtonYesNo
+    };
+
+    virtual DialogResult show(std::string, std::string, Type, Buttons) {
+        return ResultOK;
+    }
+};
+
+}
 
 #endif

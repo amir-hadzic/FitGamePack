@@ -80,8 +80,8 @@ namespace PingPong {
             mPluckSound = new Fitgy::Sound("sfx/pluck.ogg");
             mSwipeSound = new Fitgy::Sound("sfx/swipe.ogg", MIX_MAX_VOLUME / 2);
         } catch (Fitgy::Exception::FileNotFound const &e){
-            // TODO: Show a message box or something appropriate with the
-            // exception message.
+            Fitgy::MessageBox::show("Resource not found: " + e.getFile(), "Error",
+                    Fitgy::MessageBoxInt::MessageError, Fitgy::MessageBoxInt::ButtonOK);
             return false;
         }
 

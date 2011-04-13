@@ -4,9 +4,5 @@ add_executable(PingPong
 )
 target_link_libraries(
     PingPong 
-    Fitgy 
-    ${SDL_LIBRARY} 
-    ${SDLTTF_LIBRARY} 
-    ${SDLMIXER_LIBRARY} 
-    ${SDLIMAGE_LIBRARY}
+    ${FITGY_LIBRARIES}
 )

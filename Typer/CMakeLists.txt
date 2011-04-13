@@ -5,8 +5,5 @@ add_executable(Typer
 )
 target_link_libraries(Typer 
     Fitgy 
-    ${SDL_LIBRARY} 
-    ${SDLTTF_LIBRARY} 
-    ${SDLMIXER_LIBRARY}
-    ${SDLIMAGE_LIBRARY}
+    ${FITGY_LIBRARIES}
 )

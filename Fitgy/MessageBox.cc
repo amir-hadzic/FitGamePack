@@ -17,27 +17,16 @@
 *    Author: Amir Hadzic <amir.hadzic@randomshouting.com>
 */
 
-#ifndef FITGY_H
-#define FITGY_H
-
-#include "LibSDL.h"
-#include "Point.h"
-#include "Vector.h"
-#include "Entity.h"
-#include "EventHub.h"
-#include "TextEntity.h"
-#include "GridEntity.h"
-#include "Display.h"
-#include "ImageEntity.h"
-#include "FieldImageEntity.h"
-#include "SplashScreen.h"
-#include "MenuItemEntity.h"
-#include "MenuEntity.h"
-#include "Application.h"
-#include "Color.h"
-#include "Sound.h"
-#include "Exception/FileNotFound.h"
 #include "MessageBox.h"
-#include "MessageBoxInt.h"
 
-#endif
+namespace Fitgy {
+
+/* static */ MessageBoxInt::DialogResult
+MessageBox::show(std::string message,std::string title, MessageBoxInt::Type type,
+        MessageBoxInt::Buttons buttons)
+{
+    _MessageBox msgBox;
+    return msgBox.show(message, title, type, buttons);
+}
+
+}
