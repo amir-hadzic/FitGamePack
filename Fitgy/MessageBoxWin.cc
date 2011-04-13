@@ -22,12 +22,13 @@
 
 namespace Fitgy {
 
+/**
+ * Windows implementation of the message box dialog using the windows API.
+ */
 MessageBox::MessageBoxWin::DialogResult
 MessageBox::MessageBoxWin::show(std::string message, std::string title,
         Type type, Buttons buttons)
 {
-    Gtk::Main kit(0, NULL);
-
     unsigned int messageType = 0;
     switch(type){
     case MessageInfo:
@@ -61,7 +62,7 @@ MessageBox::MessageBoxWin::show(std::string message, std::string title,
     }
 
     messageType |= MB_TASKMODAL;
-    int result = MessageBox(NULL, message, title, messageType);
+    int result = MessageBoxEx(NULL, message.c_str(), title.c_str(), messageType, 0);
 
     switch(result){
     case IDOK: return ResultOK;

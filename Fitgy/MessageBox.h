@@ -16,6 +16,7 @@
 *
 *    Author: Amir Hadzic <amir.hadzic@randomshouting.com>
 */
+
 #ifndef FITGY_MESSAGEBOX_H
 #define FITGY_MESSAGEBOX_H
 
@@ -30,6 +31,11 @@
 
 namespace Fitgy {
 
+/**
+ * MessageBox is used to display a dialog with a custom message, title and
+ * buttons. It uses the windows API to show the dialog on Windows and Gtk
+ * (gtkmm) on Linux.
+ */
 class MessageBox {
 private:
 #ifdef _WIN32
@@ -49,6 +55,16 @@ private:
 #endif
 
 public:
+    /**
+     * Display a message box.
+     *
+     * @param message is the message to show.
+     * @param title is the title to use for the dialog window.
+     * @param type is the type of the message.
+     * @param buttons specifies which buttons will be shown on the dialog.
+     *
+     * @return the result code showing which button was clicked.
+     */
     static MessageBoxInt::DialogResult show(std::string message,
             std::string title, MessageBoxInt::Type type,
             MessageBoxInt::Buttons buttons);

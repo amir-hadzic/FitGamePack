@@ -16,6 +16,7 @@
 *
 *    Author: Amir Hadzic <amir.hadzic@randomshouting.com>
 */
+
 #ifndef FITGY_MESSAGEBOXINT_H
 #define FITGY_MESSAGEBOXINT_H
 
@@ -23,6 +24,9 @@
 
 namespace Fitgy {
 
+/**
+ * The interface for classes that are used to show a dialog box with a message.
+ */
 class MessageBoxInt {
 public:
     enum DialogResult {
