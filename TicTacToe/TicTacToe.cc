@@ -121,8 +121,8 @@ namespace TicTacToe {
 
             restart();
         } catch (Fitgy::Exception::FileNotFound const &e){
-            // TODO: Show a message box or something appropriate with the
-            // exception message.
+            Fitgy::MessageBox::show("Resource not found: " + e.getFile(), "Error",
+                                Fitgy::MessageBoxInt::MessageError, Fitgy::MessageBoxInt::ButtonOK);
             return false;
         }
 
