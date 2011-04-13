@@ -59,97 +59,73 @@ namespace TicTacToe {
 
         mDisplay->setTitle("Fitgy::TicTacToe", "TicTacToe");
 
-        mSplashScreen = new Fitgy::SplashScreen(
-            mDisplay, "gfx/TicTacToe_Splash.bmp", 2000
-        );
+        try
+        {
+            mSplashScreen = new Fitgy::SplashScreen(mDisplay,
+                    "gfx/TicTacToe_Splash.bmp", 2000);
 
-        TTF_Font* droidSansMono22px = TTF_OpenFont("fonts/DroidSans.ttf", 22);
+            mFont = TTF_OpenFont(FONT.c_str(), 22);
 
-        gridEntity = new Fitgy::GridEntity(mDisplay, 300, 300, 3);
-        gridEntity->setBackground(new Fitgy::ImageEntity(gridEntity, "gfx/Sample.bmp"));
-        gridEntity->position.x = 10;
-        gridEntity->position.y = 10;
+            if (mFont == NULL){
+                throw Fitgy::Exception::FileNotFound(FONT);
+            }
 
-        SDL_Color colorWhite;
-        colorWhite.r = 0xff;
-        colorWhite.g = 0xff;
-        colorWhite.b = 0xff;
+            gridEntity = new Fitgy::GridEntity(mDisplay, 300, 300, 3);
+            gridEntity->setBackground(new Fitgy::ImageEntity(gridEntity, "gfx/Sample.bmp"));
+            gridEntity->position.x = 10;
+            gridEntity->position.y = 10;
 
-        SDL_Color colorBlack;
-        colorBlack.r = 0x00;
-        colorBlack.g = 0x00;
-        colorBlack.b = 0x00;
+            txtWinsO = new Fitgy::TextEntity(mDisplay, "0", mFont, Fitgy::Color::white());
+            txtWinsO->position.x = 429;
+            txtWinsO->position.y = 260;
 
-        SDL_Color colorRed;
-        colorRed.r = 0xff;
-        colorRed.g = 0x00;
-        colorRed.b = 0x00;
+            txtWinsX = new Fitgy::TextEntity(mDisplay, "0", mFont, Fitgy::Color::white());
+            txtWinsX->position.x = 549;
+            txtWinsX->position.y = 260;
 
-        SDL_Color colorDarkRed;
-        colorDarkRed.r = 0xaa;
-        colorDarkRed.g = 0x00;
-        colorDarkRed.b = 0x00;
+            txtPlaying = new Fitgy::TextEntity(mDisplay, "Currently playing:",
+                    mFont, Fitgy::Color::white());
 
-        txtWinsO = new Fitgy::TextEntity(
-            mDisplay,
-            "0",
-            droidSansMono22px,
-            colorWhite
-        );
-        txtWinsO->position.x = 429;
-        txtWinsO->position.y = 260;
+            txtPlaying->position.x = 388;
+            txtPlaying->position.y = 29;
 
-        txtWinsX = new Fitgy::TextEntity(
-            mDisplay,
-            "0",
-            droidSansMono22px,
-            colorWhite
-        );
-        txtWinsX->position.x = 549;
-        txtWinsX->position.y = 260;
+            imgPlayerO = new Fitgy::ImageEntity(mDisplay, "gfx/PlayerO.bmp", SDL_ALPHA_OPAQUE/2);
+            imgPlayerO->position.x = 390;
+            imgPlayerO->position.y = 80;
 
-        txtPlaying = new Fitgy::TextEntity(
-            mDisplay,
-            "Currently playing:",
-            droidSansMono22px,
-            colorWhite
-        );
+            imgPlayerX = new Fitgy::ImageEntity(mDisplay, "gfx/PlayerX.bmp", SDL_ALPHA_OPAQUE);
+            imgPlayerX->position.x = 510;
+            imgPlayerX->position.y = 80;
 
-        txtPlaying->position.x = 388;
-        txtPlaying->position.y = 29;
-        txtPlaying->setColor(colorWhite);
+            mnuMain = new Fitgy::MenuEntity(mDisplay, mFont);
+            mnuMain->setBackgroundColor(Fitgy::Color::fromRgb(0xaa, 0, 0));
+            mnuMain->setBackgroundHoverColor(Fitgy::Color::red());
+            mnuMain->setForegroundColor(Fitgy::Color::white());
+            mnuMain->setPadding(5);
+            mnuMain->position.x = 20;
+            mnuMain->position.y = 346;
+            mnuMain->addItem("restart", "Start new game");
+            mnuMain->addItem("quit", "Quit");
+            mnuMain->setEventHandler(new MenuEventHandler());
 
-        imgPlayerO = new Fitgy::ImageEntity(mDisplay, "gfx/PlayerO.bmp", SDL_ALPHA_OPAQUE/2);
-        imgPlayerO->position.x = 390;
-        imgPlayerO->position.y = 80;
+            soundDrawX = new Fitgy::Sound("sfx/draw-x.ogg");
+            soundDrawO = new Fitgy::Sound("sfx/draw-o.ogg");
 
-        imgPlayerX = new Fitgy::ImageEntity(mDisplay, "gfx/PlayerX.bmp", SDL_ALPHA_OPAQUE);
-        imgPlayerX->position.x = 510;
-        imgPlayerX->position.y = 80;
+            addEntity(gridEntity);
+            addEntity(txtWinsO);
+            addEntity(txtWinsX);
+            addEntity(txtPlaying);
+            addEntity(imgPlayerO);
+            addEntity(imgPlayerX);
+            addEntity(mnuMain);
 
-        mnuMain = new Fitgy::MenuEntity(mDisplay, droidSansMono22px);
-        mnuMain->setBackgroundColor(colorDarkRed);
-        mnuMain->setBackgroundHoverColor(colorRed);
-        mnuMain->setForegroundColor(colorWhite);
-        mnuMain->setPadding(5);
-        mnuMain->position.x = 20;
-        mnuMain->position.y = 346;
-        mnuMain->addItem("restart", "Start new game");
-        mnuMain->addItem("quit", "Quit");
-        mnuMain->setEventHandler(new MenuEventHandler());
+            restart();
+        } catch (Fitgy::Exception::FileNotFound const &e){
+            // TODO: Show a message box or something appropriate with the
+            // exception message.
+            return false;
+        }
 
-        soundDrawX = new Fitgy::Sound("sfx/draw-x.ogg");
-        soundDrawO = new Fitgy::Sound("sfx/draw-o.ogg");
-
-        addEntity(gridEntity);
-        addEntity(txtWinsO);
-        addEntity(txtWinsX);
-        addEntity(txtPlaying);
-        addEntity(imgPlayerO);
-        addEntity(imgPlayerX);
-        addEntity(mnuMain);
-
-        restart();
         return true;
     }
 

@@ -23,6 +23,11 @@ namespace Fitgy {
 
     Sound::Sound(char* filename, short volume, short channel){
         mChunk = Mix_LoadWAV(filename);
+
+        if (mChunk == NULL){
+            throw Exception::FileNotFound(filename);
+        }
+
         mChannel = channel;
         mVolume = volume;
         mLoops = 0;

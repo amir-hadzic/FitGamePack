@@ -30,6 +30,7 @@
 && fields[f2] == fields[f3] && fields[f3] != FieldType::Free
 
 namespace TicTacToe {
+    const std::string FONT = "fonts/DroidSans.ttf";
 
     class Game : public Fitgy::Application {
     private:
@@ -38,6 +39,7 @@ namespace TicTacToe {
         Game(Game const&){};
         Game& operator=(Game const&){ return *this; };
         static Game* mInstance;
+        TTF_Font* mFont;
         int winsX;
         int winsO;
         void checkForWin();

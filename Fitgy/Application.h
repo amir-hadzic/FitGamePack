@@ -25,8 +25,10 @@
 #include "EventHub.h"
 #include "Entity.h"
 #include "Display.h"
+#include "Exception/FileNotFound.h"
 #include <vector>
 #include <algorithm>
+
 
 namespace Fitgy {
     typedef std::vector<Entity*> EntityContainer;

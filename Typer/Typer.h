@@ -30,7 +30,10 @@
 #include <string>
 #include <sstream>
 
+
 namespace Typer {
+    const std::string LABEL_FONT = "fonts/DroidSans.ttf";
+    const std::string WORD_FONT = "fonts/DroidSansMono.ttf";
 
     class Game : public Fitgy::Application {
     private:

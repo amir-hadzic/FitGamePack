@@ -22,7 +22,12 @@
 namespace Fitgy {
     Application::Music::Music(char* filename, short volume){
         mVolume = volume;
+
         mMixMusic = Mix_LoadMUS(filename);
+        if (!mMixMusic){
+            throw Exception::FileNotFound(filename);
+        }
+
         mPaused = false;
         Mix_VolumeMusic(volume);
     }
@@ -92,7 +97,7 @@ namespace Fitgy {
     int 
     Application::execute(){
         mRunning = true;
-        
+
         if (init() == false){
             return -1;
         }

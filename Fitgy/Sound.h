@@ -18,6 +18,7 @@
 */
 
 #include "LibSDL.h"
+#include "Exception/FileNotFound.h"
 
 namespace Fitgy {
 

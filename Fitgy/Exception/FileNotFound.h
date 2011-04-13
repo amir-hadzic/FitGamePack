@@ -16,26 +16,23 @@
 *
 *    Author: Amir Hadzic <amir.hadzic@randomshouting.com>
 */
+#ifndef FITGY_EX_FILENOTFOUND
+#define FITGY_EX_FILENOTFOUND
 
-#ifndef FITGY_H
-#define FITGY_H
+#include <stdexcept>
+#include <string>
 
-#include "LibSDL.h"
-#include "Point.h"
-#include "Vector.h"
-#include "Entity.h"
-#include "EventHub.h"
-#include "TextEntity.h"
-#include "GridEntity.h"
-#include "Display.h"
-#include "ImageEntity.h"
-#include "FieldImageEntity.h"
-#include "SplashScreen.h"
-#include "MenuItemEntity.h"
-#include "MenuEntity.h"
-#include "Application.h"
-#include "Color.h"
-#include "Sound.h"
-#include "Exception/FileNotFound.h"
+namespace Fitgy { namespace Exception {
+
+    class FileNotFound : public std::runtime_error {
+    private:
+        std::string mFile;
+    public:
+        FileNotFound(std::string file);
+        ~FileNotFound() throw();
+        std::string getFile();
+    };
+
+}}
 
 #endif

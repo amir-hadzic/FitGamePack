@@ -63,17 +63,32 @@ namespace PingPong {
 
         getDisplay()->setTitle("Fitgy::Ping-Pong", "Ping-Pong");
 
-        mScoreFont = TTF_OpenFont("fonts/DroidSans.ttf", 54);
+        try
+        {
+            mScoreFont = TTF_OpenFont(SCORE_FONT.c_str(), 54);
 
-        mSplashScreen = new Fitgy::SplashScreen(getDisplay(), "gfx/Splash.png", 2000);
-        mBackgroundImage = new Fitgy::ImageEntity(getDisplay(), "gfx/Background.png");
+            if (mScoreFont == NULL){
+                throw Fitgy::Exception::FileNotFound(SCORE_FONT);
+            }
 
-        mPaddleLeft = new Fitgy::ImageEntity(getDisplay(), "gfx/Paddle.png");
+            mSplashScreen = new Fitgy::SplashScreen(getDisplay(),"gfx/Splash.png", 2000);
+            mBackgroundImage = new Fitgy::ImageEntity(getDisplay(),"gfx/Background.png");
+            mPaddleLeft = new Fitgy::ImageEntity(getDisplay(), "gfx/Paddle.png");
+            mPaddleRight = new Fitgy::ImageEntity(getDisplay(), "gfx/Paddle.png");
+            mBall = new Fitgy::ImageEntity(getDisplay(), "gfx/Ball.png",
+                            SDL_ALPHA_OPAQUE, true);
+            mPluckSound = new Fitgy::Sound("sfx/pluck.ogg");
+            mSwipeSound = new Fitgy::Sound("sfx/swipe.ogg", MIX_MAX_VOLUME / 2);
+        } catch (Fitgy::Exception::FileNotFound const &e){
+            // TODO: Show a message box or something appropriate with the
+            // exception message.
+            return false;
+        }
+
         mPaddleLeft->position.x = 10;
         mPaddleLeft->position.y = 190;
         mPaddleLeft->setSpeed(PADDLE_SPEED);
 
-        mPaddleRight = new Fitgy::ImageEntity(getDisplay(), "gfx/Paddle.png");
         mPaddleRight->position.x = 620;
         mPaddleRight->position.y = 190;
         mPaddleRight->setSpeed(PADDLE_SPEED);
@@ -88,16 +103,10 @@ namespace PingPong {
         mScoreRight->position.x = 340;
         mScoreRight->position.y = 10;
 
-        mBall = new Fitgy::ImageEntity(getDisplay(), "gfx/Ball.png",
-                SDL_ALPHA_OPAQUE, true);
-
         mBall->position.x = 300;
         mBall->position.y = 300;
         mBall->direction = Fitgy::Vector::left;
         mBall->setSpeed(BALL_SPEED);
-
-        mPluckSound = new Fitgy::Sound("sfx/pluck.ogg");
-        mSwipeSound = new Fitgy::Sound("sfx/swipe.ogg", MIX_MAX_VOLUME / 2);
 
         addEntity(mBackgroundImage);
         addEntity(mPaddleLeft);

@@ -22,6 +22,7 @@
 
 #include "../Fitgy/Fitgy.h"
 #include <sstream>
+#include <string>
 #include <stdlib.h>
 #include <time.h>
 
@@ -29,6 +30,7 @@
 #include <cmath>
 
 namespace PingPong {
+    const std::string SCORE_FONT = "fonts/DroidSans.ttf";
     const float PADDLE_SPEED = 400;
     const float BALL_SPEED = 220;
     const int SPEED_CHANGE_TIME = 3500;

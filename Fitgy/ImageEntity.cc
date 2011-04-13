@@ -42,7 +42,7 @@ namespace Fitgy {
         SDL_Surface* surfOriginal = NULL;
 
         if ((surfOriginal = IMG_Load(filename)) == NULL){
-            throw "File couldn't be read.";
+            throw Exception::FileNotFound(filename);
         }
 
         // Set image opacity before converting the surface to the display

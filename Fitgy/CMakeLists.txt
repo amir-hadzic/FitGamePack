@@ -17,4 +17,5 @@ add_library(Fitgy
     TextEntity
     Vector
     Sound
+    Exception/FileNotFound
 )

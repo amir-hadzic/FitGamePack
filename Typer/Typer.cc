@@ -51,33 +51,50 @@ namespace Typer {
         }
 
         mDisplay->setTitle("Fitgy::Typer", "Typer");
-        readWords("word-list.txt");
 
-        mSplashScreen = new Fitgy::SplashScreen(
-            mDisplay, "gfx/splash.bmp", 2000
-        );
+        try
+        {
+            readWords("word-list.txt");
 
-        mWordFont = TTF_OpenFont("fonts/DroidSansMono.ttf", 18);
-        mLabelFont = TTF_OpenFont("fonts/DroidSans.ttf", 22);
+            mSplashScreen = new Fitgy::SplashScreen(
+                mDisplay, "gfx/splash.bmp", 2000
+            );
 
-        txtScore = new Fitgy::TextEntity(getDisplay(), "Score: 0", mLabelFont,
-                Fitgy::Color::white());
-        txtScore->position.x = 10;
-        txtScore->position.y = 10;
+            mWordFont = TTF_OpenFont(WORD_FONT.c_str(), 18);
+            if (mWordFont == NULL) {
+                throw Fitgy::Exception::FileNotFound(WORD_FONT);
+            }
 
-        imgDanger = new Fitgy::ImageEntity(getDisplay(), "gfx/danger.bmp");
-        imgDanger->position.x = 10;
-        imgDanger->position.y = getDisplay()->getHeight();
-        imgDanger->position.y -= imgDanger->getHeight() + 20;
+            mLabelFont = TTF_OpenFont(LABEL_FONT.c_str(), 22);
+            if (mLabelFont == NULL) {
+                throw Fitgy::Exception::FileNotFound(LABEL_FONT);
+            }
 
-        mNextSpawnTime = getRandomSpawnTime();
-        srand(time(NULL));
+            imgDanger = new Fitgy::ImageEntity(getDisplay(), "gfx/danger.bmp");
+            imgDanger->position.x = 10;
+            imgDanger->position.y = getDisplay()->getHeight();
+            imgDanger->position.y -= imgDanger->getHeight() + 20;
 
-        typingSound = new Fitgy::Sound("sfx/typing.ogg");
-        setMusic("sfx/signal.ogg", MIX_MAX_VOLUME/2);
+            txtScore = new Fitgy::TextEntity(getDisplay(), "Score: 0", mLabelFont,
+                                    Fitgy::Color::white());
+
+            txtScore->position.x = 10;
+            txtScore->position.y = 10;
+
+            typingSound = new Fitgy::Sound("sfx/typing.ogg");
+
+            setMusic("sfx/signal.ogg", MIX_MAX_VOLUME/2);
+        } catch (Fitgy::Exception::FileNotFound const &e){
+            // TODO: Show a message box or something appropriate with the
+            // exception message.
+            return false;
+        }
 
         addEntity(txtScore);
         addEntity(imgDanger);
+
+        srand(time(NULL));
+        mNextSpawnTime = getRandomSpawnTime();
         return true;
     }
 
@@ -141,6 +158,10 @@ namespace Typer {
     void
     Game::readWords(char* filename){
         std::ifstream wordFile(filename);
+
+        if (wordFile.fail()){
+            throw Fitgy::Exception::FileNotFound(filename);
+        }
 
         while(!wordFile.eof()){
             std::string word;

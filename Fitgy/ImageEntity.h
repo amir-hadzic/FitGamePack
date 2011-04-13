@@ -22,6 +22,7 @@
 
 #include "LibSDL.h"
 #include "Entity.h"
+#include "Exception/FileNotFound.h"
 
 namespace Fitgy {
     
