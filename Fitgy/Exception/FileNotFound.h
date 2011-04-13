@@ -30,7 +30,7 @@ namespace Fitgy { namespace Exception {
     public:
         FileNotFound(std::string file);
         ~FileNotFound() throw();
-        std::string getFile();
+        std::string getFile() const;
     };
 
 }}
