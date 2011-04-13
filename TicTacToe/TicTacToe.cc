@@ -62,7 +62,7 @@ namespace TicTacToe {
         try
         {
             mSplashScreen = new Fitgy::SplashScreen(mDisplay,
-                    "gfx/TicTacToe_Splash.bmp", 2000);
+                    "gfx/Splash.png", 2000);
 
             mFont = TTF_OpenFont(FONT.c_str(), 22);
 
@@ -71,7 +71,6 @@ namespace TicTacToe {
             }
 
             gridEntity = new Fitgy::GridEntity(mDisplay, 300, 300, 3);
-            gridEntity->setBackground(new Fitgy::ImageEntity(gridEntity, "gfx/Sample.bmp"));
             gridEntity->position.x = 10;
             gridEntity->position.y = 10;
 
@@ -89,11 +88,11 @@ namespace TicTacToe {
             txtPlaying->position.x = 388;
             txtPlaying->position.y = 29;
 
-            imgPlayerO = new Fitgy::ImageEntity(mDisplay, "gfx/PlayerO.bmp", SDL_ALPHA_OPAQUE/2);
+            imgPlayerO = new Fitgy::ImageEntity(mDisplay, "gfx/PlayerO.png", SDL_ALPHA_OPAQUE/2);
             imgPlayerO->position.x = 390;
             imgPlayerO->position.y = 80;
 
-            imgPlayerX = new Fitgy::ImageEntity(mDisplay, "gfx/PlayerX.bmp", SDL_ALPHA_OPAQUE);
+            imgPlayerX = new Fitgy::ImageEntity(mDisplay, "gfx/PlayerX.png", SDL_ALPHA_OPAQUE);
             imgPlayerX->position.x = 510;
             imgPlayerX->position.y = 80;
 
@@ -205,7 +204,7 @@ namespace TicTacToe {
 
         GridFieldEventHandler* gridFieldEventHandler = new GridFieldEventHandler();
         for (int i = 0; i < 9; i++){
-            Fitgy::FieldImageEntity* field = new Fitgy::FieldImageEntity(gridEntity, "gfx/B100.bmp", i);
+            Fitgy::FieldImageEntity* field = new Fitgy::FieldImageEntity(gridEntity, "gfx/B100.png", i);
             field->setEventHandler(gridFieldEventHandler);
             gridEntity->removeEntity(i);
             gridEntity->addEntity(field, i);

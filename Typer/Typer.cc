@@ -57,7 +57,7 @@ namespace Typer {
             readWords("word-list.txt");
 
             mSplashScreen = new Fitgy::SplashScreen(
-                mDisplay, "gfx/splash.bmp", 2000
+                mDisplay, "gfx/splash.png", 2000
             );
 
             mWordFont = TTF_OpenFont(WORD_FONT.c_str(), 18);
@@ -70,7 +70,7 @@ namespace Typer {
                 throw Fitgy::Exception::FileNotFound(LABEL_FONT);
             }
 
-            imgDanger = new Fitgy::ImageEntity(getDisplay(), "gfx/danger.bmp");
+            imgDanger = new Fitgy::ImageEntity(getDisplay(), "gfx/danger.png");
             imgDanger->position.x = 10;
             imgDanger->position.y = getDisplay()->getHeight();
             imgDanger->position.y -= imgDanger->getHeight() + 20;
