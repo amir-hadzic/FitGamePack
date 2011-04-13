@@ -137,9 +137,7 @@ namespace PingPong {
 
     void
     Game::loop(){
-        if (mSplashScreen != NULL){
-            mSplashScreen->onLoop();
-    } else {
+        if (mSplashScreen == NULL){
             Application::loop();
 
             if (mLastSpeedChange == 0){
@@ -200,6 +198,8 @@ namespace PingPong {
                 mBall->direction.setAngle(( (3.0/4.0)*M_PI ) + bounceAngle);
                 mPluckSound->play();
             }
+        } else {
+            mSplashScreen->onLoop();
         }
     }
 
