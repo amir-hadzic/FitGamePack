@@ -25,50 +25,51 @@
 
 namespace Fitgy {
 
+/**
+ * Point is a simple class for representing a coordinate in a 2D world.
+ */
+class Point {
+public:
     /**
-     * Point is a simple class for representing a coordinate in a 2D world.
+     * The X value of the point.
      */
-    class Point {
-    public:
-        /**
-         * The X value of the point.
-         */
-        float x;
+    float x;
 
-        /**
-         * The Y value of the point.
-         */
-        float y;
+    /**
+     * The Y value of the point.
+     */
+    float y;
 
-        /**
-         * Constructor that sets the X and Y values to 0.
-         */
-        Point();
+    /**
+     * Constructor that sets the X and Y values to 0.
+     */
+    Point();
 
-        /**
-         * Constructor that sets the X and Y values to provided values.
-         *
-         * @param x the x value of the point.
-         * @param y the y value of the point.
-         */
-        Point(float x, float y);
+    /**
+     * Constructor that sets the X and Y values to provided values.
+     *
+     * @param x the x value of the point.
+     * @param y the y value of the point.
+     */
+    Point(float x, float y);
 
-        /**
-         * Provides an representation of the Point readable by humans.
-         */
-        operator std::string() const;
+    /**
+     * Provides an representation of the Point readable by humans.
+     */
+    operator std::string() const;
 
-        bool operator==(const Point &v) const;
-        bool operator!=(const Point &v) const;
-        Point operator-(const Point &v) const;
-        Point operator+(const Point &v) const;
-        Point operator*(float scale) const;
-        Point operator/(float divider) const;
-        Point& operator+=(const Point &v);
-        Point& operator-=(const Point &v);
-        Point& operator*=(float f);
-        Point& operator/=(float f);
-    };
+    bool operator==(const Point &v) const;
+    bool operator!=(const Point &v) const;
+    Point operator-(const Point &v) const;
+    Point operator+(const Point &v) const;
+    Point operator*(float scale) const;
+    Point operator/(float divider) const;
+    Point& operator+=(const Point &v);
+    Point& operator-=(const Point &v);
+    Point& operator*=(float f);
+    Point& operator/=(float f);
+};
+
 }
 
 #endif

@@ -21,82 +21,83 @@
 
 namespace Fitgy {
 
-    Point::Point(){
-        x = 0;
-        y = 0;
-    }
+Point::Point(){
+    x = 0;
+    y = 0;
+}
 
-    Point::Point(float x, float y){
-        this->x = x;
-        this->y = y;
-    }
+Point::Point(float x, float y){
+    this->x = x;
+    this->y = y;
+}
 
-    Point::operator std::string() const {
-        std::stringstream ss;
-        ss << "(" << x << ", " << y << ")";
+Point::operator std::string() const {
+    std::stringstream ss;
+    ss << "(" << x << ", " << y << ")";
 
-        return ss.str();
-    }
+    return ss.str();
+}
 
-    bool
-    Point::operator==(const Point &point) const {
-        return x == point.x && y == point.y;
-    }
+bool
+Point::operator==(const Point &point) const {
+    return x == point.x && y == point.y;
+}
 
-    bool
-    Point::operator!=(const Point &point) const {
-        return !(*this == point);
-    }
+bool
+Point::operator!=(const Point &point) const {
+    return !(*this == point);
+}
 
-    Point
-    Point::operator-(const Point &p) const {
-        return Point(x - p.x, y - p.y);
-    }
+Point
+Point::operator-(const Point &p) const {
+    return Point(x - p.x, y - p.y);
+}
 
-    Point
-    Point::operator+(const Point &p) const {
-        return Point(x + p.x, y + p.y);
-    }
+Point
+Point::operator+(const Point &p) const {
+    return Point(x + p.x, y + p.y);
+}
 
-    Point
-    Point::operator*(float scale) const {
-        return Point(x * scale, y * scale);
-    }
+Point
+Point::operator*(float scale) const {
+    return Point(x * scale, y * scale);
+}
 
-    Point
-    Point::operator/(float divider) const {
-        return Point(x / divider, y / divider);
-    }
+Point
+Point::operator/(float divider) const {
+    return Point(x / divider, y / divider);
+}
 
-    Point&
-    Point::operator+=(const Point &p) {
-        x += p.x;
-        y += p.y;
+Point&
+Point::operator+=(const Point &p) {
+    x += p.x;
+    y += p.y;
 
-        return *this;
-    }
+    return *this;
+}
 
-    Point&
-    Point::operator-=(const Point &p) {
-        x -= p.x;
-        y -= p.y;
+Point&
+Point::operator-=(const Point &p) {
+    x -= p.x;
+    y -= p.y;
 
-        return *this;
-    }
+    return *this;
+}
 
-    Point&
-    Point::operator*=(float f) {
-        x *= f;
-        y *= f;
+Point&
+Point::operator*=(float f) {
+    x *= f;
+    y *= f;
 
-        return *this;
-    }
+    return *this;
+}
 
-    Point&
-    Point::operator/=(float f) {
-        x /= f;
-        y /= f;
+Point&
+Point::operator/=(float f) {
+    x /= f;
+    y /= f;
 
-        return *this;
-    }
+    return *this;
+}
+
 }

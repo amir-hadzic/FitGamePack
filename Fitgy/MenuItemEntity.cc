@@ -20,161 +20,163 @@
 #include "MenuItemEntity.h"
 
 namespace Fitgy {
-    MenuItemEntity::MenuItemEntity(Entity* parent, std::string identifier,
-            std::string text, TTF_Font *font)
-    : Entity(parent)
-    {
-        mIdentifier = identifier;
-        mFont = font;
-        mForegroundColor = Color::black();
-        mBackgroundColor = Color::red();
-        mBackgroundHoverColor = Color::green();
-        mTextEntity = new TextEntity(this, text, font, mForegroundColor);
-        mPadding = 0;
-        mWidth = mTextEntity->getWidth();
-        mHeight = mTextEntity->getHeight();
 
-        redraw();
+MenuItemEntity::MenuItemEntity(Entity* parent, std::string identifier,
+        std::string text, TTF_Font *font)
+: Entity(parent)
+{
+    mIdentifier = identifier;
+    mFont = font;
+    mForegroundColor = Color::black();
+    mBackgroundColor = Color::red();
+    mBackgroundHoverColor = Color::green();
+    mTextEntity = new TextEntity(this, text, font, mForegroundColor);
+    mPadding = 0;
+    mWidth = mTextEntity->getWidth();
+    mHeight = mTextEntity->getHeight();
+
+    redraw();
+}
+
+MenuItemEntity::~MenuItemEntity(){
+    delete mTextEntity;
+    mTextEntity = NULL;
+}
+
+void
+MenuItemEntity::redraw(){
+    if (entitySurface != NULL){
+        SDL_FreeSurface(entitySurface);
+        entitySurface = NULL;
     }
 
-    MenuItemEntity::~MenuItemEntity(){
-        delete mTextEntity;
-        mTextEntity = NULL;
-    }
+    entitySurface = SDL_CreateRGBSurface(
+        SDL_HWSURFACE | SDL_SRCALPHA,
+        getWidth(),
+        getHeight(),
+        32, 0, 0, 0, 0
+    );
 
-    void
-    MenuItemEntity::redraw(){
-        if (entitySurface != NULL){
-            SDL_FreeSurface(entitySurface);
-            entitySurface = NULL;
-        }
+    SDL_FillRect(
+        entitySurface,
+        NULL,
+        SDL_MapRGB(
+            entitySurface->format,
+            mCurrentBackgroundColor.r,
+            mCurrentBackgroundColor.g,
+            mCurrentBackgroundColor.b
+        )
+    );
 
-        entitySurface = SDL_CreateRGBSurface(
-            SDL_HWSURFACE | SDL_SRCALPHA,
-            getWidth(),
-            getHeight(),
-            32, 0, 0, 0, 0
-        );
+    mTextEntity->onRender(this);
+}
 
-        SDL_FillRect(
-            entitySurface,
-            NULL,
-            SDL_MapRGB(
-                entitySurface->format,
-                mCurrentBackgroundColor.r,
-                mCurrentBackgroundColor.g,
-                mCurrentBackgroundColor.b
-            )
-        );
+void
+MenuItemEntity::onRender(Entity* entity){
+    drawToEntity(entity);
+}
 
-        mTextEntity->onRender(this);
-    }
+bool
+MenuItemEntity::onMouseEnter(void* sender, SDL_Event* event){
+    mCurrentBackgroundColor = mBackgroundHoverColor;
+    redraw();
 
-    void
-    MenuItemEntity::onRender(Entity* entity){
-        drawToEntity(entity);
-    }
+    return Entity::onMouseEnter(sender, event);
+}
 
-    bool
-    MenuItemEntity::onMouseEnter(void* sender, SDL_Event* event){
-        mCurrentBackgroundColor = mBackgroundHoverColor;
-        redraw();
+bool
+MenuItemEntity::onMouseLeave(void* sender, SDL_Event* event){
+    mCurrentBackgroundColor = mBackgroundColor;
+    redraw();
 
-        return Entity::onMouseEnter(sender, event);
-    }
+    return Entity::onMouseLeave(sender, event);
+}
 
-    bool
-    MenuItemEntity::onMouseLeave(void* sender, SDL_Event* event){
-        mCurrentBackgroundColor = mBackgroundColor;
-        redraw();
+void
+MenuItemEntity::setPadding(short padding){
+    mPadding = padding;
+    mTextEntity->position.x = padding;
+    mTextEntity->position.y = padding;
+    redraw();
+}
 
-        return Entity::onMouseLeave(sender, event);
-    }
+short
+MenuItemEntity::getPadding(){
+    // Both X and Y values are the same, return X.
+    return mPadding;
+}
 
-    void
-    MenuItemEntity::setPadding(short padding){
-        mPadding = padding;
-        mTextEntity->position.x = padding;
-        mTextEntity->position.y = padding;
-        redraw();
-    }
+void
+MenuItemEntity::setText(std::string text){
+    mTextEntity->setText(text);
+}
 
-    short
-    MenuItemEntity::getPadding(){
-        // Both X and Y values are the same, return X.
-        return mPadding;
-    }
+std::string
+MenuItemEntity::getText(){
+    return mTextEntity->getText();
+}
 
-    void
-    MenuItemEntity::setText(std::string text){
-        mTextEntity->setText(text);
-    }
+std::string
+MenuItemEntity::getIdentifier(){
+    return mIdentifier;
+}
 
-    std::string
-    MenuItemEntity::getText(){
-        return mTextEntity->getText();
-    }
+SDL_Color
+MenuItemEntity::getBackgroundColor(){
+    return mBackgroundColor;
+}
 
-    std::string
-    MenuItemEntity::getIdentifier(){
-        return mIdentifier;
-    }
+void
+MenuItemEntity::setBackgroundColor(SDL_Color color){
+    mBackgroundColor = color;
+    mCurrentBackgroundColor = color;
+    redraw();
+}
 
-    SDL_Color
-    MenuItemEntity::getBackgroundColor(){
-        return mBackgroundColor;
-    }
+SDL_Color
+MenuItemEntity::getBackgroundHoverColor(){
+    return mBackgroundHoverColor;
+    redraw();
+}
 
-    void
-    MenuItemEntity::setBackgroundColor(SDL_Color color){
-        mBackgroundColor = color;
-        mCurrentBackgroundColor = color;
-        redraw();
-    }
+void
+MenuItemEntity::setBackgroundHoverColor(SDL_Color color){
+    mBackgroundHoverColor = color;
+    redraw();
+}
 
-    SDL_Color
-    MenuItemEntity::getBackgroundHoverColor(){
-        return mBackgroundHoverColor;
-        redraw();
-    }
+SDL_Color
+MenuItemEntity::getForegroundColor(){
+    return mForegroundColor;
+}
 
-    void
-    MenuItemEntity::setBackgroundHoverColor(SDL_Color color){
-        mBackgroundHoverColor = color;
-        redraw();
-    }
+void
+MenuItemEntity::setForegroundColor(SDL_Color color){
+    mForegroundColor = color;
+    mTextEntity->setColor(color);
+}
 
-    SDL_Color
-    MenuItemEntity::getForegroundColor(){
-        return mForegroundColor;
-    }
+void
+MenuItemEntity::setWidth(int width){
+    mWidth = width - (mPadding * 2);
+    redraw();
+}
 
-    void
-    MenuItemEntity::setForegroundColor(SDL_Color color){
-        mForegroundColor = color;
-        mTextEntity->setColor(color);
-    }
+int
+MenuItemEntity::getWidth(){
+    return mWidth + (mPadding * 2);
+}
 
-    void
-    MenuItemEntity::setWidth(int width){
-        mWidth = width - (mPadding * 2);
-        redraw();
-    }
+void
+MenuItemEntity::setHeight(int height)
+{
+    mHeight = height - (mPadding * 2);
+    redraw();
+}
 
-    int
-    MenuItemEntity::getWidth(){
-        return mWidth + (mPadding * 2);
-    }
+int
+MenuItemEntity::getHeight(){
+    return mHeight + (mPadding * 2);
+}
 
-    void
-    MenuItemEntity::setHeight(int height)
-    {
-        mHeight = height - (mPadding * 2);
-        redraw();
-    }
-
-    int
-    MenuItemEntity::getHeight(){
-        return mHeight + (mPadding * 2);
-    }
 }

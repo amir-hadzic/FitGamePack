@@ -20,260 +20,262 @@
 #include "Game.h"
 
 namespace PingPong {
-    Game* Game::mInstance = NULL;
 
-    Game* Game::getInstance(){
-        if (mInstance == NULL){
-            mInstance = new Game();
-        }
+Game* Game::mInstance = NULL;
 
-        return mInstance;
+Game* Game::getInstance(){
+    if (mInstance == NULL){
+        mInstance = new Game();
     }
 
-    Game::Game(){
-        mSplashScreen = NULL;
-        mBackgroundImage = NULL;
-        mPaddleLeft = NULL;
-        mPaddleRight = NULL;
-        mBall = NULL;
-        mScoreLeft = NULL;
-        mScoreRight = NULL;
-        mPluckSound = NULL;
-        mSwipeSound = NULL;
-        mScoreFont = NULL;
+    return mInstance;
+}
 
-        mLastSpeedChange = 0;
-        mLeftWins = 0;
-        mRightWins = 0;
+Game::Game(){
+    mSplashScreen = NULL;
+    mBackgroundImage = NULL;
+    mPaddleLeft = NULL;
+    mPaddleRight = NULL;
+    mBall = NULL;
+    mScoreLeft = NULL;
+    mScoreRight = NULL;
+    mPluckSound = NULL;
+    mSwipeSound = NULL;
+    mScoreFont = NULL;
+
+    mLastSpeedChange = 0;
+    mLeftWins = 0;
+    mRightWins = 0;
+}
+
+Game::~Game(){
+    delete mPluckSound;
+    delete mSwipeSound;
+
+    TTF_CloseFont(mScoreFont);
+}
+
+bool
+Game::init()
+{
+    if (Application::init() == false) {
+        return false;
     }
 
-    Game::~Game(){
-        delete mPluckSound;
-        delete mSwipeSound;
+    getDisplay()->setTitle("Fitgy::Ping-Pong", "Ping-Pong");
 
-        TTF_CloseFont(mScoreFont);
-    }
-
-    bool
-    Game::init()
+    try
     {
-        if (Application::init() == false) {
-            return false;
+        mScoreFont = TTF_OpenFont(SCORE_FONT.c_str(), 54);
+
+        if (mScoreFont == NULL){
+            throw Fitgy::Exception::FileNotFound(SCORE_FONT);
         }
 
-        getDisplay()->setTitle("Fitgy::Ping-Pong", "Ping-Pong");
-
-        try
-        {
-            mScoreFont = TTF_OpenFont(SCORE_FONT.c_str(), 54);
-
-            if (mScoreFont == NULL){
-                throw Fitgy::Exception::FileNotFound(SCORE_FONT);
-            }
-
-            mSplashScreen = new Fitgy::SplashScreen(getDisplay(),"gfx/Splash.png", 2000);
-            mBackgroundImage = new Fitgy::ImageEntity(getDisplay(),"gfx/Background.png");
-            mPaddleLeft = new Fitgy::ImageEntity(getDisplay(), "gfx/Paddle.png");
-            mPaddleRight = new Fitgy::ImageEntity(getDisplay(), "gfx/Paddle.png");
-            mBall = new Fitgy::ImageEntity(getDisplay(), "gfx/Ball.png",
-                            SDL_ALPHA_OPAQUE, true);
-            mPluckSound = new Fitgy::Sound("sfx/pluck.ogg");
-            mSwipeSound = new Fitgy::Sound("sfx/swipe.ogg", MIX_MAX_VOLUME / 2);
-        } catch (Fitgy::Exception::FileNotFound const &e){
-            Fitgy::MessageBox::show("Resource not found: " + e.getFile(), "Error",
-                    Fitgy::MessageBoxInt::MessageError, Fitgy::MessageBoxInt::ButtonOK);
-            return false;
-        }
-
-        mPaddleLeft->position.x = 10;
-        mPaddleLeft->position.y = 190;
-        mPaddleLeft->setSpeed(PADDLE_SPEED);
-
-        mPaddleRight->position.x = 620;
-        mPaddleRight->position.y = 190;
-        mPaddleRight->setSpeed(PADDLE_SPEED);
-
-        mScoreLeft = new Fitgy::TextEntity(getDisplay(), "0",
-                mScoreFont, Fitgy::Color::fromRgb(63, 82, 43));
-        mScoreLeft->position.x = 270;
-        mScoreLeft->position.y = 10;
-
-        mScoreRight = new Fitgy::TextEntity(getDisplay(), "0",
-                        mScoreFont, Fitgy::Color::fromRgb(63, 82, 43));
-        mScoreRight->position.x = 340;
-        mScoreRight->position.y = 10;
-
-        mBall->position.x = 300;
-        mBall->position.y = 300;
-        mBall->direction = Fitgy::Vector::left;
-        mBall->setSpeed(BALL_SPEED);
-
-        addEntity(mBackgroundImage);
-        addEntity(mPaddleLeft);
-        addEntity(mPaddleRight);
-        addEntity(mScoreLeft);
-        addEntity(mScoreRight);
-        addEntity(mBall);
-
-        srand(time(NULL));
-        return true;
+        mSplashScreen = new Fitgy::SplashScreen(getDisplay(),"gfx/Splash.png", 2000);
+        mBackgroundImage = new Fitgy::ImageEntity(getDisplay(),"gfx/Background.png");
+        mPaddleLeft = new Fitgy::ImageEntity(getDisplay(), "gfx/Paddle.png");
+        mPaddleRight = new Fitgy::ImageEntity(getDisplay(), "gfx/Paddle.png");
+        mBall = new Fitgy::ImageEntity(getDisplay(), "gfx/Ball.png",
+                        SDL_ALPHA_OPAQUE, true);
+        mPluckSound = new Fitgy::Sound("sfx/pluck.ogg");
+        mSwipeSound = new Fitgy::Sound("sfx/swipe.ogg", MIX_MAX_VOLUME / 2);
+    } catch (Fitgy::Exception::FileNotFound const &e){
+        Fitgy::MessageBox::show("Resource not found: " + e.getFile(), "Error",
+                Fitgy::MessageBoxInt::MessageError, Fitgy::MessageBoxInt::ButtonOK);
+        return false;
     }
 
-    void
-    Game::render(){
-        if (mSplashScreen != NULL && !mSplashScreen->isFinished()){
-            mSplashScreen->onRender(getDisplay());
+    mPaddleLeft->position.x = 10;
+    mPaddleLeft->position.y = 190;
+    mPaddleLeft->setSpeed(PADDLE_SPEED);
+
+    mPaddleRight->position.x = 620;
+    mPaddleRight->position.y = 190;
+    mPaddleRight->setSpeed(PADDLE_SPEED);
+
+    mScoreLeft = new Fitgy::TextEntity(getDisplay(), "0",
+            mScoreFont, Fitgy::Color::fromRgb(63, 82, 43));
+    mScoreLeft->position.x = 270;
+    mScoreLeft->position.y = 10;
+
+    mScoreRight = new Fitgy::TextEntity(getDisplay(), "0",
+                    mScoreFont, Fitgy::Color::fromRgb(63, 82, 43));
+    mScoreRight->position.x = 340;
+    mScoreRight->position.y = 10;
+
+    mBall->position.x = 300;
+    mBall->position.y = 300;
+    mBall->direction = Fitgy::Vector::left;
+    mBall->setSpeed(BALL_SPEED);
+
+    addEntity(mBackgroundImage);
+    addEntity(mPaddleLeft);
+    addEntity(mPaddleRight);
+    addEntity(mScoreLeft);
+    addEntity(mScoreRight);
+    addEntity(mBall);
+
+    srand(time(NULL));
+    return true;
+}
+
+void
+Game::render(){
+    if (mSplashScreen != NULL && !mSplashScreen->isFinished()){
+        mSplashScreen->onRender(getDisplay());
+        return;
+    }
+
+    if (mSplashScreen != NULL){
+        // Call the destructor to release all resources.
+        delete mSplashScreen;
+        mSplashScreen = NULL;
+    }
+
+    Application::render();
+}
+
+void
+Game::loop(){
+    if (mSplashScreen == NULL){
+        Application::loop();
+
+        if (mLastSpeedChange == 0){
+            mLastSpeedChange = SDL_GetTicks();
+        }
+
+        if (SDL_GetTicks() - mLastSpeedChange >= SPEED_CHANGE_TIME)
+        {
+            mBall->setSpeed( mBall->getSpeed() + (BALL_SPEED / 4) );
+            mLastSpeedChange = SDL_GetTicks();
+        }
+
+
+        // Rudimentary collision detection
+        // First, we are going to check if the ball is out of the screen area.
+        if (mBall->position.y >= 0 && mBall->position.x < 0){
+            mSwipeSound->play();
+            rightWins();
+
+            return;
+        } else if (mBall->position.y >= 0 &&
+                mBall->position.x > getDisplay()->getWidth())
+        {
+            mSwipeSound->play();
+            leftWins();
+
             return;
         }
 
-        if (mSplashScreen != NULL){
-            // Call the destructor to release all resources.
-            delete mSplashScreen;
-            mSplashScreen = NULL;
+        // Floor or ceiling collision detection
+        if (mBall->bottomRight().y > getDisplay()->getHeight()
+                || mBall->position.y <= 0)
+        {
+            mBall->direction.y *= -1;
+            mPluckSound->play();
+            return;
         }
 
-        Application::render();
-    }
+        // Paddle collision detection
+        // bounceAngle is the angle (in radians) for which the ball will be
+        // rotated (plus the min. angle) when bounced back from the paddle.
+        float bounceAngle = ( (float)rand() / (float)RAND_MAX ) * (1.0/2.0)*M_PI;
 
-    void
-    Game::loop(){
-        if (mSplashScreen == NULL){
-            Application::loop();
+        if (mPaddleLeft->isWithinBounds(mBall->position) ||
+                mPaddleLeft->isWithinBounds(mBall->bottomLeft()))
+        {
+            // Min. angle is -(1/4)PI
+            // Max. angle is (1/4)PI
+            mBall->direction.setAngle(( (1.0/4.0)*M_PI ) - bounceAngle);
+            mPluckSound->play();
 
-            if (mLastSpeedChange == 0){
-                mLastSpeedChange = SDL_GetTicks();
-            }
+        } else if (mPaddleRight->isWithinBounds(mBall->topRight()) ||
+                mPaddleRight->isWithinBounds(mBall->bottomRight()))
+        {
 
-            if (SDL_GetTicks() - mLastSpeedChange >= SPEED_CHANGE_TIME)
-            {
-                mBall->setSpeed( mBall->getSpeed() + (BALL_SPEED / 4) );
-                mLastSpeedChange = SDL_GetTicks();
-            }
-
-
-            // Rudimentary collision detection
-            // First, we are going to check if the ball is out of the screen area.
-            if (mBall->position.y >= 0 && mBall->position.x < 0){
-                mSwipeSound->play();
-                rightWins();
-
-                return;
-            } else if (mBall->position.y >= 0 &&
-                    mBall->position.x > getDisplay()->getWidth())
-            {
-                mSwipeSound->play();
-                leftWins();
-
-                return;
-            }
-
-            // Floor or ceiling collision detection
-            if (mBall->bottomRight().y > getDisplay()->getHeight()
-                    || mBall->position.y <= 0)
-            {
-                mBall->direction.y *= -1;
-                mPluckSound->play();
-                return;
-            }
-
-            // Paddle collision detection
-            // bounceAngle is the angle (in radians) for which the ball will be
-            // rotated (plus the min. angle) when bounced back from the paddle.
-            float bounceAngle = ( (float)rand() / (float)RAND_MAX ) * (1.0/2.0)*M_PI;
-
-            if (mPaddleLeft->isWithinBounds(mBall->position) ||
-                    mPaddleLeft->isWithinBounds(mBall->bottomLeft()))
-            {
-                // Min. angle is -(1/4)PI
-                // Max. angle is (1/4)PI
-                mBall->direction.setAngle(( (1.0/4.0)*M_PI ) - bounceAngle);
-                mPluckSound->play();
-
-            } else if (mPaddleRight->isWithinBounds(mBall->topRight()) ||
-                    mPaddleRight->isWithinBounds(mBall->bottomRight()))
-            {
-
-                // Min. angle is (3/4)PI
-                // Max. angle is (5/4)PI
-                mBall->direction.setAngle(( (3.0/4.0)*M_PI ) + bounceAngle);
-                mPluckSound->play();
-            }
-        } else {
-            mSplashScreen->onLoop();
+            // Min. angle is (3/4)PI
+            // Max. angle is (5/4)PI
+            mBall->direction.setAngle(( (3.0/4.0)*M_PI ) + bounceAngle);
+            mPluckSound->play();
         }
+    } else {
+        mSplashScreen->onLoop();
+    }
+}
+
+bool
+Game::onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode){
+    switch(sym){
+    case SDLK_w:
+        mPaddleLeft->direction = Fitgy::Vector::up;
+        break;
+    case SDLK_UP:
+        mPaddleRight->direction = Fitgy::Vector::up;
+        break;
+    case SDLK_s:
+        mPaddleLeft->direction = Fitgy::Vector::down;
+        break;
+    case SDLK_DOWN:
+        mPaddleRight->direction = Fitgy::Vector::down;
+        break;
+    default:
+        break;
     }
 
-    bool
-    Game::onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode){
-        switch(sym){
-        case SDLK_w:
-            mPaddleLeft->direction = Fitgy::Vector::up;
-            break;
-        case SDLK_UP:
-            mPaddleRight->direction = Fitgy::Vector::up;
-            break;
-        case SDLK_s:
-            mPaddleLeft->direction = Fitgy::Vector::down;
-            break;
-        case SDLK_DOWN:
-            mPaddleRight->direction = Fitgy::Vector::down;
-            break;
-        default:
-            break;
-        }
+    return true;
+}
 
-        return true;
+bool
+Game::onKeyUp(SDLKey sym, SDLMod mod, uint16_t unicode){
+    switch(sym){
+    case SDLK_w:
+        mPaddleLeft->direction = Fitgy::Vector::zero;
+        break;
+    case SDLK_UP:
+        mPaddleRight->direction = Fitgy::Vector::zero;
+        break;
+    case SDLK_s:
+        mPaddleLeft->direction = Fitgy::Vector::zero;
+        break;
+    case SDLK_DOWN:
+        mPaddleRight->direction = Fitgy::Vector::zero;
+        break;
+    default:
+        break;
     }
 
-    bool
-    Game::onKeyUp(SDLKey sym, SDLMod mod, uint16_t unicode){
-        switch(sym){
-        case SDLK_w:
-            mPaddleLeft->direction = Fitgy::Vector::zero;
-            break;
-        case SDLK_UP:
-            mPaddleRight->direction = Fitgy::Vector::zero;
-            break;
-        case SDLK_s:
-            mPaddleLeft->direction = Fitgy::Vector::zero;
-            break;
-        case SDLK_DOWN:
-            mPaddleRight->direction = Fitgy::Vector::zero;
-            break;
-        default:
-            break;
-        }
+    return true;
+}
 
-        return true;
-    }
+void
+Game::restart(){
+    std::stringstream ss;
 
-    void
-    Game::restart(){
-        std::stringstream ss;
+    mBall->position.x = 312;
+    mBall->position.y = 232;
+    mBall->direction = Fitgy::Vector::left;
+    mBall->setSpeed(BALL_SPEED);
 
-        mBall->position.x = 312;
-        mBall->position.y = 232;
-        mBall->direction = Fitgy::Vector::left;
-        mBall->setSpeed(BALL_SPEED);
+    ss << mLeftWins;
+    mScoreLeft->setText(ss.str());
 
-        ss << mLeftWins;
-        mScoreLeft->setText(ss.str());
+    ss.clear();
+    ss.str(std::string());
+    ss << mRightWins;
+    mScoreRight->setText(ss.str());
+}
 
-        ss.clear();
-        ss.str(std::string());
-        ss << mRightWins;
-        mScoreRight->setText(ss.str());
-    }
+void
+Game::leftWins(){
+    mLeftWins++;
+    restart();
+}
 
-    void
-    Game::leftWins(){
-        mLeftWins++;
-        restart();
-    }
+void
+Game::rightWins(){
+    mRightWins++;
+    restart();
+}
 
-    void
-    Game::rightWins(){
-        mRightWins++;
-        restart();
-    }
 }

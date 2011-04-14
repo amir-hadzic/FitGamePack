@@ -20,220 +20,222 @@
 #include "Typer.h"
 
 namespace Typer {
-    Game* Game::mInstance = 0;
 
-    Game*
-    Game::getInstance(){
-        if (mInstance == NULL){
-            mInstance = new Game();
-        }
+Game* Game::mInstance = 0;
 
-        return mInstance;
+Game*
+Game::getInstance(){
+    if (mInstance == NULL){
+        mInstance = new Game();
     }
 
-    Game::Game()
-        : Application()
+    return mInstance;
+}
+
+Game::Game()
+    : Application()
+{
+            mScore = 0;
+}
+
+Game::~Game(){
+    TTF_CloseFont(mWordFont);
+    TTF_CloseFont(mLabelFont);
+    delete typingSound;
+}
+
+bool
+Game::init()
+{
+    if (Application::init() == false) {
+        return false;
+    }
+
+    mDisplay->setTitle("Fitgy::Typer", "Typer");
+
+    try
     {
-		mScore = 0;
-    }
+        readWords("word-list.txt");
 
-    Game::~Game(){
-        TTF_CloseFont(mWordFont);
-        TTF_CloseFont(mLabelFont);
-        delete typingSound;
-    }
+        mSplashScreen = new Fitgy::SplashScreen(
+            mDisplay, "gfx/splash.png", 2000
+        );
 
-    bool
-    Game::init()
-    {
-        if (Application::init() == false) {
-            return false;
+        mWordFont = TTF_OpenFont(WORD_FONT.c_str(), 18);
+        if (mWordFont == NULL) {
+            throw Fitgy::Exception::FileNotFound(WORD_FONT);
         }
 
-        mDisplay->setTitle("Fitgy::Typer", "Typer");
-
-        try
-        {
-            readWords("word-list.txt");
-
-            mSplashScreen = new Fitgy::SplashScreen(
-                mDisplay, "gfx/splash.png", 2000
-            );
-
-            mWordFont = TTF_OpenFont(WORD_FONT.c_str(), 18);
-            if (mWordFont == NULL) {
-                throw Fitgy::Exception::FileNotFound(WORD_FONT);
-            }
-
-            mLabelFont = TTF_OpenFont(LABEL_FONT.c_str(), 22);
-            if (mLabelFont == NULL) {
-                throw Fitgy::Exception::FileNotFound(LABEL_FONT);
-            }
-
-            imgDanger = new Fitgy::ImageEntity(getDisplay(), "gfx/danger.png");
-            imgDanger->position.x = 10;
-            imgDanger->position.y = getDisplay()->getHeight();
-            imgDanger->position.y -= imgDanger->getHeight() + 20;
-
-            txtScore = new Fitgy::TextEntity(getDisplay(), "Score: 0", mLabelFont,
-                                    Fitgy::Color::white());
-
-            txtScore->position.x = 10;
-            txtScore->position.y = 10;
-
-            typingSound = new Fitgy::Sound("sfx/typing.ogg");
-            failSound = new Fitgy::Sound("sfx/fail.ogg");
-
-            setMusic("sfx/signal.ogg", MIX_MAX_VOLUME/2);
-        } catch (Fitgy::Exception::FileNotFound const &e){
-            Fitgy::MessageBox::show("Resource not found: " + e.getFile(), "Error",
-                                Fitgy::MessageBoxInt::MessageError, Fitgy::MessageBoxInt::ButtonOK);
-            return false;
+        mLabelFont = TTF_OpenFont(LABEL_FONT.c_str(), 22);
+        if (mLabelFont == NULL) {
+            throw Fitgy::Exception::FileNotFound(LABEL_FONT);
         }
 
-        addEntity(txtScore);
-        addEntity(imgDanger);
+        imgDanger = new Fitgy::ImageEntity(getDisplay(), "gfx/danger.png");
+        imgDanger->position.x = 10;
+        imgDanger->position.y = getDisplay()->getHeight();
+        imgDanger->position.y -= imgDanger->getHeight() + 20;
 
-        srand(time(NULL));
-        mNextSpawnTime = getRandomSpawnTime();
-        return true;
+        txtScore = new Fitgy::TextEntity(getDisplay(), "Score: 0", mLabelFont,
+                                Fitgy::Color::white());
+
+        txtScore->position.x = 10;
+        txtScore->position.y = 10;
+
+        typingSound = new Fitgy::Sound("sfx/typing.ogg");
+        failSound = new Fitgy::Sound("sfx/fail.ogg");
+
+        setMusic("sfx/signal.ogg", MIX_MAX_VOLUME/2);
+    } catch (Fitgy::Exception::FileNotFound const &e){
+        Fitgy::MessageBox::show("Resource not found: " + e.getFile(), "Error",
+                            Fitgy::MessageBoxInt::MessageError, Fitgy::MessageBoxInt::ButtonOK);
+        return false;
     }
 
-    void
-    Game::render(){
-        if (mSplashScreen != NULL && !mSplashScreen->isFinished()){
-            mSplashScreen->onRender(mDisplay);
-            return;
-        }
+    addEntity(txtScore);
+    addEntity(imgDanger);
 
-        if (mSplashScreen != NULL){
-            // Call the destructor to release all resources.
-            delete mSplashScreen;
-            mSplashScreen = NULL;
+    srand(time(NULL));
+    mNextSpawnTime = getRandomSpawnTime();
+    return true;
+}
 
-            music()->play();
-        }
-
-        Application::render();
+void
+Game::render(){
+    if (mSplashScreen != NULL && !mSplashScreen->isFinished()){
+        mSplashScreen->onRender(mDisplay);
+        return;
     }
 
-    void
-    Game::loop(){
-        if (mSplashScreen != NULL){
-            mSplashScreen->onLoop();
-    } else {
-            Application::loop();
+    if (mSplashScreen != NULL){
+        // Call the destructor to release all resources.
+        delete mSplashScreen;
+        mSplashScreen = NULL;
 
-            // Find typed words and delete them.
-            std::map<std::string, TyperWord*>::iterator it;
-            it = mActiveWords.begin();
-            while(it != mActiveWords.end()){
-                if (it->second->isSolved()){
-                    mScore++;
-                    removeEntity(it->second);
-                    mActiveWords.erase(it++);
-                    updateScore();
-                } else if (it->second->bottomRight().y > getDisplay()->getWidth()) {
-                    mScore--;
-                    removeEntity(it->second);
-                    mActiveWords.erase(it++);
-                    failSound->play();
-                    updateScore();
-                } else {
-                    ++it;
-                }
-            }
-
-            // See if we are supposed to spawn a word.
-            if (SDL_GetTicks() >= mNextSpawnTime){
-                spawnWord();
-                mNextSpawnTime = getRandomSpawnTime();
-            }
-        }
+        music()->play();
     }
 
-    void
-    Game::restart(){
+    Application::render();
+}
 
-    }
+void
+Game::loop(){
+    if (mSplashScreen != NULL){
+        mSplashScreen->onLoop();
+} else {
+        Application::loop();
 
-    void
-    Game::readWords(char* filename){
-        std::ifstream wordFile(filename);
-
-        if (wordFile.fail()){
-            throw Fitgy::Exception::FileNotFound(filename);
-        }
-
-        while(!wordFile.eof()){
-            std::string word;
-            std::getline(wordFile, word);
-
-            if (word != ""){
-                mWords.push_back(word);
-            }
-        }
-    }
-
-    std::string
-    Game::nextWord(){
-        std::string word = "";
-
-        while(word == ""){
-            unsigned int randIndex = rand() % (mWords.size());
-            std::string foundWord = mWords[randIndex];
-
-            if (mActiveWords.find(foundWord) == mActiveWords.end()){
-                word = foundWord;
+        // Find typed words and delete them.
+        std::map<std::string, TyperWord*>::iterator it;
+        it = mActiveWords.begin();
+        while(it != mActiveWords.end()){
+            if (it->second->isSolved()){
+                mScore++;
+                removeEntity(it->second);
+                mActiveWords.erase(it++);
+                updateScore();
+            } else if (it->second->bottomRight().y > getDisplay()->getWidth()) {
+                mScore--;
+                removeEntity(it->second);
+                mActiveWords.erase(it++);
+                failSound->play();
+                updateScore();
+            } else {
+                ++it;
             }
         }
 
-        return word;
+        // See if we are supposed to spawn a word.
+        if (SDL_GetTicks() >= mNextSpawnTime){
+            spawnWord();
+            mNextSpawnTime = getRandomSpawnTime();
+        }
+    }
+}
+
+void
+Game::restart(){
+
+}
+
+void
+Game::readWords(char* filename){
+    std::ifstream wordFile(filename);
+
+    if (wordFile.fail()){
+        throw Fitgy::Exception::FileNotFound(filename);
     }
 
-    void
-    Game::spawnWord(){
-        std::string word = nextWord();
-        TyperWord* typerWord = new TyperWord(getDisplay(), word, mWordFont);
+    while(!wordFile.eof()){
+        std::string word;
+        std::getline(wordFile, word);
 
-        int maxY = getDisplay()->getWidth() - typerWord->getWidth();
-        typerWord->position.y = 0;
-        typerWord->position.x = rand() % (maxY + 1);
-        typerWord->direction = Fitgy::Vector::down;
-        typerWord->setSpeed(getRandomSpeed());
+        if (word != ""){
+            mWords.push_back(word);
+        }
+    }
+}
 
-        mActiveWords[word] = typerWord;
-        addEntity(typerWord);
+std::string
+Game::nextWord(){
+    std::string word = "";
+
+    while(word == ""){
+        unsigned int randIndex = rand() % (mWords.size());
+        std::string foundWord = mWords[randIndex];
+
+        if (mActiveWords.find(foundWord) == mActiveWords.end()){
+            word = foundWord;
+        }
     }
 
-    unsigned int
-    Game::getRandomSpawnTime(){
-        // For now we are going to always choose some random time.
-        // TODO: Spawn time should be relative to the current score.
+    return word;
+}
 
-        return SDL_GetTicks() + 300 + (rand() % (1501));
-    }
+void
+Game::spawnWord(){
+    std::string word = nextWord();
+    TyperWord* typerWord = new TyperWord(getDisplay(), word, mWordFont);
 
-    unsigned int
-    Game::getRandomSpeed(){
-        // Just take some random speed for now.
-        // TODO: Speed should be relative to the current score.
+    int maxY = getDisplay()->getWidth() - typerWord->getWidth();
+    typerWord->position.y = 0;
+    typerWord->position.x = rand() % (maxY + 1);
+    typerWord->direction = Fitgy::Vector::down;
+    typerWord->setSpeed(getRandomSpeed());
 
-        return 50 + (rand() % 200);
-    }
+    mActiveWords[word] = typerWord;
+    addEntity(typerWord);
+}
 
-    void
-    Game::updateScore(){
-        std::stringstream ss;
-        ss << "Score: " << mScore;
+unsigned int
+Game::getRandomSpawnTime(){
+    // For now we are going to always choose some random time.
+    // TODO: Spawn time should be relative to the current score.
+
+    return SDL_GetTicks() + 300 + (rand() % (1501));
+}
+
+unsigned int
+Game::getRandomSpeed(){
+    // Just take some random speed for now.
+    // TODO: Speed should be relative to the current score.
+
+    return 50 + (rand() % 200);
+}
+
+void
+Game::updateScore(){
+    std::stringstream ss;
+    ss << "Score: " << mScore;
 
 
-        txtScore->setText(ss.str());
-    }
+    txtScore->setText(ss.str());
+}
 
-    bool
-    Game::onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode){
-        typingSound->play();
-        return true;
-    }
+bool
+Game::onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode){
+    typingSound->play();
+    return true;
+}
+
 }

@@ -21,18 +21,19 @@
 
 namespace Fitgy { namespace Exception {
 
-    FileNotFound::FileNotFound(std::string file)
-        : std::runtime_error("File not found: " + file)
-    {
-        mFile = file;
-    }
+FileNotFound::FileNotFound(std::string file)
+    : std::runtime_error("File not found: " + file)
+{
+    mFile = file;
+}
 
-    FileNotFound::~FileNotFound() throw() {
+FileNotFound::~FileNotFound() throw() {
 
-    }
+}
 
-    std::string
-    FileNotFound::getFile() const {
-        return mFile;
-    }
+std::string
+FileNotFound::getFile() const {
+    return mFile;
+}
+
 }}

@@ -24,14 +24,14 @@
 
 namespace Fitgy { namespace Exception {
 
-    class FileNotFound : public std::runtime_error {
-    private:
-        std::string mFile;
-    public:
-        FileNotFound(std::string file);
-        ~FileNotFound() throw();
-        std::string getFile() const;
-    };
+class FileNotFound : public std::runtime_error {
+private:
+    std::string mFile;
+public:
+    FileNotFound(std::string file);
+    ~FileNotFound() throw();
+    std::string getFile() const;
+};
 
 }}
 

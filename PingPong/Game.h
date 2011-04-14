@@ -30,47 +30,49 @@
 #include <cmath>
 
 namespace PingPong {
-    const std::string SCORE_FONT = "fonts/DroidSans.ttf";
-    const float PADDLE_SPEED = 400;
-    const float BALL_SPEED = 220;
-    const int SPEED_CHANGE_TIME = 3500;
 
-    class Game : public Fitgy::Application {
-    private:
-        Game();
-        ~Game();
+const std::string SCORE_FONT = "fonts/DroidSans.ttf";
+const float PADDLE_SPEED = 400;
+const float BALL_SPEED = 220;
+const int SPEED_CHANGE_TIME = 3500;
 
-        Game(Game const&){};
-        Game& operator=(Game const&){ return *this; };
+class Game : public Fitgy::Application {
+private:
+    Game();
+    ~Game();
 
-        static Game* mInstance;
-        Fitgy::SplashScreen* mSplashScreen;
-        Fitgy::ImageEntity* mBackgroundImage;
-        Fitgy::ImageEntity* mPaddleLeft;
-        Fitgy::ImageEntity* mPaddleRight;
-        Fitgy::ImageEntity* mBall;
-        Fitgy::TextEntity* mScoreLeft;
-        Fitgy::TextEntity* mScoreRight;
-        Fitgy::Sound* mPluckSound;
-        Fitgy::Sound* mSwipeSound;
-        TTF_Font* mScoreFont;
+    Game(Game const&){};
+    Game& operator=(Game const&){ return *this; };
 
-        unsigned int mLastSpeedChange;
-        int mLeftWins;
-        int mRightWins;
+    static Game* mInstance;
+    Fitgy::SplashScreen* mSplashScreen;
+    Fitgy::ImageEntity* mBackgroundImage;
+    Fitgy::ImageEntity* mPaddleLeft;
+    Fitgy::ImageEntity* mPaddleRight;
+    Fitgy::ImageEntity* mBall;
+    Fitgy::TextEntity* mScoreLeft;
+    Fitgy::TextEntity* mScoreRight;
+    Fitgy::Sound* mPluckSound;
+    Fitgy::Sound* mSwipeSound;
+    TTF_Font* mScoreFont;
 
-        void leftWins();
-        void rightWins();
-        void restart();
+    unsigned int mLastSpeedChange;
+    int mLeftWins;
+    int mRightWins;
 
-    public:
-        static Game* getInstance();
-        bool init();
-        void loop();
-        void render();
-        bool onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode);
-        bool onKeyUp(SDLKey sym, SDLMod mod, uint16_t unicode);
-    };
+    void leftWins();
+    void rightWins();
+    void restart();
+
+public:
+    static Game* getInstance();
+    bool init();
+    void loop();
+    void render();
+    bool onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode);
+    bool onKeyUp(SDLKey sym, SDLMod mod, uint16_t unicode);
+};
+
 }
 
 

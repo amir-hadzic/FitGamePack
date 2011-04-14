@@ -23,20 +23,21 @@
 #include "TicTacToe.h"
 
 namespace TicTacToe {
-    class MenuEventHandler : public Fitgy::EventHandler {
-        bool onLMouseButtonUp(void* sender, SDL_Event*, Fitgy::Point){
-            Fitgy::MenuItemEntity* menuItem = (Fitgy::MenuItemEntity*)sender;
-            Game* game = Game::getInstance();
 
-            if (menuItem->getIdentifier() == "quit"){
-                game->onExit();
-            } else if (menuItem->getIdentifier() == "restart") {
-                game->restart();
-            }
+class MenuEventHandler : public Fitgy::EventHandler {
+    bool onLMouseButtonUp(void* sender, SDL_Event*, Fitgy::Point){
+        Fitgy::MenuItemEntity* menuItem = (Fitgy::MenuItemEntity*)sender;
+        Game* game = Game::getInstance();
 
-            return true;
+        if (menuItem->getIdentifier() == "quit"){
+            game->onExit();
+        } else if (menuItem->getIdentifier() == "restart") {
+            game->restart();
         }
-    };
+
+        return true;
+    }
+};
 }
 
 #endif

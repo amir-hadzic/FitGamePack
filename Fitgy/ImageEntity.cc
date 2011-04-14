@@ -20,53 +20,55 @@
 #include "ImageEntity.h"
 
 namespace Fitgy {
-    ImageEntity::ImageEntity(Entity* parent, char *filename,
-            short opacity, bool imageWithAlpha)
-        : Entity(parent)
-    {
-        mImageWithAlpha = imageWithAlpha;
-        setImage(filename, opacity);
+
+ImageEntity::ImageEntity(Entity* parent, char *filename, short opacity,
+        bool imageWithAlpha)
+    : Entity(parent)
+{
+    mImageWithAlpha = imageWithAlpha;
+    setImage(filename, opacity);
+}
+
+void
+ImageEntity::onRender(Entity* entity){
+    drawToEntity(entity);
+}
+
+void
+ImageEntity::setImage(char* filename, short opacity){
+    if (entitySurface != NULL){
+        SDL_FreeSurface(entitySurface);
     }
 
-    void
-    ImageEntity::onRender(Entity* entity){
-        drawToEntity(entity);
+    SDL_Surface* surfOriginal = NULL;
+
+    if ((surfOriginal = IMG_Load(filename)) == NULL){
+        throw Exception::FileNotFound(filename);
     }
 
-    void
-    ImageEntity::setImage(char* filename, short opacity){
-        if (entitySurface != NULL){
-            SDL_FreeSurface(entitySurface);
-        }
+    // Set image opacity before converting the surface to the display
+    // format, so that we can take advantage of hardware alpha blit
+    // acceleration.
+    SDL_SetAlpha(surfOriginal, SDL_SRCALPHA, opacity);
 
-        SDL_Surface* surfOriginal = NULL;
-
-        if ((surfOriginal = IMG_Load(filename)) == NULL){
-            throw Exception::FileNotFound(filename);
-        }
-
-        // Set image opacity before converting the surface to the display
-        // format, so that we can take advantage of hardware alpha blit
-        // acceleration.
-        SDL_SetAlpha(surfOriginal, SDL_SRCALPHA, opacity);
-
-        // Convert the surface to the display format.
-        if (mImageWithAlpha){
-            entitySurface = SDL_DisplayFormatAlpha(surfOriginal);
-        } else {
-            entitySurface = SDL_DisplayFormat(surfOriginal);
-        }
-
-
-        // Free resources taken by the old surface.
-        SDL_FreeSurface(surfOriginal);
-
-        mWidth = entitySurface->w;
-        mHeight = entitySurface->h;
+    // Convert the surface to the display format.
+    if (mImageWithAlpha){
+        entitySurface = SDL_DisplayFormatAlpha(surfOriginal);
+    } else {
+        entitySurface = SDL_DisplayFormat(surfOriginal);
     }
-    
-    void
-    ImageEntity::setOpacity(short opacity){
-        SDL_SetAlpha(entitySurface, SDL_SRCALPHA, opacity);
-    }
+
+
+    // Free resources taken by the old surface.
+    SDL_FreeSurface(surfOriginal);
+
+    mWidth = entitySurface->w;
+    mHeight = entitySurface->h;
+}
+
+void
+ImageEntity::setOpacity(short opacity){
+    SDL_SetAlpha(entitySurface, SDL_SRCALPHA, opacity);
+}
+
 }

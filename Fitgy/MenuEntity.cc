@@ -20,148 +20,150 @@
 #include "MenuEntity.h"
 
 namespace Fitgy {
-    MenuEntity::MenuEntity(Entity* parent, TTF_Font* font)
-        : Entity(parent)
-    {
-        mPadding = 0;
-        mFont = font;
-        mItemEventHandler = NULL;
-        mForegroundColor = Color::black();
-        mBackgroundColor = Color::red();
-        mBackgroundHoverColor = Color::green();
+
+MenuEntity::MenuEntity(Entity* parent, TTF_Font* font)
+    : Entity(parent)
+{
+    mPadding = 0;
+    mFont = font;
+    mItemEventHandler = NULL;
+    mForegroundColor = Color::black();
+    mBackgroundColor = Color::red();
+    mBackgroundHoverColor = Color::green();
+}
+
+MenuEntity::~MenuEntity(){
+    std::vector<MenuItemEntity*>::iterator it = mMenuItems.begin();
+    while(it != mMenuItems.end()){
+        delete (*it);
+        *it = NULL;
+        ++it;
     }
 
-    MenuEntity::~MenuEntity(){
-        std::vector<MenuItemEntity*>::iterator it = mMenuItems.begin();
-        while(it != mMenuItems.end()){
-            delete (*it);
-            *it = NULL;
-            ++it;
-        }
+    delete mItemEventHandler;
+}
 
-        delete mItemEventHandler;
+void
+MenuEntity::redraw(){
+    if (mMenuItems.size() == 0){
+        return;
     }
 
-    void
-    MenuEntity::redraw(){
-        if (mMenuItems.size() == 0){
-            return;
+    // Set menu items properties and find the widest menu item.
+    std::vector<MenuItemEntity*>::iterator it = mMenuItems.begin();
+    int maxWidth = 0;
+    while(it != mMenuItems.end()){
+        MenuItemEntity* menuItem = (*it);
+        menuItem->setPadding(mPadding);
+        menuItem->setBackgroundColor(mBackgroundColor);
+        menuItem->setBackgroundHoverColor(mBackgroundHoverColor);
+        menuItem->setForegroundColor(mForegroundColor);
+
+        if (maxWidth < menuItem->getWidth()){
+            maxWidth = menuItem->getWidth();
         }
 
-        // Set menu items properties and find the widest menu item.
-        std::vector<MenuItemEntity*>::iterator it = mMenuItems.begin();
-        int maxWidth = 0;
-        while(it != mMenuItems.end()){
-            MenuItemEntity* menuItem = (*it);
-            menuItem->setPadding(mPadding);
-            menuItem->setBackgroundColor(mBackgroundColor);
-            menuItem->setBackgroundHoverColor(mBackgroundHoverColor);
-            menuItem->setForegroundColor(mForegroundColor);
-
-            if (maxWidth < menuItem->getWidth()){
-                maxWidth = menuItem->getWidth();
-            }
-
-            ++it;
-        }
-
-        // Equalize width of all menu items to the widest one.
-        it = mMenuItems.begin();
-        while(it != mMenuItems.end()){
-           (*it)->setWidth(maxWidth);
-           ++it;
-        }
-
-        if (entitySurface != NULL){
-            SDL_FreeSurface(entitySurface);
-            entitySurface = NULL;
-        }
-
-        setWidth(maxWidth);
-        setHeight(mMenuItems.front()->getHeight() * mMenuItems.size());
-
-        entitySurface = SDL_CreateRGBSurface(
-            SDL_HWSURFACE | SDL_SRCALPHA,
-            getWidth(),
-            getHeight(),
-            32, 0, 0, 0, 0
-        );
-
-        // Align menu items in a single column.
-        for(unsigned int i = 0; i < mMenuItems.size(); i++){
-            MenuItemEntity* menuItem = mMenuItems[i];
-            menuItem->position.y = menuItem->getHeight() * i;
-        }
+        ++it;
     }
 
-    void
-    MenuEntity::onRender(Entity* entity){
-        if (entitySurface == NULL){
-            return;
-        }
-
-        SDL_FillRect(
-            entitySurface,
-            NULL,
-            SDL_MapRGB(
-                entitySurface->format,
-                mBackgroundColor.r,
-                mBackgroundColor.g,
-                mBackgroundColor.b
-            )
-        );
-
-        for(unsigned int i = 0; i < mMenuItems.size(); i++){
-            mMenuItems[i]->onRender(this);
-        }
-
-        drawToEntity(entity);
+    // Equalize width of all menu items to the widest one.
+    it = mMenuItems.begin();
+    while(it != mMenuItems.end()){
+       (*it)->setWidth(maxWidth);
+       ++it;
     }
 
-    void
-    MenuEntity::addItem(std::string identifier, std::string text){
-        MenuItemEntity* item = new MenuItemEntity(this, identifier, text, mFont);
-
-        if (mItemEventHandler != NULL){
-            item->setEventHandler(mItemEventHandler);
-        }
-
-        mMenuItems.push_back(item);
-        redraw();
+    if (entitySurface != NULL){
+        SDL_FreeSurface(entitySurface);
+        entitySurface = NULL;
     }
 
-    void
-    MenuEntity::setBackgroundColor(SDL_Color color){
-        mBackgroundColor = color;
-        redraw();
+    setWidth(maxWidth);
+    setHeight(mMenuItems.front()->getHeight() * mMenuItems.size());
+
+    entitySurface = SDL_CreateRGBSurface(
+        SDL_HWSURFACE | SDL_SRCALPHA,
+        getWidth(),
+        getHeight(),
+        32, 0, 0, 0, 0
+    );
+
+    // Align menu items in a single column.
+    for(unsigned int i = 0; i < mMenuItems.size(); i++){
+        MenuItemEntity* menuItem = mMenuItems[i];
+        menuItem->position.y = menuItem->getHeight() * i;
+    }
+}
+
+void
+MenuEntity::onRender(Entity* entity){
+    if (entitySurface == NULL){
+        return;
     }
 
-    void
-    MenuEntity::setBackgroundHoverColor(SDL_Color color){
-        mBackgroundHoverColor = color;
-        redraw();
+    SDL_FillRect(
+        entitySurface,
+        NULL,
+        SDL_MapRGB(
+            entitySurface->format,
+            mBackgroundColor.r,
+            mBackgroundColor.g,
+            mBackgroundColor.b
+        )
+    );
+
+    for(unsigned int i = 0; i < mMenuItems.size(); i++){
+        mMenuItems[i]->onRender(this);
     }
 
-    void
-    MenuEntity::setForegroundColor(SDL_Color color){
-        mForegroundColor = color;
-        redraw();
+    drawToEntity(entity);
+}
+
+void
+MenuEntity::addItem(std::string identifier, std::string text){
+    MenuItemEntity* item = new MenuItemEntity(this, identifier, text, mFont);
+
+    if (mItemEventHandler != NULL){
+        item->setEventHandler(mItemEventHandler);
     }
 
-    void
-    MenuEntity::setEventHandler(EventHandler* handler){
-        mItemEventHandler = handler;
+    mMenuItems.push_back(item);
+    redraw();
+}
 
-        std::vector<MenuItemEntity*>::iterator it = mMenuItems.begin();
-        while(it != mMenuItems.end()){
-            (*it)->setEventHandler(handler);
-            ++it;
-        }
-    }
+void
+MenuEntity::setBackgroundColor(SDL_Color color){
+    mBackgroundColor = color;
+    redraw();
+}
 
-    void
-    MenuEntity::setPadding(short padding){
-        mPadding = padding;
-        redraw();
+void
+MenuEntity::setBackgroundHoverColor(SDL_Color color){
+    mBackgroundHoverColor = color;
+    redraw();
+}
+
+void
+MenuEntity::setForegroundColor(SDL_Color color){
+    mForegroundColor = color;
+    redraw();
+}
+
+void
+MenuEntity::setEventHandler(EventHandler* handler){
+    mItemEventHandler = handler;
+
+    std::vector<MenuItemEntity*>::iterator it = mMenuItems.begin();
+    while(it != mMenuItems.end()){
+        (*it)->setEventHandler(handler);
+        ++it;
     }
+}
+
+void
+MenuEntity::setPadding(short padding){
+    mPadding = padding;
+    redraw();
+}
+
 }

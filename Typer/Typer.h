@@ -32,45 +32,47 @@
 
 
 namespace Typer {
-    const std::string LABEL_FONT = "fonts/DroidSans.ttf";
-    const std::string WORD_FONT = "fonts/DroidSansMono.ttf";
 
-    class Game : public Fitgy::Application {
-    private:
-        Fitgy::SplashScreen *mSplashScreen;
-        Game();
-        Game(Game const&){};
-        ~Game();
-        Game& operator=(Game const&){ return *this; };
-        static Game* mInstance;
-        TTF_Font* mWordFont;
-        TTF_Font* mLabelFont;
-        unsigned int mNextSpawnTime;
-        int mScore;
+const std::string LABEL_FONT = "fonts/DroidSans.ttf";
+const std::string WORD_FONT = "fonts/DroidSansMono.ttf";
 
-        std::vector<std::string> mWords;
-        std::map<std::string, TyperWord*> mActiveWords;
-        Fitgy::TextEntity* txtScore;
-        Fitgy::ImageEntity* imgDanger;
-        Fitgy::Sound* typingSound;
-        Fitgy::Sound* failSound;
+class Game : public Fitgy::Application {
+private:
+    Fitgy::SplashScreen *mSplashScreen;
+    Game();
+    Game(Game const&){};
+    ~Game();
+    Game& operator=(Game const&){ return *this; };
+    static Game* mInstance;
+    TTF_Font* mWordFont;
+    TTF_Font* mLabelFont;
+    unsigned int mNextSpawnTime;
+    int mScore;
 
-        void readWords(char* filename);
-        std::string nextWord();
-        void spawnWord();
-        unsigned int getRandomSpawnTime();
-        unsigned int getRandomSpeed();
-        void updateScore();
+    std::vector<std::string> mWords;
+    std::map<std::string, TyperWord*> mActiveWords;
+    Fitgy::TextEntity* txtScore;
+    Fitgy::ImageEntity* imgDanger;
+    Fitgy::Sound* typingSound;
+    Fitgy::Sound* failSound;
 
-    public:
-        static Game* getInstance();
+    void readWords(char* filename);
+    std::string nextWord();
+    void spawnWord();
+    unsigned int getRandomSpawnTime();
+    unsigned int getRandomSpeed();
+    void updateScore();
 
-        bool init();
-        void render();
-        void loop();
-        void restart();
+public:
+    static Game* getInstance();
 
-        bool onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode);
-    };
+    bool init();
+    void render();
+    void loop();
+    void restart();
+
+    bool onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode);
+};
+
 }
 #endif

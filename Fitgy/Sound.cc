@@ -21,67 +21,68 @@
 
 namespace Fitgy {
 
-    Sound::Sound(char* filename, short volume, short channel){
-        mChunk = Mix_LoadWAV(filename);
+Sound::Sound(char* filename, short volume, short channel){
+    mChunk = Mix_LoadWAV(filename);
 
-        if (mChunk == NULL){
-            throw Exception::FileNotFound(filename);
-        }
+    if (mChunk == NULL){
+        throw Exception::FileNotFound(filename);
+    }
 
-        mChannel = channel;
-        mVolume = volume;
-        mLoops = 0;
+    mChannel = channel;
+    mVolume = volume;
+    mLoops = 0;
+    mPaused = false;
+
+    Mix_VolumeChunk(mChunk, mVolume);
+}
+
+Sound::~Sound(){
+    stop();
+    Mix_FreeChunk(mChunk);
+}
+
+void
+Sound::play(){
+    if (mPaused){
+        Mix_Resume(mChannel);
         mPaused = false;
-
-        Mix_VolumeChunk(mChunk, mVolume);
+    } else {
+        mChannel = Mix_PlayChannel(mChannel, mChunk, mLoops);
     }
+}
 
-    Sound::~Sound(){
-        stop();
-        Mix_FreeChunk(mChunk);
-    }
+void
+Sound::pause(){
+    Mix_Pause(mChannel);
+    mPaused = true;
+}
 
-    void
-    Sound::play(){
-        if (mPaused){
-            Mix_Resume(mChannel);
-            mPaused = false;
-        } else {
-            mChannel = Mix_PlayChannel(mChannel, mChunk, mLoops);
-        }
-    }
+void
+Sound::stop(){
+    Mix_HaltChannel(mChannel);
+    mPaused = false;
+}
 
-    void
-    Sound::pause(){
-        Mix_Pause(mChannel);
-        mPaused = true;
-    }
+void
+Sound::setLoops(int loops){
+    mLoops = loops;
+}
 
-    void
-    Sound::stop(){
-        Mix_HaltChannel(mChannel);
-        mPaused = false;
-    }
+int
+Sound::getLoops(){
+    return mLoops;
+}
 
-    void
-    Sound::setLoops(int loops){
-        mLoops = loops;
-    }
+void
+Sound::setVolume(short volume){
+    mVolume = volume;
 
-    int
-    Sound::getLoops(){
-        return mLoops;
-    }
+    Mix_VolumeChunk(mChunk, mVolume);
+}
 
-    void
-    Sound::setVolume(short volume){
-        mVolume = volume;
+short
+Sound::getVolume(){
+    return mVolume;
+}
 
-        Mix_VolumeChunk(mChunk, mVolume);
-    }
-
-    short
-    Sound::getVolume(){
-        return mVolume;
-    }
 }

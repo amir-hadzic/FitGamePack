@@ -31,148 +31,150 @@
 
 
 namespace Fitgy {
-    typedef std::vector<Entity*> EntityContainer;
-    typedef EntityContainer::iterator EntityIterator;
 
-    /**
-     * Number of channels to allocate for mixing initialy. This can be changed
-     * later on by calling Mix_AllocateChannels(int).
-     */
-    const short MIX_NUM_CHANNELS = 16;
+typedef std::vector<Entity*> EntityContainer;
+typedef EntityContainer::iterator EntityIterator;
 
-    /**
-     * From the SDL_Mixer documentation: Bytes used per output sample.
-     */
-    const int MIX_CHUNKSIZE = 1024;
+/**
+ * Number of channels to allocate for mixing initialy. This can be changed
+ * later on by calling Mix_AllocateChannels(int).
+ */
+const short MIX_NUM_CHANNELS = 16;
 
-    /**
-     * Mono = 1, Stereo = 2
-     */
-    const short MIX_AUDIO_CHANNELS = 2;
+/**
+ * From the SDL_Mixer documentation: Bytes used per output sample.
+ */
+const int MIX_CHUNKSIZE = 1024;
+
+/**
+ * Mono = 1, Stereo = 2
+ */
+const short MIX_AUDIO_CHANNELS = 2;
 
 
-    /**
-     * This is the base class for a Fitgy Application. It handles the entities,
-     * event broadcasting and everything else required to run a game.
-     */
-    class Application : public EventHandler {
+/**
+ * This is the base class for a Fitgy Application. It handles the entities,
+ * event broadcasting and everything else required to run a game.
+ */
+class Application : public EventHandler {
+private:
+    bool mRunning;
+
+protected:
+    std::vector<Entity*> mEntities;
+    Display* mDisplay;
+    void startRender();
+
+    class Music {
     private:
-        bool mRunning;
+        Mix_Music* mMixMusic;
+        short mVolume;
+        bool mPaused;
 
-    protected:
-        std::vector<Entity*> mEntities;
-        Display* mDisplay;
-        void startRender();
-
-        class Music {
-        private:
-            Mix_Music* mMixMusic;
-            short mVolume;
-            bool mPaused;
-
-        public:
-            Music(char* filename, short volume);
-            ~Music();
-
-            void play(int loops = -1);
-            void pause();
-            void stop();
-
-            void setVolume(short volume);
-        };
-
-        Music* mMusic;
     public:
-        /**
-         * Constructor.
-         */
-        Application();
+        Music(char* filename, short volume);
+        ~Music();
 
-        /**
-         * Destructor.
-         */
-        ~Application();
+        void play(int loops = -1);
+        void pause();
+        void stop();
 
-        /**
-         * Runs the Application loop.
-         *
-         * @return 0 if the application executed succesfully and anything else
-         * if it fails.
-         */
-        int execute();
-
-        /**
-         * Returns the display entity.
-         *
-         * @return the display entity associated with this application.
-         */
-        Display* getDisplay();
-
-        /**
-         * Adds an entity.
-         *
-         * @param entity is the target entity.
-         */
-        void addEntity(Entity* entity);
-
-        /**
-         * Removes the entity.
-         *
-         * @param entity is the target entity.
-         */
-        void removeEntity(Entity* entity);
-
-        /**
-         * Initializes the Application.
-         *
-         * Initializes the SDL libraries and creates an display entity.
-         */
-        virtual bool init();
-
-        /**
-         * This method is called on each application loop iteration and this
-         * is where you should implement your game logic.
-         */
-        virtual void loop();
-
-        /**
-         * This method is called on each application loop iteration and this is
-         * where you should implement your rendering code. By default this
-         * method calls the onRender() method of each entity.
-         */
-        virtual void render();
-
-        /**
-         * This method is responsible for releasing any allocated resources such
-         * as entities, fonts, etc.
-         */
-        virtual void cleanup();
-
-        /**
-         * onExit() implementation.
-         * return true if the event is handled and shouldn't be broadcasted
-         * further.
-         */
-        virtual bool onExit();
-
-        /**
-         * Gets the pointer to the internal Music class.
-         *
-         * @return pointer to the internal Music handler class.
-         */
-        Music* music();
-
-        /**
-         * Initializes the background music from the specified file.
-         *
-         * If there is any background music playing at the time of calling this
-         * functions it's stopped.
-         *
-         * @param filename the path to the specified file.
-         * @param volume the volume to be used for the background music.
-         */
-        void setMusic(char* filename, short volume = MIX_MAX_VOLUME);
+        void setVolume(short volume);
     };
+
+    Music* mMusic;
+public:
+    /**
+     * Constructor.
+     */
+    Application();
+
+    /**
+     * Destructor.
+     */
+    ~Application();
+
+    /**
+     * Runs the Application loop.
+     *
+     * @return 0 if the application executed succesfully and anything else
+     * if it fails.
+     */
+    int execute();
+
+    /**
+     * Returns the display entity.
+     *
+     * @return the display entity associated with this application.
+     */
+    Display* getDisplay();
+
+    /**
+     * Adds an entity.
+     *
+     * @param entity is the target entity.
+     */
+    void addEntity(Entity* entity);
+
+    /**
+     * Removes the entity.
+     *
+     * @param entity is the target entity.
+     */
+    void removeEntity(Entity* entity);
+
+    /**
+     * Initializes the Application.
+     *
+     * Initializes the SDL libraries and creates an display entity.
+     */
+    virtual bool init();
+
+    /**
+     * This method is called on each application loop iteration and this
+     * is where you should implement your game logic.
+     */
+    virtual void loop();
+
+    /**
+     * This method is called on each application loop iteration and this is
+     * where you should implement your rendering code. By default this
+     * method calls the onRender() method of each entity.
+     */
+    virtual void render();
+
+    /**
+     * This method is responsible for releasing any allocated resources such
+     * as entities, fonts, etc.
+     */
+    virtual void cleanup();
+
+    /**
+     * onExit() implementation.
+     * return true if the event is handled and shouldn't be broadcasted
+     * further.
+     */
+    virtual bool onExit();
+
+    /**
+     * Gets the pointer to the internal Music class.
+     *
+     * @return pointer to the internal Music handler class.
+     */
+    Music* music();
+
+    /**
+     * Initializes the background music from the specified file.
+     *
+     * If there is any background music playing at the time of calling this
+     * functions it's stopped.
+     *
+     * @param filename the path to the specified file.
+     * @param volume the volume to be used for the background music.
+     */
+    void setMusic(char* filename, short volume = MIX_MAX_VOLUME);
+};
+
 }
 
 #endif

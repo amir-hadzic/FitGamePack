@@ -25,30 +25,31 @@
 
 namespace Fitgy {
 
+/**
+ * This entity is used to represent the actual window/screen used for the
+ * application.
+ */
+class Display: public Entity {
+public:
     /**
-     * This entity is used to represent the actual window/screen used for the
-     * application.
+     * Initializes the windows with the specified width and height.
+     *
+     * @param width is the width that will be used for the window.
+     * @param height is the height that will be used for the window.
      */
-    class Display: public Entity {
-    public:
-        /**
-         * Initializes the windows with the specified width and height.
-         *
-         * @param width is the width that will be used for the window.
-         * @param height is the height that will be used for the window.
-         */
-        Display(int width, int height);
+    Display(int width, int height);
 
-        /**
-         * Sets the window title.
-         *
-         * @param windowTitle is the title that is shown at the top of the
-         * window border.
-         * @param iconTitle is the system title that might be used for the
-         * taskbar. This actually depends on the operating system.
-         */
-        void setTitle(char* windowTitle, char* iconTitle);
-    };
+    /**
+     * Sets the window title.
+     *
+     * @param windowTitle is the title that is shown at the top of the
+     * window border.
+     * @param iconTitle is the system title that might be used for the
+     * taskbar. This actually depends on the operating system.
+     */
+    void setTitle(char* windowTitle, char* iconTitle);
+};
+
 }
 
 #endif

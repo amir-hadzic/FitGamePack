@@ -30,51 +30,53 @@
 && fields[f2] == fields[f3] && fields[f3] != FieldType::Free
 
 namespace TicTacToe {
-    const std::string FONT = "fonts/DroidSans.ttf";
 
-    class Game : public Fitgy::Application {
-    private:
-        Fitgy::SplashScreen *mSplashScreen;
-        Game();
-        Game(Game const&){};
-        Game& operator=(Game const&){ return *this; };
-        static Game* mInstance;
-        TTF_Font* mFont;
-        int winsX;
-        int winsO;
-        void checkForWin();
-        void announceWin();
-    public:
-        enum FieldType {
-            Free = 0,
-            X = 1,
-            O = 2
-        };
+const std::string FONT = "fonts/DroidSans.ttf";
 
-        static Game* getInstance();
-        Fitgy::GridEntity* gridEntity;
-
-        Fitgy::TextEntity* txtWinsX;
-        Fitgy::TextEntity* txtWinsO;
-        Fitgy::TextEntity* txtPlaying;
-
-        Fitgy::ImageEntity* imgPlayerX;
-        Fitgy::ImageEntity* imgPlayerO;
-
-        Fitgy::MenuEntity* mnuMain;
-
-        Fitgy::Sound* soundDrawX;
-        Fitgy::Sound* soundDrawO;
-
-        FieldType fields[9];
-        bool xPlays;
-        bool gameOver;
-        bool init();
-        void render();
-        void loop();
-        void restart();
-
-        void nextPlayer();
+class Game : public Fitgy::Application {
+private:
+    Fitgy::SplashScreen *mSplashScreen;
+    Game();
+    Game(Game const&){};
+    Game& operator=(Game const&){ return *this; };
+    static Game* mInstance;
+    TTF_Font* mFont;
+    int winsX;
+    int winsO;
+    void checkForWin();
+    void announceWin();
+public:
+    enum FieldType {
+        Free = 0,
+        X = 1,
+        O = 2
     };
+
+    static Game* getInstance();
+    Fitgy::GridEntity* gridEntity;
+
+    Fitgy::TextEntity* txtWinsX;
+    Fitgy::TextEntity* txtWinsO;
+    Fitgy::TextEntity* txtPlaying;
+
+    Fitgy::ImageEntity* imgPlayerX;
+    Fitgy::ImageEntity* imgPlayerO;
+
+    Fitgy::MenuEntity* mnuMain;
+
+    Fitgy::Sound* soundDrawX;
+    Fitgy::Sound* soundDrawO;
+
+    FieldType fields[9];
+    bool xPlays;
+    bool gameOver;
+    bool init();
+    void render();
+    void loop();
+    void restart();
+
+    void nextPlayer();
+};
+
 }
 #endif

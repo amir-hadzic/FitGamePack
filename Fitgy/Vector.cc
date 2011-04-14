@@ -21,130 +21,131 @@
 
 namespace Fitgy {
 
-    Vector Vector::zero(0, 0);
-    Vector Vector::up(0, -1);
-    Vector Vector::down(0, 1);
-    Vector Vector::left(-1, 0);
-    Vector Vector::right(1, 0);
+Vector Vector::zero(0, 0);
+Vector Vector::up(0, -1);
+Vector Vector::down(0, 1);
+Vector Vector::left(-1, 0);
+Vector Vector::right(1, 0);
 
-    Vector::Vector(){
-        x = 0;
-        y = 0;
-    }
+Vector::Vector(){
+    x = 0;
+    y = 0;
+}
 
-    Vector::Vector(float angle){
-        x = cos(angle);
-        y = sin(angle);
-    }
+Vector::Vector(float angle){
+    x = cos(angle);
+    y = sin(angle);
+}
 
-    Vector::Vector(float x, float y){
-        this->x = x;
-        this->y = y;
-    }
+Vector::Vector(float x, float y){
+    this->x = x;
+    this->y = y;
+}
 
-    Vector::Vector(Point point){
-        x = point.x;
-        y = point.y;
-    }
+Vector::Vector(Point point){
+    x = point.x;
+    y = point.y;
+}
 
-    void
-    Vector::normalize(){
-        float magnitude = sqrt((x * x) + (y * y));
-        assert(magnitude != 0.0f);
+void
+Vector::normalize(){
+    float magnitude = sqrt((x * x) + (y * y));
+    assert(magnitude != 0.0f);
 
-        x /= magnitude;
-        y /= magnitude;
-    }
+    x /= magnitude;
+    y /= magnitude;
+}
 
-    float
-    Vector::getAngle(){
-        return atan2(y, x);
-    }
+float
+Vector::getAngle(){
+    return atan2(y, x);
+}
 
-    void
-    Vector::setAngle(float angle){
-        x = cos(angle);
-        y = sin(angle);
-    }
+void
+Vector::setAngle(float angle){
+    x = cos(angle);
+    y = sin(angle);
+}
 
-    void
-    Vector::rotate(float rotationAngle){
-        float angleToSet = getAngle() + rotationAngle;
-        setAngle(angleToSet);
-    }
+void
+Vector::rotate(float rotationAngle){
+    float angleToSet = getAngle() + rotationAngle;
+    setAngle(angleToSet);
+}
 
-    void
-    Vector::pointAt(Point point){
-        x = point.x;
-        y = point.y;
+void
+Vector::pointAt(Point point){
+    x = point.x;
+    y = point.y;
 
-        normalize();
-    }
+    normalize();
+}
 
-    bool
-    Vector::operator==(const Vector &vector) const {
-        return x == vector.x && y == vector.y;
-    }
+bool
+Vector::operator==(const Vector &vector) const {
+    return x == vector.x && y == vector.y;
+}
 
-    bool
-    Vector::operator!=(const Vector &vector) const {
-        return !(*this == vector);
-    }
+bool
+Vector::operator!=(const Vector &vector) const {
+    return !(*this == vector);
+}
 
-    Vector
-    Vector::operator-() const {
-        return Vector::zero - *this;
-    }
+Vector
+Vector::operator-() const {
+    return Vector::zero - *this;
+}
 
-    Vector
-    Vector::operator-(const Vector &v) const {
-        return Vector(x - v.x, y - v.y);
-    }
+Vector
+Vector::operator-(const Vector &v) const {
+    return Vector(x - v.x, y - v.y);
+}
 
-    Vector
-    Vector::operator+(const Vector &v) const {
-        return Vector(x + v.x, y + v.y);
-    }
+Vector
+Vector::operator+(const Vector &v) const {
+    return Vector(x + v.x, y + v.y);
+}
 
-    Vector
-    Vector::operator*(float scale) const {
-        return Vector(x * scale, y * scale);
-    }
+Vector
+Vector::operator*(float scale) const {
+    return Vector(x * scale, y * scale);
+}
 
-    Vector
-    Vector::operator/(float divider) const {
-        return Vector(x / divider, y / divider);
-    }
+Vector
+Vector::operator/(float divider) const {
+    return Vector(x / divider, y / divider);
+}
 
-    Vector&
-    Vector::operator+=(const Vector &v) {
-        x += v.x;
-        y += v.y;
+Vector&
+Vector::operator+=(const Vector &v) {
+    x += v.x;
+    y += v.y;
 
-        return *this;
-    }
+    return *this;
+}
 
-    Vector&
-    Vector::operator-=(const Vector &v) {
-        x -= v.x;
-        y -= v.y;
+Vector&
+Vector::operator-=(const Vector &v) {
+    x -= v.x;
+    y -= v.y;
 
-        return *this;
-    }
+    return *this;
+}
 
-    Vector&
-    Vector::operator*=(float f) {
-        x *= f;
-        y *= f;
+Vector&
+Vector::operator*=(float f) {
+    x *= f;
+    y *= f;
 
-        return *this;
-    }
+    return *this;
+}
 
-    Vector&
-    Vector::operator/=(float f) {
-        x /= f;
-        y /= f;
+Vector&
+Vector::operator/=(float f) {
+    x /= f;
+    y /= f;
 
-        return *this;
-    }
+    return *this;
+}
+
 }

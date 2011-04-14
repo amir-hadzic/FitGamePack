@@ -25,34 +25,36 @@
 
 namespace Fitgy {
 
+/**
+ * An image entity that is enhanced for use with the grid entity.
+ * @see ImageEntity
+ */
+class FieldImageEntity : public ImageEntity {
+private:
+    int mField;
+public:
     /**
-     * An image entity that is enhanced for use with the grid entity.
-     * @see ImageEntity
+     * Constructor that initializes the entity.
+     *
+     * @param parent is the parent entity. This should be but doesn't have
+     * to be a GridEntity.
+     * @param filename path to the image file.
+     * @param field is the field position of this entity inside the parent
+     * grid entity.
+     * @param opacity is the opacity of the image. Default is opaque.
      */
-    class FieldImageEntity : public ImageEntity {
-    private:
-        int mField;
-    public:
-        /**
-         * Constructor that initializes the entity.
-         *
-         * @param parent is the parent entity. This should be but doesn't have
-         * to be a GridEntity.
-         * @param filename path to the image file.
-         * @param field is the field position of this entity inside the parent
-         * grid entity.
-         * @param opacity is the opacity of the image. Default is opaque.
-         */
-        FieldImageEntity(GridEntity* parent, char* filename, int field, short opacity = SDL_ALPHA_OPAQUE);
+    FieldImageEntity(GridEntity* parent, char* filename, int field,
+            short opacity = SDL_ALPHA_OPAQUE);
 
-        /**
-         * Gets the field position.
-         *
-         * @return the field position of this entity inside the parent grid
-         * entity.
-         */
-        int getField();
-    };
+    /**
+     * Gets the field position.
+     *
+     * @return the field position of this entity inside the parent grid
+     * entity.
+     */
+    int getField();
+};
+
 }
 
 #endif

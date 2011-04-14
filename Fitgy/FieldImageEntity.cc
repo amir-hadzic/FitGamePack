@@ -20,13 +20,15 @@
 #include "FieldImageEntity.h"
 
 namespace Fitgy {
-    FieldImageEntity::FieldImageEntity(GridEntity* parent, char* filename, int field, short opacity)
-        : ImageEntity(parent, filename, opacity)
-    {
-        mField = field;
-    }
 
-    int FieldImageEntity::getField(){
-        return mField;
-    }
+FieldImageEntity::FieldImageEntity(GridEntity* parent, char* filename, int field, short opacity)
+    : ImageEntity(parent, filename, opacity)
+{
+    mField = field;
+}
+
+int FieldImageEntity::getField(){
+    return mField;
+}
+
 }
