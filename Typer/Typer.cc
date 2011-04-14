@@ -82,6 +82,7 @@ namespace Typer {
             txtScore->position.y = 10;
 
             typingSound = new Fitgy::Sound("sfx/typing.ogg");
+            failSound = new Fitgy::Sound("sfx/fail.ogg");
 
             setMusic("sfx/signal.ogg", MIX_MAX_VOLUME/2);
         } catch (Fitgy::Exception::FileNotFound const &e){
@@ -132,10 +133,11 @@ namespace Typer {
                     removeEntity(it->second);
                     mActiveWords.erase(it++);
                     updateScore();
-                } else if (it->second->position.y - 50> getDisplay()->getWidth()) {
+                } else if (it->second->bottomRight().y > getDisplay()->getWidth()) {
                     mScore--;
                     removeEntity(it->second);
                     mActiveWords.erase(it++);
+                    failSound->play();
                     updateScore();
                 } else {
                     ++it;

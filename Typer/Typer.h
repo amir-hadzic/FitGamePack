@@ -53,6 +53,7 @@ namespace Typer {
         Fitgy::TextEntity* txtScore;
         Fitgy::ImageEntity* imgDanger;
         Fitgy::Sound* typingSound;
+        Fitgy::Sound* failSound;
 
         void readWords(char* filename);
         std::string nextWord();
