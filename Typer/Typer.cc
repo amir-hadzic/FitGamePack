@@ -35,7 +35,8 @@ Game::getInstance(){
 Game::Game()
     : Application()
 {
-            mScore = 0;
+    mScore = 0;
+    currentWord = NULL;
 }
 
 Game::~Game(){
@@ -82,8 +83,11 @@ Game::init()
         txtScore->position.x = 10;
         txtScore->position.y = 10;
 
-        typingSound = new Fitgy::Sound("sfx/typing.ogg");
-        failSound = new Fitgy::Sound("sfx/fail.ogg");
+        typingSound = new Fitgy::Sound("sfx/typing.ogg", MIX_MAX_VOLUME,
+                TYPING_CHANNEL);
+
+        failSound = new Fitgy::Sound("sfx/fail.ogg", MIX_MAX_VOLUME / 2,
+                FAIL_CHANNEL);
 
         setMusic("sfx/signal.ogg", MIX_MAX_VOLUME/2);
     } catch (Fitgy::Exception::FileNotFound const &e){
@@ -125,21 +129,31 @@ Game::loop(){
 } else {
         Application::loop();
 
-        // Find typed words and delete them.
-        std::map<std::string, TyperWord*>::iterator it;
+        std::vector<TyperWord*>::iterator it;
+        if (currentWord != NULL && currentWord->isSolved()){
+            it = std::find(mActiveWords.begin(), mActiveWords.end(), currentWord);
+            mActiveWords.erase(it);
+            removeEntity(currentWord);
+
+            mScore++;
+            updateScore();
+            currentWord = NULL;
+        }
+
+        // Find fallen words and delete them
         it = mActiveWords.begin();
         while(it != mActiveWords.end()){
-            if (it->second->isSolved()){
-                mScore++;
-                removeEntity(it->second);
+            if (!getDisplay()->isWithinBounds((*it)->position)){
+                if (currentWord == (*it)){
+                    currentWord = NULL;
+                }
+
+                removeEntity((*it));
                 mActiveWords.erase(it++);
-                updateScore();
-            } else if (it->second->bottomRight().y > getDisplay()->getWidth()) {
+
                 mScore--;
-                removeEntity(it->second);
-                mActiveWords.erase(it++);
-                failSound->play();
                 updateScore();
+                failSound->play();
             } else {
                 ++it;
             }
@@ -184,7 +198,17 @@ Game::nextWord(){
         unsigned int randIndex = rand() % (mWords.size());
         std::string foundWord = mWords[randIndex];
 
-        if (mActiveWords.find(foundWord) == mActiveWords.end()){
+        bool found = false;
+        std::vector<TyperWord*>::iterator it = mActiveWords.begin();
+        while (it != mActiveWords.end()){
+            if ((*it)->getWord() == foundWord) {
+                found = true;
+                break;
+            }
+            ++it;
+        }
+
+        if (!found){
             word = foundWord;
         }
     }
@@ -203,7 +227,7 @@ Game::spawnWord(){
     typerWord->direction = Fitgy::Vector::down;
     typerWord->setSpeed(getRandomSpeed());
 
-    mActiveWords[word] = typerWord;
+    mActiveWords.push_back(typerWord);
     addEntity(typerWord);
 }
 
@@ -234,6 +258,23 @@ Game::updateScore(){
 
 bool
 Game::onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode){
+    if (currentWord == NULL){
+        std::vector<TyperWord*>::iterator it;
+        it = mActiveWords.begin();
+        while (it != mActiveWords.end()){
+            if ((*it)->addLetter((char)unicode)){
+                currentWord = *it;
+                break;
+            }
+
+            ++it;
+        }
+    } else {
+        if (!currentWord->addLetter((char)unicode)){
+            currentWord = NULL;
+        }
+    }
+
     typingSound->play();
     return true;
 }

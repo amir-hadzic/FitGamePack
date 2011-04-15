@@ -35,6 +35,8 @@ namespace Typer {
 
 const std::string LABEL_FONT = "fonts/DroidSans.ttf";
 const std::string WORD_FONT = "fonts/DroidSansMono.ttf";
+const int TYPING_CHANNEL = 1;
+const int FAIL_CHANNEL = 2;
 
 class Game : public Fitgy::Application {
 private:
@@ -50,11 +52,12 @@ private:
     int mScore;
 
     std::vector<std::string> mWords;
-    std::map<std::string, TyperWord*> mActiveWords;
+    std::vector<TyperWord*> mActiveWords;
     Fitgy::TextEntity* txtScore;
     Fitgy::ImageEntity* imgDanger;
     Fitgy::Sound* typingSound;
     Fitgy::Sound* failSound;
+    TyperWord* currentWord;
 
     void readWords(char* filename);
     std::string nextWord();

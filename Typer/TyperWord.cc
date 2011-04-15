@@ -38,15 +38,8 @@ TyperWord::TyperWord(Fitgy::Entity* parent, std::string word, TTF_Font *font)
 }
 
 TyperWord::~TyperWord(){
-    if (mFinishedLetters != NULL){
-        delete mFinishedLetters;
-        mFinishedLetters = NULL;
-    }
-
-    if (mUnfinishedLetters != NULL){
-        delete mUnfinishedLetters;
-        mUnfinishedLetters = NULL;
-    }
+    delete mFinishedLetters;
+    delete mUnfinishedLetters;
 }
 
 void
@@ -78,34 +71,30 @@ TyperWord::onRender(Entity*){
 }
 
 bool
-TyperWord::onKeyDown(SDLKey, SDLMod, uint16_t unicode){
-    bool hit = mWord[mFinishedCount] == (char)unicode;
+TyperWord::addLetter(char letter){
+    bool isNextLetter = mWord[mFinishedCount] == letter;
 
-    if (isSolved()){
-        return false;
-    }
+    if (isNextLetter) {
+            mFinishedCount++;
+            std::string finishedWord = mWord.substr(0, mFinishedCount);
+            std::string unfinishedWord = mWord.substr(mFinishedCount);
 
-    if (hit) {
-        mFinishedCount++;
-        std::string finishedWord = mWord.substr(0, mFinishedCount);
-        std::string unfinishedWord = mWord.substr(mFinishedCount);
+            if (mFinishedCount == 1){
+                mFinishedLetters = new Fitgy::TextEntity(parent, finishedWord,
+                        mFont, Fitgy::Color::blue());
+                mUnfinishedLetters->setColor(Fitgy::Color::white());
+            }
 
-        if (mFinishedCount == 1){
-            mFinishedLetters = new Fitgy::TextEntity(parent, finishedWord,
-                    mFont, Fitgy::Color::blue());
-            mUnfinishedLetters->setColor(Fitgy::Color::white());
-        }
+            mFinishedLetters->setText(finishedWord);
 
-        mFinishedLetters->setText(finishedWord);
+            if (unfinishedWord != ""){
+                mUnfinishedLetters->setText(unfinishedWord);
+            } else {
+               delete mUnfinishedLetters;
+               mUnfinishedLetters = NULL;
+            }
 
-        if (unfinishedWord != ""){
-            mUnfinishedLetters->setText(unfinishedWord);
-        } else {
-            delete mUnfinishedLetters;
-            mUnfinishedLetters = NULL;
-        }
-
-        return true;
+            return true;
     } else {
         mFinishedCount = 0;
         delete mFinishedLetters;
@@ -113,14 +102,19 @@ TyperWord::onKeyDown(SDLKey, SDLMod, uint16_t unicode){
 
         mUnfinishedLetters->setColor(Fitgy::Color::green());
         mUnfinishedLetters->setText(mWord);
-    }
 
-    return false;
+        return false;
+    }
 }
 
 bool
 TyperWord::isSolved(){
     return mFinishedCount == mWord.length();
+}
+
+std::string
+TyperWord::getWord(){
+    return mWord;
 }
 
 }

@@ -39,8 +39,9 @@ public:
 
     void onRender(Fitgy::Entity* entity);
     void onLoop();
-    bool onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode);
+    bool addLetter(char letter);
     bool isSolved();
+    std::string getWord();
 };
 
 }
