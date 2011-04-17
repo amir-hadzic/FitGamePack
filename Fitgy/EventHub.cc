@@ -21,21 +21,28 @@
 
 namespace Fitgy {
 
+int EventHub::numListeners = 0;
+bool EventHub::mListLocked = false;
 std::vector<EventHub::EventListener> EventHub::mListeners;
 
 void
 EventHub::subscribe(EventHandler* handler){
     mListeners.push_back(EventListener(handler));
+    numListeners++;
 }
 
 void
 EventHub::unsubscribe(EventHandler* handler){
     std::vector<EventListener>::iterator it;
     it = mListeners.begin();
-
     while(it != mListeners.end()){
-        if ((*it).handler == handler){
-            (*it).isActive = false;
+        if (it->handler == handler){
+            if (true){
+                it->isActive = false;
+            } else {
+                mListeners.erase(it);
+            }
+            numListeners--;
             break;
         }
         ++it;
@@ -43,12 +50,14 @@ EventHub::unsubscribe(EventHandler* handler){
 }
 
 void
-EventHub::broadcast(SDL_Event *event){
+EventHub::broadcast(SDL_Event* event){
     std::vector<EventListener>::iterator it = mListeners.begin();
 
+    mListLocked = true;
     while (it != mListeners.end()){
-        if ((*it).isActive){
-            bool handled = (*it).handler->onEvent(NULL, event);
+        if (it->isActive){
+            it->handler->dummy();
+            bool handled = it->handler->onEvent(NULL, event);
 
             if (handled){
                 break;
@@ -59,6 +68,7 @@ EventHub::broadcast(SDL_Event *event){
             it = mListeners.erase(it);
         }
     }
+    mListLocked = false;
 
 }
 

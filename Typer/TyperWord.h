@@ -22,6 +22,7 @@
 
 #include "../Fitgy/Fitgy.h"
 #include <string>
+#include <iostream>
 
 namespace Typer {
 
@@ -35,7 +36,7 @@ private:
 
 public:
     TyperWord(Fitgy::Entity* parent, std::string word, TTF_Font* font);
-    ~TyperWord();
+    virtual ~TyperWord();
 
     void onRender(Fitgy::Entity* entity);
     void onLoop();

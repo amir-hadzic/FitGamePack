@@ -22,6 +22,7 @@
 
 #include "LibSDL.h"
 #include "Point.h"
+#include "assert.h"
 
 namespace Fitgy {
 
@@ -50,6 +51,8 @@ public:
 
     virtual bool onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode);
     virtual bool onKeyUp(SDLKey sym, SDLMod mod, uint16_t unicode);
+
+    void dummy() { }
 };
 
 }

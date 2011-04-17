@@ -26,11 +26,13 @@
 #include "Vector.h"
 #include "EventHandler.h"
 #include "EventHub.h"
+#include <iostream>
 
 namespace Fitgy {
 
 class Entity : public EventHandler {
 protected:
+    static int numEntities;
     /**
      * Holds the hover state. If this is true then the cursor position is
      * within the entity bounds.

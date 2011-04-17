@@ -31,6 +31,7 @@ EventHandler::~EventHandler(){
 
 bool
 EventHandler::onEvent(void* sender, SDL_Event* event){
+    assert(event != NULL);
     switch(event->type){
         case SDL_QUIT:
             return onExit();

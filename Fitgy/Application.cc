@@ -103,15 +103,21 @@ Application::execute(){
         return -1;
     }
     
-    SDL_Event event;
-    while(mRunning){
-        while(SDL_PollEvent(&event)){
-            EventHub::broadcast(&event);
-            onEvent(this, &event);
-        }
+    mGameLoopTimer = SDL_AddTimer(20, (SDL_NewTimerCallback)fireLoopEvent, this);
 
-        loop();
-        startRender();
+    SDL_Event event;
+    while(mRunning && SDL_WaitEvent(&event)){
+        switch(event.type){
+        case SDL_USEREVENT:
+            if (event.user.code == EVENT_GAME_LOOP){
+                loop();
+                startRender();
+                continue;
+            }
+        default:
+            onEvent(this, &event);
+            EventHub::broadcast(&event);
+        }
     }
 
     cleanup();
@@ -174,6 +180,8 @@ Application::render(){
 
 void
 Application::cleanup(){
+    SDL_RemoveTimer(mGameLoopTimer);
+
     EntityIterator it = mEntities.begin();
 
     while(it != mEntities.end()){
@@ -206,4 +214,19 @@ Application::setMusic(char* filename, short volume){
 
     mMusic = new Application::Music(filename, volume);
 }
+
+/* static */ unsigned int
+Application::fireLoopEvent(unsigned int interval, void* param){
+    SDL_Event *event = new SDL_Event;
+
+    event->type = SDL_USEREVENT;
+    event->user.code = EVENT_GAME_LOOP;
+    event->user.data1 = 0;
+    event->user.data2 = 0;
+
+    SDL_PushEvent(event);
+
+    return interval;
+}
+
 }

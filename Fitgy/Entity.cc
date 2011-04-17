@@ -21,6 +21,8 @@
 
 namespace Fitgy {
 
+int Entity::numEntities = 0;
+
 Entity::Entity(Entity* parent){
     entitySurface = NULL;
     mExternalEventHandler = NULL;
@@ -29,10 +31,18 @@ Entity::Entity(Entity* parent){
     mLastLoopTime = 0;
     mSpeed = 0;
     EventHub::subscribe(this);
+    numEntities++;
+    std::cout << "Entities: " << numEntities << " "
+              << "Subscribers: " << EventHub::numListeners << " "
+              << std::endl;
 }
 
 Entity::~Entity(){
     onCleanup();
+    numEntities--;
+    std::cout << "Entities: " << numEntities << " "
+              << "Subscribers: " << EventHub::numListeners << " "
+              << std::endl;
 }
 
 void

@@ -51,6 +51,10 @@ const int MIX_CHUNKSIZE = 1024;
  */
 const short MIX_AUDIO_CHANNELS = 2;
 
+/**
+ * User code for the game loop event.
+ */
+const int EVENT_GAME_LOOP = 1;
 
 /**
  * This is the base class for a Fitgy Application. It handles the entities,
@@ -64,6 +68,7 @@ protected:
     std::vector<Entity*> mEntities;
     Display* mDisplay;
     void startRender();
+    SDL_TimerID mGameLoopTimer;
 
     class Music {
     private:
@@ -81,6 +86,8 @@ protected:
 
         void setVolume(short volume);
     };
+
+    static unsigned int fireLoopEvent(unsigned int interval, void* param);
 
     Music* mMusic;
 public:

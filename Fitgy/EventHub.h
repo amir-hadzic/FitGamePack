@@ -24,6 +24,7 @@
 #include "EventHandler.h"
 #include <vector>
 #include <algorithm>
+#include <iostream>
 
 namespace Fitgy {
 
@@ -51,8 +52,10 @@ private:
     };
 
     static std::vector<EventListener> mListeners;
+    static bool mListLocked;
 
 public:
+    static int numListeners;
 
     /**
      * Subscribes the specified EventHandler to receive events.
