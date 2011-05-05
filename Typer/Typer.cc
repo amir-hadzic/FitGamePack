@@ -149,7 +149,7 @@ Game::loop(){
                 }
 
                 removeEntity((*it));
-                mActiveWords.erase(it++);
+                it = mActiveWords.erase(it);
 
                 mScore--;
                 updateScore();
