@@ -34,8 +34,9 @@ EventHub::unsubscribe(EventHandler* handler){
     it = mListeners.begin();
 
     while(it != mListeners.end()){
-        if ((*it).handler == handler){
-            (*it).isActive = false;
+        if (it->handler == handler){
+            it->isActive = false;
+            it->handler = NULL;
             break;
         }
         ++it;
@@ -47,8 +48,8 @@ EventHub::broadcast(SDL_Event *event){
     std::vector<EventListener>::iterator it = mListeners.begin();
 
     while (it != mListeners.end()){
-        if ((*it).isActive){
-            bool handled = (*it).handler->onEvent(NULL, event);
+        if (it->isActive){
+            bool handled = it->handler->onEvent(NULL, event);
 
             if (handled){
                 break;
