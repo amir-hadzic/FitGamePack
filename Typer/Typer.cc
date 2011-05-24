@@ -19,6 +19,8 @@
 
 #include "Typer.h"
 
+using namespace Fitgy;
+
 namespace Typer {
 
 Game* Game::mInstance = 0;
@@ -36,13 +38,15 @@ Game::Game()
     : Application()
 {
     mScore = 0;
-    currentWord = NULL;
+    mCurrentWord = NULL;
+    mLives = 3;
+    mGameOver = false;
 }
 
 Game::~Game(){
     TTF_CloseFont(mWordFont);
     TTF_CloseFont(mLabelFont);
-    delete typingSound;
+    delete mTypingSound;
 }
 
 bool
@@ -54,50 +58,42 @@ Game::init()
 
     mDisplay->setTitle("Fitgy::Typer", "Typer");
 
-    try
-    {
-        readWords("word-list.txt");
+	readWords("word-list.txt");
 
-        mSplashScreen = new Fitgy::SplashScreen(
-            mDisplay, "gfx/splash.png", 2000
-        );
+	mSplashScreen = new SplashScreen(mDisplay, "gfx/splash.png", 2000);
 
-        mWordFont = TTF_OpenFont(WORD_FONT.c_str(), 18);
-        if (mWordFont == NULL) {
-            throw Fitgy::Exception::FileNotFound(WORD_FONT);
-        }
+	mWordFont = TTF_OpenFont(WORD_FONT.c_str(), 18);
+	if (mWordFont == NULL) {
+		throw Exception::FileNotFound(WORD_FONT);
+	}
 
-        mLabelFont = TTF_OpenFont(LABEL_FONT.c_str(), 22);
-        if (mLabelFont == NULL) {
-            throw Fitgy::Exception::FileNotFound(LABEL_FONT);
-        }
+	mLabelFont = TTF_OpenFont(LABEL_FONT.c_str(), 22);
+	if (mLabelFont == NULL) {
+		throw Exception::FileNotFound(LABEL_FONT);
+	}
 
-        imgDanger = new Fitgy::ImageEntity(getDisplay(), "gfx/danger.png");
-        imgDanger->position.x = 10;
-        imgDanger->position.y = getDisplay()->getHeight();
-        imgDanger->position.y -= imgDanger->getHeight() + 20;
+	mImgDanger = new ImageEntity(getDisplay(), "gfx/danger.png");
+	mImgDanger->position.x = 10;
+	mImgDanger->position.y = getDisplay()->getHeight();
+	mImgDanger->position.y -= mImgDanger->getHeight() + 20;
 
-        txtScore = new Fitgy::TextEntity(getDisplay(), "Score: 0", mLabelFont,
-                                Fitgy::Color::white());
+	mTxtScore = new TextEntity(getDisplay(), "Score: 0", mLabelFont, Color::white());
 
-        txtScore->position.x = 10;
-        txtScore->position.y = 10;
+	mTxtScore->position.x = 10;
+	mTxtScore->position.y = 10;
 
-        typingSound = new Fitgy::Sound("sfx/typing.ogg", MIX_MAX_VOLUME,
-                TYPING_CHANNEL);
+	mTxtLives = new TextEntity(getDisplay(), "Lives: 3", mLabelFont, Color::white());
+	mTxtLives->position.x = getDisplay()->getWidth() - mTxtLives->getWidth() - 10;
+	mTxtLives->position.y = 10;
 
-        failSound = new Fitgy::Sound("sfx/fail.ogg", MIX_MAX_VOLUME / 2,
-                FAIL_CHANNEL);
+	mTypingSound = new Sound("sfx/typing.ogg", MIX_MAX_VOLUME, TYPING_CHANNEL);
+	mFailSound = new Sound("sfx/fail.ogg", MIX_MAX_VOLUME / 2,	FAIL_CHANNEL);
 
-        setMusic("sfx/signal.ogg", MIX_MAX_VOLUME/2);
-    } catch (Fitgy::Exception::FileNotFound const &e){
-        Fitgy::MessageBox::show("Resource not found: " + e.getFile(), "Error",
-                            Fitgy::MessageBoxInt::MessageError, Fitgy::MessageBoxInt::ButtonOK);
-        return false;
-    }
+	setMusic("sfx/signal.ogg", MIX_MAX_VOLUME/2);
 
-    addEntity(txtScore);
-    addEntity(imgDanger);
+    addEntity(mTxtScore);
+    addEntity(mTxtLives);
+    addEntity(mImgDanger);
 
     srand(time(NULL));
     mNextSpawnTime = getRandomSpawnTime();
@@ -126,37 +122,40 @@ void
 Game::loop(){
     if (mSplashScreen != NULL){
         mSplashScreen->onLoop();
-} else {
+	} else if (mGameOver){
+		Application::loop();
+	} else if(!mGameOver) {
         Application::loop();
 
         std::vector<TyperWord*>::iterator it;
-        if (currentWord != NULL && currentWord->isSolved()){
-            it = std::find(mActiveWords.begin(), mActiveWords.end(), currentWord);
+        if (mCurrentWord != NULL && mCurrentWord->isSolved()){
+            it = std::find(mActiveWords.begin(), mActiveWords.end(), mCurrentWord);
             mActiveWords.erase(it);
-            removeEntity(currentWord);
+            removeEntity(mCurrentWord);
 
-            mScore++;
-            updateScore();
-            currentWord = NULL;
+            incrementScore();
+            mCurrentWord = NULL;
         }
 
         // Find fallen words and delete them
         it = mActiveWords.begin();
         while(it != mActiveWords.end()){
             if (!getDisplay()->isWithinBounds((*it)->position)){
-                if (currentWord == (*it)){
-                    currentWord = NULL;
+                if (mCurrentWord == (*it)){
+                    mCurrentWord = NULL;
                 }
 
                 removeEntity((*it));
                 it = mActiveWords.erase(it);
-
-                mScore--;
-                updateScore();
-                failSound->play();
+                mFailSound->play();
+                decrementLives();
             } else {
                 ++it;
             }
+        }
+
+        if (mLives == 0) {
+        	gameOver();
         }
 
         // See if we are supposed to spawn a word.
@@ -177,7 +176,7 @@ Game::readWords(char* filename){
     std::ifstream wordFile(filename);
 
     if (wordFile.fail()){
-        throw Fitgy::Exception::FileNotFound(filename);
+        throw Exception::FileNotFound(filename);
     }
 
     while(!wordFile.eof()){
@@ -224,7 +223,7 @@ Game::spawnWord(){
     int maxY = getDisplay()->getWidth() - typerWord->getWidth();
     typerWord->position.y = 0;
     typerWord->position.x = rand() % (maxY + 1);
-    typerWord->direction = Fitgy::Vector::down;
+    typerWord->direction = Vector::down;
     typerWord->setSpeed(getRandomSpeed());
 
     mActiveWords.push_back(typerWord);
@@ -248,34 +247,64 @@ Game::getRandomSpeed(){
 }
 
 void
-Game::updateScore(){
-    std::stringstream ss;
+Game::incrementScore(){
+    mScore++;
+
+	std::stringstream ss;
     ss << "Score: " << mScore;
 
 
-    txtScore->setText(ss.str());
+    mTxtScore->setText(ss.str());
+}
+
+void
+Game::decrementLives(){
+	mLives--;
+
+	std::stringstream ss;
+	ss << "Lives: " << mLives;
+	mTxtLives->setText(ss.str());
+}
+
+void
+Game::gameOver() {
+	mGameOver = true;
+
+	std::vector<TyperWord*>::iterator it = mActiveWords.begin();
+	while (it != mActiveWords.end()) {
+		removeEntity(*it);
+		++it;
+	}
+	mActiveWords.clear();
+
+	TextEntity* txtGameOver = new TextEntity(getDisplay(),
+			"Game over!", mLabelFont, Color::green());
+	txtGameOver->position.x = getDisplay()->getWidth() / 2 - txtGameOver->getWidth() / 2;
+	txtGameOver->position.y = getDisplay()->getHeight() / 2 - txtGameOver->getHeight() / 2;
+
+	addEntity(txtGameOver);
 }
 
 bool
 Game::onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode){
-    if (currentWord == NULL){
+    if (mCurrentWord == NULL){
         std::vector<TyperWord*>::iterator it;
         it = mActiveWords.begin();
         while (it != mActiveWords.end()){
             if ((*it)->addLetter((char)unicode)){
-                currentWord = *it;
+                mCurrentWord = *it;
                 break;
             }
 
             ++it;
         }
     } else {
-        if (!currentWord->addLetter((char)unicode)){
-            currentWord = NULL;
+        if (!mCurrentWord->addLetter((char)unicode)){
+            mCurrentWord = NULL;
         }
     }
 
-    typingSound->play();
+    mTypingSound->play();
     return true;
 }
 

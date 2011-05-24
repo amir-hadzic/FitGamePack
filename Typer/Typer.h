@@ -30,6 +30,7 @@
 #include <string>
 #include <sstream>
 
+using namespace Fitgy;
 
 namespace Typer {
 
@@ -38,9 +39,9 @@ const std::string WORD_FONT = "fonts/DroidSansMono.ttf";
 const int TYPING_CHANNEL = 1;
 const int FAIL_CHANNEL = 2;
 
-class Game : public Fitgy::Application {
+class Game : public Application {
 private:
-    Fitgy::SplashScreen *mSplashScreen;
+	SplashScreen *mSplashScreen;
     Game();
     Game(Game const&){};
     ~Game();
@@ -50,30 +51,33 @@ private:
     TTF_Font* mLabelFont;
     unsigned int mNextSpawnTime;
     int mScore;
+    int mLives;
+    bool mGameOver;
 
     std::vector<std::string> mWords;
     std::vector<TyperWord*> mActiveWords;
-    Fitgy::TextEntity* txtScore;
-    Fitgy::ImageEntity* imgDanger;
-    Fitgy::Sound* typingSound;
-    Fitgy::Sound* failSound;
-    TyperWord* currentWord;
+    TextEntity* mTxtScore;
+    TextEntity* mTxtLives;
+    ImageEntity* mImgDanger;
+    Sound* mTypingSound;
+    Sound* mFailSound;
+    TyperWord* mCurrentWord;
 
     void readWords(char* filename);
     std::string nextWord();
     void spawnWord();
     unsigned int getRandomSpawnTime();
     unsigned int getRandomSpeed();
-    void updateScore();
+    void incrementScore();
+    void decrementLives();
+    void gameOver();
 
 public:
     static Game* getInstance();
-
     bool init();
     void render();
     void loop();
     void restart();
-
     bool onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode);
 };
 

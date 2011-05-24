@@ -18,8 +18,22 @@
 */
 
 #include "Typer.h"
+#include "../Fitgy/Fitgy.h"
+
+using namespace Fitgy;
+using namespace Typer;
 
 int main(int argc, char** argv){
-    Typer::Game* game = Typer::Game::getInstance();
-    return game->execute();
+	Game* game = Game::getInstance();
+
+	try
+    {
+    	return game->execute();
+    } catch (Exception::FileNotFound const &e) {
+    	MessageBox::show("Resource not found: " + e.getFile(), "Error",
+    			MessageBoxInt::MessageError, MessageBoxInt::ButtonOK);
+
+    	return -1;
+    }
+
 }
