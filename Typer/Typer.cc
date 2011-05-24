@@ -154,21 +154,16 @@ Game::loop(){
             }
         }
 
-        if (mLives == 0) {
-        	gameOver();
-        }
-
         // See if we are supposed to spawn a word.
         if (SDL_GetTicks() >= mNextSpawnTime){
             spawnWord();
             mNextSpawnTime = getRandomSpawnTime();
         }
+
+        if (mLives == 0) {
+			gameOver();
+		}
     }
-}
-
-void
-Game::restart(){
-
 }
 
 void
@@ -240,10 +235,10 @@ Game::getRandomSpawnTime(){
 
 unsigned int
 Game::getRandomSpeed(){
-    // Just take some random speed for now.
-    // TODO: Speed should be relative to the current score.
+    int calculatedMin = MIN_START_SPEED + mScore * 2;
+    int calculatedMax = MAX_START_SPEED + mScore * 2;
 
-    return 50 + (rand() % 200);
+	return calculatedMin + (rand() % (calculatedMax - calculatedMin));
 }
 
 void

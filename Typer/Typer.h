@@ -38,6 +38,8 @@ const std::string LABEL_FONT = "fonts/DroidSans.ttf";
 const std::string WORD_FONT = "fonts/DroidSansMono.ttf";
 const int TYPING_CHANNEL = 1;
 const int FAIL_CHANNEL = 2;
+const int MIN_START_SPEED = 20;
+const int MAX_START_SPEED = 130;
 
 class Game : public Application {
 private:
@@ -77,7 +79,6 @@ public:
     bool init();
     void render();
     void loop();
-    void restart();
     bool onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode);
 };
 
