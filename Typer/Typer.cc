@@ -72,10 +72,9 @@ Game::init()
 		throw Exception::FileNotFound(LABEL_FONT);
 	}
 
-	mImgDanger = new ImageEntity(getDisplay(), "gfx/danger.png");
-	mImgDanger->position.x = 10;
-	mImgDanger->position.y = getDisplay()->getHeight();
-	mImgDanger->position.y -= mImgDanger->getHeight() + 20;
+	mImgBackground = new ImageEntity(getDisplay(), "gfx/background.png");
+	mImgBackground->position.x = 0;
+	mImgBackground->position.y = 0;
 
 	mTxtScore = new TextEntity(getDisplay(), "Score: 0", mLabelFont, Color::white());
 
@@ -91,9 +90,9 @@ Game::init()
 
 	setMusic("sfx/signal.ogg", MIX_MAX_VOLUME/2);
 
+	addEntity(mImgBackground);
     addEntity(mTxtScore);
     addEntity(mTxtLives);
-    addEntity(mImgDanger);
 
     srand(time(NULL));
     mNextSpawnTime = getRandomSpawnTime();

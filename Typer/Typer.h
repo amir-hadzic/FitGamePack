@@ -60,7 +60,7 @@ private:
     std::vector<TyperWord*> mActiveWords;
     TextEntity* mTxtScore;
     TextEntity* mTxtLives;
-    ImageEntity* mImgDanger;
+    ImageEntity* mImgBackground;
     Sound* mTypingSound;
     Sound* mFailSound;
     TyperWord* mCurrentWord;
