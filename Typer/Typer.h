@@ -29,6 +29,7 @@
 #include <time.h>
 #include <string>
 #include <sstream>
+#include <iomanip>
 
 using namespace Fitgy;
 
@@ -54,6 +55,8 @@ private:
     unsigned int mNextSpawnTime;
     int mScore;
     int mLives;
+    int mTypedLettersCount;
+    int mScoredLettersCount;
     bool mGameOver;
 
     std::vector<std::string> mWords;

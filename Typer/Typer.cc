@@ -41,6 +41,8 @@ Game::Game()
     mCurrentWord = NULL;
     mLives = 10;
     mGameOver = false;
+    mTypedLettersCount = 0;
+    mScoredLettersCount = 0;
 }
 
 Game::~Game(){
@@ -280,7 +282,14 @@ Game::gameOver() {
 	txtGameOver->position.x = getDisplay()->getWidth() / 2 - txtGameOver->getWidth() / 2;
 	txtGameOver->position.y = getDisplay()->getHeight() / 2 - txtGameOver->getHeight() / 2;
 
+	std::stringstream ss;
+	ss << "Accuracy: " << std::fixed << std::setprecision(2) << ((float)mScoredLettersCount / mTypedLettersCount) * 100 << "%";
+	TextEntity* txtAccuracy = new TextEntity(getDisplay(), ss.str(), mLabelFont, Color::green());
+	txtAccuracy->position.x = getDisplay()->getWidth() / 2 - txtAccuracy->getWidth() / 2;
+	txtAccuracy->position.y = txtGameOver->position.y + txtGameOver->getHeight() + 10;
+
 	addEntity(txtGameOver);
+	addEntity(txtAccuracy);
 }
 
 bool
@@ -291,6 +300,7 @@ Game::onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode){
         while (it != mActiveWords.end()){
             if ((*it)->addLetter((char)unicode)){
                 mCurrentWord = *it;
+                mScoredLettersCount++;
                 break;
             }
 
@@ -299,9 +309,12 @@ Game::onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode){
     } else {
         if (!mCurrentWord->addLetter((char)unicode)){
             mCurrentWord = NULL;
+        } else {
+        	mScoredLettersCount++;
         }
     }
 
+    mTypedLettersCount++;
     mTypingSound->play();
     return true;
 }
