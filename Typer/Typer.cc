@@ -39,7 +39,7 @@ Game::Game()
 {
     mScore = 0;
     mCurrentWord = NULL;
-    mLives = 3;
+    mLives = 10;
     mGameOver = false;
 }
 
@@ -82,7 +82,7 @@ Game::init()
 	mTxtScore->position.x = 10;
 	mTxtScore->position.y = 10;
 
-	mTxtLives = new TextEntity(getDisplay(), "Lives: 3", mLabelFont, Color::white());
+	mTxtLives = new TextEntity(getDisplay(), "Lives: 10", mLabelFont, Color::white());
 	mTxtLives->position.x = getDisplay()->getWidth() - mTxtLives->getWidth() - 10;
 	mTxtLives->position.y = 10;
 
@@ -155,7 +155,9 @@ Game::loop(){
         }
 
         // See if we are supposed to spawn a word.
-        if (SDL_GetTicks() >= mNextSpawnTime){
+        // Do not spawn the word if there are already too many active words.
+        bool blockSpawn = mActiveWords.size() >= (mScore / 10) + 1;
+        if (SDL_GetTicks() >= mNextSpawnTime && !blockSpawn){
             spawnWord();
             mNextSpawnTime = getRandomSpawnTime();
         }
@@ -230,15 +232,15 @@ Game::getRandomSpawnTime(){
     // For now we are going to always choose some random time.
     // TODO: Spawn time should be relative to the current score.
 
-    return SDL_GetTicks() + 300 + (rand() % (1501));
+    return SDL_GetTicks() + 300 + (rand() % (1600));
 }
 
 unsigned int
 Game::getRandomSpeed(){
-    int calculatedMin = MIN_START_SPEED + mScore * 2;
-    int calculatedMax = MAX_START_SPEED + mScore * 2;
+    float calculatedMin = MIN_START_SPEED + mScore * 1.5f;
+    float calculatedMax = MAX_START_SPEED + mScore * 1.5f;
 
-	return calculatedMin + (rand() % (calculatedMax - calculatedMin));
+	return calculatedMin + ((float)(rand() % 100) / 100) * (calculatedMax - calculatedMin);
 }
 
 void
