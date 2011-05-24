@@ -274,6 +274,8 @@ Game::gameOver() {
 	}
 	mActiveWords.clear();
 
+	music()->stop();
+
 	TextEntity* txtGameOver = new TextEntity(getDisplay(),
 			"Game over!", mLabelFont, Color::green());
 	txtGameOver->position.x = getDisplay()->getWidth() / 2 - txtGameOver->getWidth() / 2;
