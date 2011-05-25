@@ -44,12 +44,12 @@ EventHub::unsubscribe(EventHandler* handler){
 }
 
 void
-EventHub::broadcast(SDL_Event *event){
+EventHub::broadcast(SDL_Event& event){
     std::vector<EventListener>::iterator it = mListeners.begin();
 
     while (it != mListeners.end()){
         if (it->isActive){
-            bool handled = it->handler->onEvent(NULL, event);
+            bool handled = it->handler->onEvent(NULL, &event);
 
             if (handled){
                 break;

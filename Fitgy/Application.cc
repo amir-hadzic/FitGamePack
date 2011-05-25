@@ -106,7 +106,7 @@ Application::execute(){
     SDL_Event event;
     while(mRunning){
         while(SDL_PollEvent(&event)){
-            EventHub::broadcast(&event);
+            EventHub::broadcast(event);
             onEvent(this, &event);
         }
 

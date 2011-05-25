@@ -77,7 +77,7 @@ public:
      *
      * @param event is the event that needs to be broadcasted.
      */
-    static void broadcast(SDL_Event* event);
+    static void broadcast(SDL_Event& event);
 };
 
 }
