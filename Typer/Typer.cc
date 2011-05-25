@@ -178,7 +178,7 @@ Game::readWords(char* filename){
     }
 
     while(!wordFile.eof()){
-        std::string word;
+        String word;
         std::getline(wordFile, word);
 
         if (word != ""){
@@ -187,13 +187,13 @@ Game::readWords(char* filename){
     }
 }
 
-std::string
+String
 Game::nextWord(){
-    std::string word = "";
+    String word = "";
 
     while(word == ""){
         unsigned int randIndex = rand() % (mWords.size());
-        std::string foundWord = mWords[randIndex];
+        String foundWord = mWords[randIndex];
 
         bool found = false;
         std::vector<TyperWord*>::iterator it = mActiveWords.begin();
@@ -215,7 +215,7 @@ Game::nextWord(){
 
 void
 Game::spawnWord(){
-    std::string word = nextWord();
+    String word = nextWord();
     TyperWord* typerWord = new TyperWord(getDisplay(), word, mWordFont);
 
     int maxY = getDisplay()->getWidth() - typerWord->getWidth();
@@ -247,21 +247,13 @@ Game::getRandomSpeed(){
 void
 Game::incrementScore(){
     mScore++;
-
-	std::stringstream ss;
-    ss << "Score: " << mScore;
-
-
-    mTxtScore->setText(ss.str());
+    mTxtScore->setText("Score: " + intToString(mScore));
 }
 
 void
 Game::decrementLives(){
 	mLives--;
-
-	std::stringstream ss;
-	ss << "Lives: " << mLives;
-	mTxtLives->setText(ss.str());
+	mTxtLives->setText("Lives: " + intToString(mLives));
 }
 
 void
@@ -277,14 +269,14 @@ Game::gameOver() {
 
 	music()->stop();
 
-	TextEntity* txtGameOver = new TextEntity(getDisplay(),
-			"Game over!", mLabelFont, Color::green());
+	TextEntity* txtGameOver = new TextEntity(getDisplay(), "Game over!", mLabelFont, Color::green());
 	txtGameOver->position.x = getDisplay()->getWidth() / 2 - txtGameOver->getWidth() / 2;
 	txtGameOver->position.y = getDisplay()->getHeight() / 2 - txtGameOver->getHeight() / 2;
 
-	std::stringstream ss;
-	ss << "Accuracy: " << std::fixed << std::setprecision(2) << ((float)mScoredLettersCount / mTypedLettersCount) * 100 << "%";
-	TextEntity* txtAccuracy = new TextEntity(getDisplay(), ss.str(), mLabelFont, Color::green());
+	float accuracy = ((float)mScoredLettersCount / mTypedLettersCount) * 100;
+	String accuracyInfo = "Accuracy: " + floatToString(accuracy) + "%";
+
+	TextEntity* txtAccuracy = new TextEntity(getDisplay(), accuracyInfo, mLabelFont, Color::green());
 	txtAccuracy->position.x = getDisplay()->getWidth() / 2 - txtAccuracy->getWidth() / 2;
 	txtAccuracy->position.y = txtGameOver->position.y + txtGameOver->getHeight() + 10;
 

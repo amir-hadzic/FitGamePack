@@ -21,7 +21,7 @@
 
 namespace Fitgy {
 
-TextEntity::TextEntity(Entity* parent, std::string text, TTF_Font* font,
+TextEntity::TextEntity(Entity* parent, String text, TTF_Font* font,
         SDL_Color color)
     : Entity(parent)
 {
@@ -50,13 +50,13 @@ TextEntity::onRender(Entity* entity){
 }
 
 void
-TextEntity::setText(std::string text){
+TextEntity::setText(String text){
     mText = text;
 
     recreateSurface();
 }
 
-std::string
+String
 TextEntity::getText(){
     return mText;
 }

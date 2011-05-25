@@ -22,4 +22,5 @@ add_library(Fitgy
     MessageBoxGtk
     MessageBoxWin
     MessageBoxInt
+    Util/String
 )

@@ -22,7 +22,9 @@
 
 #include "LibSDL.h"
 #include "Entity.h"
-#include <string>
+#include "Util/String.h"
+
+using namespace Fitgy::Util;
 
 namespace Fitgy {
 
@@ -31,7 +33,7 @@ namespace Fitgy {
  */
 class TextEntity : public Entity {
 private:
-    std::string mText;
+    String mText;
     TTF_Font* mFont;
     SDL_Color mColor;
 
@@ -51,7 +53,7 @@ public:
      * @param font is the font that will be used for the text.
      * @param color is the color that will be used for the text.
      */
-    TextEntity(Entity* parent, std::string text, TTF_Font* font, SDL_Color color);
+    TextEntity(Entity* parent, String text, TTF_Font* font, SDL_Color color);
 
     /**
      * onRender implementation for this entity. It simply blits the
@@ -77,7 +79,7 @@ public:
      *
      * @param text is the text that will be drawn.
      */
-    void setText(std::string text);
+    void setText(String text);
 
     /**
      * Returns the color.

@@ -27,16 +27,15 @@
 #include <algorithm>
 #include <stdlib.h>
 #include <time.h>
-#include <string>
-#include <sstream>
 #include <iomanip>
 
 using namespace Fitgy;
+using namespace Fitgy::Util;
 
 namespace Typer {
 
-const std::string LABEL_FONT = "fonts/DroidSans.ttf";
-const std::string WORD_FONT = "fonts/DroidSansMono.ttf";
+const String LABEL_FONT = "fonts/DroidSans.ttf";
+const String WORD_FONT = "fonts/DroidSansMono.ttf";
 const int TYPING_CHANNEL = 1;
 const int FAIL_CHANNEL = 2;
 const int MIN_START_SPEED = 20;
@@ -59,7 +58,7 @@ private:
     int mScoredLettersCount;
     bool mGameOver;
 
-    std::vector<std::string> mWords;
+    StringList mWords;
     std::vector<TyperWord*> mActiveWords;
     TextEntity* mTxtScore;
     TextEntity* mTxtLives;
@@ -69,7 +68,7 @@ private:
     TyperWord* mCurrentWord;
 
     void readWords(char* filename);
-    std::string nextWord();
+    String nextWord();
     void spawnWord();
     unsigned int getRandomSpawnTime();
     unsigned int getRandomSpeed();

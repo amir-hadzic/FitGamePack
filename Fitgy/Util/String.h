@@ -17,28 +17,22 @@
 *    Author: Amir Hadzic <amir.hadzic@randomshouting.com>
 */
 
-#ifndef FITGY_H
-#define FITGY_H
+#ifndef FITGY_UTIL_STRING_H
+#define FITGY_UTIL_STRING_H
 
-#include "LibSDL.h"
-#include "Point.h"
-#include "Vector.h"
-#include "Entity.h"
-#include "EventHub.h"
-#include "TextEntity.h"
-#include "GridEntity.h"
-#include "Display.h"
-#include "ImageEntity.h"
-#include "FieldImageEntity.h"
-#include "SplashScreen.h"
-#include "MenuItemEntity.h"
-#include "MenuEntity.h"
-#include "Application.h"
-#include "Color.h"
-#include "Sound.h"
-#include "Exception/FileNotFound.h"
-#include "MessageBox.h"
-#include "MessageBoxInt.h"
-#include "Util/String.h"
+#include <string>
+#include <vector>
+#include <iomanip>
+#include <sstream>
+
+namespace Fitgy { namespace Util {
+
+typedef std::string String;
+typedef std::vector<String> StringList;
+
+String intToString(int value);
+String floatToString(float value);
+
+}}
 
 #endif
