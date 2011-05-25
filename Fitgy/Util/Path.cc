@@ -28,14 +28,14 @@ String executablePath() {
 	TCHAR buffer[255];
 	GetModuleFileName(NULL, buffer, 255);
 	path = String(buffer);
+	path = path.substr(0, path.find_last_of('\\'));
 #else
 	char buffer[255];
 	int readChars = readlink("/proc/self/exe", buffer, 255);
 	buffer[readChars] = '\0';
 	path = String(buffer);
-#endif
-
 	path = path.substr(0, path.find_last_of('/'));
+#endif
 
 	return path;
 }
