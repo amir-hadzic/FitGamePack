@@ -21,7 +21,10 @@
 #define FITGY_DISPLAY_H
 
 #include "Entity.h"
+#include "Util/String.h"
 #include <string>
+
+using namespace Fitgy::Util;
 
 namespace Fitgy {
 
@@ -47,7 +50,7 @@ public:
      * @param iconTitle is the system title that might be used for the
      * taskbar. This actually depends on the operating system.
      */
-    void setTitle(char* windowTitle, char* iconTitle);
+    void setTitle(String windowTitle, String iconTitle);
 };
 
 }

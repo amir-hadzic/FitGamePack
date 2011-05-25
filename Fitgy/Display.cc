@@ -37,8 +37,8 @@ Display::Display(int width,int height)
 }
 
 void
-Display::setTitle(char* windowTitle, char* iconTitle){
-    SDL_WM_SetCaption(windowTitle, iconTitle);
+Display::setTitle(String windowTitle, String iconTitle){
+    SDL_WM_SetCaption(windowTitle.c_str(), iconTitle.c_str());
 }
 
 }
