@@ -61,7 +61,7 @@ private:
     bool mRunning;
 
 protected:
-    std::vector<Entity*> mEntities;
+    EntityContainer mEntities;
     Display* mDisplay;
     void startRender();
 

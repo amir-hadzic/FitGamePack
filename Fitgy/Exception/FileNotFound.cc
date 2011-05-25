@@ -21,7 +21,7 @@
 
 namespace Fitgy { namespace Exception {
 
-FileNotFound::FileNotFound(std::string file)
+FileNotFound::FileNotFound(String file)
     : std::runtime_error("File not found: " + file)
 {
     mFile = file;
@@ -31,7 +31,7 @@ FileNotFound::~FileNotFound() throw() {
 
 }
 
-std::string
+String
 FileNotFound::getFile() const {
     return mFile;
 }

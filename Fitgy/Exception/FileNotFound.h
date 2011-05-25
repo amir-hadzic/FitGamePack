@@ -19,18 +19,20 @@
 #ifndef FITGY_EX_FILENOTFOUND
 #define FITGY_EX_FILENOTFOUND
 
+#include "../Util/String.h"
 #include <stdexcept>
-#include <string>
+
+using namespace Fitgy::Util;
 
 namespace Fitgy { namespace Exception {
 
 class FileNotFound : public std::runtime_error {
 private:
-    std::string mFile;
+    String mFile;
 public:
-    FileNotFound(std::string file);
+    FileNotFound(String file);
     ~FileNotFound() throw();
-    std::string getFile() const;
+    String getFile() const;
 };
 
 }}
