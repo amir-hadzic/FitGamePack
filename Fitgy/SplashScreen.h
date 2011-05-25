@@ -22,13 +22,16 @@
 
 #include "LibSDL.h"
 #include "ImageEntity.h"
+#include "Util/String.h"
+
+using namespace Fitgy::Util;
 
 namespace Fitgy {
 
 /**
  * An entity that can be used as a splash screen in games.
  */
-class SplashScreen : public ImageEntity{
+class SplashScreen : public ImageEntity {
 public:
     /**
      * Constructor that initializes the splash screen.
@@ -42,8 +45,8 @@ public:
      *
      * @see Entity
      */
-    SplashScreen(Entity* parent, char* splashImage,
-            unsigned int animDuration = 2500, unsigned int postDuration = 1000);
+    SplashScreen(Entity* parent, String splashImage,
+    		unsigned int animDuration = 2500, unsigned int postDuration = 1000);
 
     /**
      * Checks if the splash screen is considered to be finished.

@@ -19,6 +19,9 @@
 
 #include "LibSDL.h"
 #include "Exception/FileNotFound.h"
+#include "Util/String.h"
+
+using namespace Fitgy::Util;
 
 namespace Fitgy {
 
@@ -40,7 +43,7 @@ public:
      * @param channel is the channel number on which this sound is going to
      * be played. If this is set to -1 the first free channel will be used.
      */
-    Sound(char* filename, short volume = MIX_MAX_VOLUME, short channel = -1);
+    Sound(String filename, short volume = MIX_MAX_VOLUME, short channel = -1);
 
     /**
      * Destructor.

@@ -120,7 +120,7 @@ MenuEntity::onRender(Entity* entity){
 }
 
 void
-MenuEntity::addItem(std::string identifier, std::string text){
+MenuEntity::addItem(String identifier, String text){
     MenuItemEntity* item = new MenuItemEntity(this, identifier, text, mFont);
 
     if (mItemEventHandler != NULL){

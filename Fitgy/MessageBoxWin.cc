@@ -26,8 +26,7 @@ namespace Fitgy {
  * Windows implementation of the message box dialog using the windows API.
  */
 MessageBox::MessageBoxWin::DialogResult
-MessageBox::MessageBoxWin::show(std::string message, std::string title,
-        Type type, Buttons buttons)
+MessageBox::MessageBoxWin::show(String message, String title, Type type, Buttons buttons)
 {
     unsigned int messageType = 0;
     switch(type){

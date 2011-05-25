@@ -23,7 +23,7 @@ namespace Fitgy {
 
 SplashScreen::SplashScreen(
         Entity* parent,
-        char* splashImage,
+        String splashImage,
         unsigned int animDuration,
         unsigned int postDuration
 )

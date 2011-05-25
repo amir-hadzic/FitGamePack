@@ -21,8 +21,7 @@
 
 namespace Fitgy {
 
-MenuItemEntity::MenuItemEntity(Entity* parent, std::string identifier,
-        std::string text, TTF_Font *font)
+MenuItemEntity::MenuItemEntity(Entity* parent, String identifier, String text, TTF_Font *font)
 : Entity(parent)
 {
     mIdentifier = identifier;
@@ -108,16 +107,16 @@ MenuItemEntity::getPadding(){
 }
 
 void
-MenuItemEntity::setText(std::string text){
+MenuItemEntity::setText(String text){
     mTextEntity->setText(text);
 }
 
-std::string
+String
 MenuItemEntity::getText(){
     return mTextEntity->getText();
 }
 
-std::string
+String
 MenuItemEntity::getIdentifier(){
     return mIdentifier;
 }

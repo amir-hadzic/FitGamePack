@@ -22,6 +22,9 @@
 
 #include "ImageEntity.h"
 #include "GridEntity.h"
+#include "Util/String.h"
+
+using namespace Fitgy::Util;
 
 namespace Fitgy {
 
@@ -43,7 +46,7 @@ public:
      * grid entity.
      * @param opacity is the opacity of the image. Default is opaque.
      */
-    FieldImageEntity(GridEntity* parent, char* filename, int field,
+    FieldImageEntity(GridEntity* parent, String filename, int field,
             short opacity = SDL_ALPHA_OPAQUE);
 
     /**

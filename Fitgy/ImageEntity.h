@@ -23,6 +23,9 @@
 #include "LibSDL.h"
 #include "Entity.h"
 #include "Exception/FileNotFound.h"
+#include "Util/String.h"
+
+using namespace Fitgy::Util;
 
 namespace Fitgy {
     
@@ -41,7 +44,7 @@ public:
      * @param opacity is the initial opacity of the image. Default is
      * opaque.
      */
-    ImageEntity(Entity* parent, char *filename, short opacity = SDL_ALPHA_OPAQUE,
+    ImageEntity(Entity* parent, String filename, short opacity = SDL_ALPHA_OPAQUE,
             bool imageWithAlpha = false);
 
     /**
@@ -57,7 +60,7 @@ public:
      * @param opacity is the initial opacity of the image. Default is
      * opaque.
      */
-    void setImage(char* filename, short opacity = SDL_ALPHA_OPAQUE);
+    void setImage(String filename, short opacity = SDL_ALPHA_OPAQUE);
 
     /**
      * Changes the opacity of the image.

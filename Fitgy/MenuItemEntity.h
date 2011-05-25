@@ -24,7 +24,9 @@
 #include "Entity.h"
 #include "Color.h"
 #include "TextEntity.h"
-#include <string>
+#include "Util/String.h"
+
+using namespace Fitgy;
 
 namespace Fitgy {
 
@@ -35,7 +37,7 @@ class MenuItemEntity : public Entity {
 private:
     short mPadding;
     TextEntity* mTextEntity;
-    std::string mIdentifier;
+    String mIdentifier;
     SDL_Color mBackgroundColor;
     SDL_Color mBackgroundHoverColor;
     SDL_Color mCurrentBackgroundColor;
@@ -59,8 +61,7 @@ public:
      * @param text is the item text.
      * @param font is the font that will be used to draw the text.
      */
-    MenuItemEntity(Entity* parent, std::string identifier, std::string text,
-            TTF_Font* font);
+    MenuItemEntity(Entity* parent, String identifier, String text, TTF_Font* font);
 
     /**
      * Deletes the allocated resources such as the internal TextEntity.
@@ -162,21 +163,21 @@ public:
      *
      * @param the text that will be drawn on this menu item.
      */
-    void setText(std::string text);
+    void setText(String text);
 
     /**
      * Gets the text.
      *
      * @return the text that is drawn on this menu item.
      */
-    std::string getText();
+    String getText();
 
     /**
      * Gets the identifier.
      *
      * @return the identifier that is set in the constructor.
      */
-    std::string getIdentifier();
+    String getIdentifier();
 
     /**
      * Implementation for onMouseEnter().

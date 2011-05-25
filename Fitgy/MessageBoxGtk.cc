@@ -26,8 +26,7 @@ namespace Fitgy {
  * Windows implementation of the message box dialog using Gtk (gtkmm).
  */
 MessageBox::MessageBoxGtk::DialogResult
-MessageBox::MessageBoxGtk::show(std::string message, std::string title,
-        Type type, Buttons buttons)
+MessageBox::MessageBoxGtk::show(String message, String title, Type type, Buttons buttons)
 {
     Gtk::Main kit(0, NULL);
 

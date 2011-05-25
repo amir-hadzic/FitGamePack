@@ -21,8 +21,7 @@
 
 namespace Fitgy {
 
-ImageEntity::ImageEntity(Entity* parent, char *filename, short opacity,
-        bool imageWithAlpha)
+ImageEntity::ImageEntity(Entity* parent, String filename, short opacity, bool imageWithAlpha)
     : Entity(parent)
 {
     mImageWithAlpha = imageWithAlpha;
@@ -35,14 +34,14 @@ ImageEntity::onRender(Entity* entity){
 }
 
 void
-ImageEntity::setImage(char* filename, short opacity){
+ImageEntity::setImage(String filename, short opacity){
     if (entitySurface != NULL){
         SDL_FreeSurface(entitySurface);
     }
 
     SDL_Surface* surfOriginal = NULL;
 
-    if ((surfOriginal = IMG_Load(filename)) == NULL){
+    if ((surfOriginal = IMG_Load(filename.c_str())) == NULL){
         throw Exception::FileNotFound(filename);
     }
 

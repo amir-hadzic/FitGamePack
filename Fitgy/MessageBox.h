@@ -21,6 +21,7 @@
 #define FITGY_MESSAGEBOX_H
 
 #include "MessageBoxInt.h"
+#include "Util/String.h"
 
 #ifdef _WIN32
 #include "windows.h"
@@ -28,6 +29,8 @@
 #include <gtkmm/main.h>
 #include <gtkmm/messagedialog.h>
 #endif
+
+using namespace Fitgy::Util;
 
 namespace Fitgy {
 
@@ -41,15 +44,13 @@ private:
 #ifdef _WIN32
     class MessageBoxWin : public MessageBoxInt {
     public:
-        DialogResult show(std::string message, std::string title, Type type,
-            Buttons buttons);
+        DialogResult show(String message, String title, Type type, Buttons buttons);
     };
     typedef MessageBoxWin _MessageBox;
 #else
     class MessageBoxGtk : public MessageBoxInt {
     public:
-        DialogResult show(std::string message, std::string title, Type type,
-                    Buttons buttons);
+        DialogResult show(String message, String title, Type type, Buttons buttons);
     };
     typedef MessageBoxGtk _MessageBox;
 #endif
@@ -65,9 +66,8 @@ public:
      *
      * @return the result code showing which button was clicked.
      */
-    static MessageBoxInt::DialogResult show(std::string message,
-            std::string title, MessageBoxInt::Type type,
-            MessageBoxInt::Buttons buttons);
+    static MessageBoxInt::DialogResult show(String message, String title,
+    		MessageBoxInt::Type type, MessageBoxInt::Buttons buttons);
 };
 
 }

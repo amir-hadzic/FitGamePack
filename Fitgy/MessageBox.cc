@@ -22,8 +22,7 @@
 namespace Fitgy {
 
 /* static */ MessageBoxInt::DialogResult
-MessageBox::show(std::string message,std::string title, MessageBoxInt::Type type,
-        MessageBoxInt::Buttons buttons)
+MessageBox::show(String message, String title, MessageBoxInt::Type type, MessageBoxInt::Buttons buttons)
 {
     _MessageBox msgBox;
     return msgBox.show(message, title, type, buttons);

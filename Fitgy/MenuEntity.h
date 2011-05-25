@@ -26,6 +26,9 @@
 #include "LibSDL.h"
 #include "EventHandler.h"
 #include "MenuItemEntity.h"
+#include "Util/String.h"
+
+using namespace Fitgy::Util;
 
 namespace Fitgy {
 
@@ -68,7 +71,7 @@ public:
      * @param identifier the identifier for the menu item.
      * @param text is the text for the menu item.
      */
-    void addItem(std::string identifier, std::string text);
+    void addItem(String identifier, String text);
 
     /**
      * Sets the background color.
