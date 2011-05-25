@@ -35,6 +35,8 @@ String executablePath() {
 	path = String(buffer);
 #endif
 
+	path = path.substr(0, path.find_last_of('/'));
+
 	return path;
 }
 
