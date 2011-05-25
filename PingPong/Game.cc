@@ -42,7 +42,6 @@ Game::Game(){
     mPluckSound = NULL;
     mSwipeSound = NULL;
     mScoreFont = NULL;
-
     mLastSpeedChange = 0;
     mLeftWins = 0;
     mRightWins = 0;
@@ -69,20 +68,19 @@ Game::init()
         mScoreFont = TTF_OpenFont(SCORE_FONT.c_str(), 54);
 
         if (mScoreFont == NULL){
-            throw Fitgy::Exception::FileNotFound(SCORE_FONT);
+            throw Exception::FileNotFound(SCORE_FONT);
         }
 
-        mSplashScreen = new Fitgy::SplashScreen(getDisplay(),"gfx/Splash.png", 2000);
-        mBackgroundImage = new Fitgy::ImageEntity(getDisplay(),"gfx/Background.png");
-        mPaddleLeft = new Fitgy::ImageEntity(getDisplay(), "gfx/Paddle.png");
-        mPaddleRight = new Fitgy::ImageEntity(getDisplay(), "gfx/Paddle.png");
-        mBall = new Fitgy::ImageEntity(getDisplay(), "gfx/Ball.png",
-                        SDL_ALPHA_OPAQUE, true);
-        mPluckSound = new Fitgy::Sound("sfx/pluck.ogg");
-        mSwipeSound = new Fitgy::Sound("sfx/swipe.ogg", MIX_MAX_VOLUME / 2);
-    } catch (Fitgy::Exception::FileNotFound const &e){
-        Fitgy::MessageBox::show("Resource not found: " + e.getFile(), "Error",
-                Fitgy::MessageBoxInt::MessageError, Fitgy::MessageBoxInt::ButtonOK);
+        mSplashScreen = new SplashScreen(getDisplay(),"gfx/Splash.png", 2000);
+        mBackgroundImage = new ImageEntity(getDisplay(),"gfx/Background.png");
+        mPaddleLeft = new ImageEntity(getDisplay(), "gfx/Paddle.png");
+        mPaddleRight = new ImageEntity(getDisplay(), "gfx/Paddle.png");
+        mBall = new ImageEntity(getDisplay(), "gfx/Ball.png",SDL_ALPHA_OPAQUE, true);
+        mPluckSound = new Sound("sfx/pluck.ogg");
+        mSwipeSound = new Sound("sfx/swipe.ogg", MIX_MAX_VOLUME / 2);
+    } catch (Exception::FileNotFound const &e){
+        MessageBox::show("Resource not found: " + e.getFile(), "Error",
+                MessageBoxInt::MessageError, MessageBoxInt::ButtonOK);
         return false;
     }
 
@@ -94,19 +92,17 @@ Game::init()
     mPaddleRight->position.y = 190;
     mPaddleRight->setSpeed(PADDLE_SPEED);
 
-    mScoreLeft = new Fitgy::TextEntity(getDisplay(), "0",
-            mScoreFont, Fitgy::Color::fromRgb(63, 82, 43));
+    mScoreLeft = new TextEntity(getDisplay(), "0", mScoreFont, Color::fromRgb(63, 82, 43));
     mScoreLeft->position.x = 270;
     mScoreLeft->position.y = 10;
 
-    mScoreRight = new Fitgy::TextEntity(getDisplay(), "0",
-                    mScoreFont, Fitgy::Color::fromRgb(63, 82, 43));
+    mScoreRight = new TextEntity(getDisplay(), "0", mScoreFont, Color::fromRgb(63, 82, 43));
     mScoreRight->position.x = 340;
     mScoreRight->position.y = 10;
 
     mBall->position.x = 300;
     mBall->position.y = 300;
-    mBall->direction = Fitgy::Vector::left;
+    mBall->direction = Vector::left;
     mBall->setSpeed(BALL_SPEED);
 
     addEntity(mBackgroundImage);
@@ -159,9 +155,7 @@ Game::loop(){
             rightWins();
 
             return;
-        } else if (mBall->position.y >= 0 &&
-                mBall->position.x > getDisplay()->getWidth())
-        {
+        } else if (mBall->position.y >= 0 && mBall->position.x > getDisplay()->getWidth()){
             mSwipeSound->play();
             leftWins();
 
@@ -169,8 +163,7 @@ Game::loop(){
         }
 
         // Floor or ceiling collision detection
-        if (mBall->bottomRight().y > getDisplay()->getHeight()
-                || mBall->position.y <= 0)
+        if (mBall->bottomRight().y > getDisplay()->getHeight() || mBall->position.y <= 0)
         {
             mBall->direction.y *= -1;
             mPluckSound->play();
@@ -208,16 +201,16 @@ bool
 Game::onKeyDown(SDLKey sym, SDLMod mod, uint16_t unicode){
     switch(sym){
     case SDLK_w:
-        mPaddleLeft->direction = Fitgy::Vector::up;
+        mPaddleLeft->direction = Vector::up;
         break;
     case SDLK_UP:
-        mPaddleRight->direction = Fitgy::Vector::up;
+        mPaddleRight->direction = Vector::up;
         break;
     case SDLK_s:
-        mPaddleLeft->direction = Fitgy::Vector::down;
+        mPaddleLeft->direction = Vector::down;
         break;
     case SDLK_DOWN:
-        mPaddleRight->direction = Fitgy::Vector::down;
+        mPaddleRight->direction = Vector::down;
         break;
     default:
         break;
@@ -230,16 +223,16 @@ bool
 Game::onKeyUp(SDLKey sym, SDLMod mod, uint16_t unicode){
     switch(sym){
     case SDLK_w:
-        mPaddleLeft->direction = Fitgy::Vector::zero;
+        mPaddleLeft->direction = Vector::zero;
         break;
     case SDLK_UP:
-        mPaddleRight->direction = Fitgy::Vector::zero;
+        mPaddleRight->direction = Vector::zero;
         break;
     case SDLK_s:
-        mPaddleLeft->direction = Fitgy::Vector::zero;
+        mPaddleLeft->direction = Vector::zero;
         break;
     case SDLK_DOWN:
-        mPaddleRight->direction = Fitgy::Vector::zero;
+        mPaddleRight->direction = Vector::zero;
         break;
     default:
         break;
@@ -250,20 +243,13 @@ Game::onKeyUp(SDLKey sym, SDLMod mod, uint16_t unicode){
 
 void
 Game::restart(){
-    std::stringstream ss;
-
     mBall->position.x = 312;
     mBall->position.y = 232;
-    mBall->direction = Fitgy::Vector::left;
+    mBall->direction = Vector::left;
     mBall->setSpeed(BALL_SPEED);
 
-    ss << mLeftWins;
-    mScoreLeft->setText(ss.str());
-
-    ss.clear();
-    ss.str(std::string());
-    ss << mRightWins;
-    mScoreRight->setText(ss.str());
+    mScoreLeft->setText(intToString(mLeftWins));
+    mScoreRight->setText(intToString(mRightWins));
 }
 
 void

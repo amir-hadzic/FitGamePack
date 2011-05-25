@@ -29,41 +29,40 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
+using namespace Fitgy;
+using namespace Fitgy::Util;
+
 namespace PingPong {
 
-const std::string SCORE_FONT = "fonts/DroidSans.ttf";
+const String SCORE_FONT = "fonts/DroidSans.ttf";
 const float PADDLE_SPEED = 400;
 const float BALL_SPEED = 220;
 const int SPEED_CHANGE_TIME = 3500;
 
-class Game : public Fitgy::Application {
+class Game : public Application {
 private:
     Game();
     ~Game();
-
     Game(Game const&){};
     Game& operator=(Game const&){ return *this; };
+    void leftWins();
+	void rightWins();
+	void restart();
 
     static Game* mInstance;
-    Fitgy::SplashScreen* mSplashScreen;
-    Fitgy::ImageEntity* mBackgroundImage;
-    Fitgy::ImageEntity* mPaddleLeft;
-    Fitgy::ImageEntity* mPaddleRight;
-    Fitgy::ImageEntity* mBall;
-    Fitgy::TextEntity* mScoreLeft;
-    Fitgy::TextEntity* mScoreRight;
-    Fitgy::Sound* mPluckSound;
-    Fitgy::Sound* mSwipeSound;
+    SplashScreen* mSplashScreen;
+    ImageEntity* mBackgroundImage;
+    ImageEntity* mPaddleLeft;
+    ImageEntity* mPaddleRight;
+    ImageEntity* mBall;
+    TextEntity* mScoreLeft;
+    TextEntity* mScoreRight;
+    Sound* mPluckSound;
+    Sound* mSwipeSound;
     TTF_Font* mScoreFont;
-
     unsigned int mLastSpeedChange;
     int mLeftWins;
     int mRightWins;
-
-    void leftWins();
-    void rightWins();
-    void restart();
-
 public:
     static Game* getInstance();
     bool init();
