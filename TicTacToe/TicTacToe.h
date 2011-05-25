@@ -24,27 +24,29 @@
 #include <map>
 #include <string>
 #include "assert.h"
-#include <sstream>
 
 #define IS_ROW_HIT(f1, f2, f3) fields[f1] == fields[f2]\
 && fields[f2] == fields[f3] && fields[f3] != FieldType::Free
 
+using namespace Fitgy;
+using namespace Fitgy::Util;
+
 namespace TicTacToe {
 
-const std::string FONT = "fonts/DroidSans.ttf";
+const String FONT = "fonts/DroidSans.ttf";
 
-class Game : public Fitgy::Application {
+class Game : public Application {
 private:
-    Fitgy::SplashScreen *mSplashScreen;
     Game();
     Game(Game const&){};
     Game& operator=(Game const&){ return *this; };
-    static Game* mInstance;
-    TTF_Font* mFont;
-    int winsX;
-    int winsO;
     void checkForWin();
-    void announceWin();
+	void announceWin();
+    static Game* mInstance;
+    SplashScreen *mSplashScreen;
+    TTF_Font* mFont;
+    int mWinsX;
+    int mWinsO;
 public:
     enum FieldType {
         Free = 0,
@@ -53,29 +55,24 @@ public:
     };
 
     static Game* getInstance();
-    Fitgy::GridEntity* gridEntity;
-
-    Fitgy::TextEntity* txtWinsX;
-    Fitgy::TextEntity* txtWinsO;
-    Fitgy::TextEntity* txtPlaying;
-
-    Fitgy::ImageEntity* imgPlayerX;
-    Fitgy::ImageEntity* imgPlayerO;
-
-    Fitgy::MenuEntity* mnuMain;
-
-    Fitgy::Sound* soundDrawX;
-    Fitgy::Sound* soundDrawO;
-
-    FieldType fields[9];
-    bool xPlays;
-    bool gameOver;
     bool init();
     void render();
     void loop();
     void restart();
-
     void nextPlayer();
+
+    GridEntity* gridEntity;
+    TextEntity* txtWinsX;
+    TextEntity* txtWinsO;
+    TextEntity* txtPlaying;
+    ImageEntity* imgPlayerX;
+    ImageEntity* imgPlayerO;
+    MenuEntity* mnuMain;
+    Sound* soundDrawX;
+    Sound* soundDrawO;
+    FieldType fields[9];
+    bool xPlays;
+    bool gameOver;
 };
 
 }

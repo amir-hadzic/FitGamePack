@@ -40,14 +40,13 @@ Game::Game(){
     xPlays = true;
     for (int i = 0; i < 9; fields[i++] = FieldType::Free);
     gridEntity = NULL;
-
     txtPlaying = NULL;
     txtWinsO = NULL;
     txtWinsX = NULL;
     imgPlayerX = NULL;
     imgPlayerO = NULL;
-    winsX = 0;
-    winsO = 0;
+    mWinsX = 0;
+    mWinsO = 0;
     gameOver = false;
 }
 
@@ -62,45 +61,43 @@ Game::init()
 
     try
     {
-        mSplashScreen = new Fitgy::SplashScreen(mDisplay,
+        mSplashScreen = new SplashScreen(mDisplay,
                 "gfx/Splash.png", 2000);
 
         mFont = TTF_OpenFont(FONT.c_str(), 22);
 
         if (mFont == NULL){
-            throw Fitgy::Exception::FileNotFound(FONT);
+            throw Exception::FileNotFound(FONT);
         }
 
-        gridEntity = new Fitgy::GridEntity(mDisplay, 300, 300, 3);
+        gridEntity = new GridEntity(mDisplay, 300, 300, 3);
         gridEntity->position.x = 10;
         gridEntity->position.y = 10;
 
-        txtWinsO = new Fitgy::TextEntity(mDisplay, "0", mFont, Fitgy::Color::white());
+        txtWinsO = new TextEntity(mDisplay, "0", mFont, Fitgy::Color::white());
         txtWinsO->position.x = 429;
         txtWinsO->position.y = 260;
 
-        txtWinsX = new Fitgy::TextEntity(mDisplay, "0", mFont, Fitgy::Color::white());
+        txtWinsX = new TextEntity(mDisplay, "0", mFont, Fitgy::Color::white());
         txtWinsX->position.x = 549;
         txtWinsX->position.y = 260;
 
-        txtPlaying = new Fitgy::TextEntity(mDisplay, "Currently playing:",
-                mFont, Fitgy::Color::white());
-
+        txtPlaying = new TextEntity(mDisplay, "Currently playing:", mFont, Fitgy::Color::white());
         txtPlaying->position.x = 388;
         txtPlaying->position.y = 29;
 
-        imgPlayerO = new Fitgy::ImageEntity(mDisplay, "gfx/PlayerO.png", SDL_ALPHA_OPAQUE/2);
+        imgPlayerO = new ImageEntity(mDisplay, "gfx/PlayerO.png", SDL_ALPHA_OPAQUE/2);
         imgPlayerO->position.x = 390;
         imgPlayerO->position.y = 80;
 
-        imgPlayerX = new Fitgy::ImageEntity(mDisplay, "gfx/PlayerX.png", SDL_ALPHA_OPAQUE);
+        imgPlayerX = new ImageEntity(mDisplay, "gfx/PlayerX.png", SDL_ALPHA_OPAQUE);
         imgPlayerX->position.x = 510;
         imgPlayerX->position.y = 80;
 
-        mnuMain = new Fitgy::MenuEntity(mDisplay, mFont);
-        mnuMain->setBackgroundColor(Fitgy::Color::fromRgb(0xaa, 0, 0));
-        mnuMain->setBackgroundHoverColor(Fitgy::Color::red());
-        mnuMain->setForegroundColor(Fitgy::Color::white());
+        mnuMain = new MenuEntity(mDisplay, mFont);
+        mnuMain->setBackgroundColor(Color::fromRgb(0xaa, 0, 0));
+        mnuMain->setBackgroundHoverColor(Color::red());
+        mnuMain->setForegroundColor(Color::white());
         mnuMain->setPadding(5);
         mnuMain->position.x = 20;
         mnuMain->position.y = 346;
@@ -120,9 +117,9 @@ Game::init()
         addEntity(mnuMain);
 
         restart();
-    } catch (Fitgy::Exception::FileNotFound const &e){
-        Fitgy::MessageBox::show("Resource not found: " + e.getFile(), "Error",
-                            Fitgy::MessageBoxInt::MessageError, Fitgy::MessageBoxInt::ButtonOK);
+    } catch (Exception::FileNotFound const &e){
+        MessageBox::show("Resource not found: " + e.getFile(), "Error",
+        		MessageBoxInt::MessageError, MessageBoxInt::ButtonOK);
         return false;
     }
 
@@ -188,13 +185,12 @@ void Game::checkForWin(){
 }
 
 void Game::announceWin(){
-    std::stringstream ss;
     if (xPlays){
-        ss << ++winsX;
-        txtWinsX->setText(ss.str());
+        mWinsX++;
+        txtWinsX->setText(intToString(mWinsX));
     } else {
-        ss << ++winsO;
-        txtWinsO->setText(ss.str());
+        mWinsO++;
+        txtWinsO->setText(intToString(mWinsO));
     }
 
     restart();
@@ -205,7 +201,7 @@ void Game::restart(){
 
     GridFieldEventHandler* gridFieldEventHandler = new GridFieldEventHandler();
     for (int i = 0; i < 9; i++){
-        Fitgy::FieldImageEntity* field = new Fitgy::FieldImageEntity(gridEntity, "gfx/B100.png", i);
+        FieldImageEntity* field = new FieldImageEntity(gridEntity, "gfx/B100.png", i);
         field->setEventHandler(gridFieldEventHandler);
         gridEntity->removeEntity(i);
         gridEntity->addEntity(field, i);
