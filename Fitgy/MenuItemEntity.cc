@@ -36,6 +36,7 @@ MenuItemEntity::MenuItemEntity(Entity* parent, std::string identifier,
     mHeight = mTextEntity->getHeight();
 
     redraw();
+    subscribe();
 }
 
 MenuItemEntity::~MenuItemEntity(){

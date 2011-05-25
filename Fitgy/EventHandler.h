@@ -26,8 +26,13 @@
 namespace Fitgy {
 
 class EventHandler {
+protected:
+	bool mSubscribed;
+
 public:
     EventHandler();
+    void subscribe();
+    void unsubscribe();
     virtual ~EventHandler();
 
     /* Event definitions */

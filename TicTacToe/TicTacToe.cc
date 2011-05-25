@@ -202,6 +202,7 @@ void Game::restart(){
     GridFieldEventHandler* gridFieldEventHandler = new GridFieldEventHandler();
     for (int i = 0; i < 9; i++){
         FieldImageEntity* field = new FieldImageEntity(gridEntity, "gfx/B100.png", i);
+        field->subscribe();
         field->setEventHandler(gridFieldEventHandler);
         gridEntity->removeEntity(i);
         gridEntity->addEntity(field, i);

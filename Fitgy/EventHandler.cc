@@ -18,15 +18,28 @@
 */
 
 #include "EventHandler.h"
+#include "EventHub.h"
 
 namespace Fitgy {
 
 EventHandler::EventHandler(){
-
+	mSubscribed = false;
 }
 
 EventHandler::~EventHandler(){
+	if (mSubscribed) {
+		unsubscribe();
+	}
+}
 
+void EventHandler::subscribe(){
+	EventHub::subscribe(this);
+	mSubscribed = true;
+}
+
+void EventHandler::unsubscribe(){
+	EventHub::unsubscribe(this);
+	mSubscribed = false;
 }
 
 bool

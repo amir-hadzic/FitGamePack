@@ -28,7 +28,6 @@ Entity::Entity(Entity* parent){
     this->parent = parent;
     mLastLoopTime = 0;
     mSpeed = 0;
-    EventHub::subscribe(this);
 }
 
 Entity::~Entity(){
@@ -37,8 +36,6 @@ Entity::~Entity(){
 
 void
 Entity::onCleanup(){
-    EventHub::unsubscribe(this);
-
     if (entitySurface != NULL){
         SDL_FreeSurface(entitySurface);
         entitySurface = NULL;
