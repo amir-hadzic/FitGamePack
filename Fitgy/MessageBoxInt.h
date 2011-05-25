@@ -20,7 +20,9 @@
 #ifndef FITGY_MESSAGEBOXINT_H
 #define FITGY_MESSAGEBOXINT_H
 
-#include <string>
+#include "Util/String.h"
+
+using namespace Fitgy::Util;
 
 namespace Fitgy {
 
@@ -49,7 +51,7 @@ public:
         ButtonYesNo
     };
 
-    virtual DialogResult show(std::string, std::string, Type, Buttons) {
+    virtual DialogResult show(String, String, Type, Buttons) {
         return ResultOK;
     }
 };

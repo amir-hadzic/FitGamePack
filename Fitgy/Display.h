@@ -22,7 +22,6 @@
 
 #include "Entity.h"
 #include "Util/String.h"
-#include <string>
 
 using namespace Fitgy::Util;
 

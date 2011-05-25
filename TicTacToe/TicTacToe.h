@@ -22,7 +22,6 @@
 
 #include "../Fitgy/Fitgy.h"
 #include <map>
-#include <string>
 #include "assert.h"
 
 #define IS_ROW_HIT(f1, f2, f3) fields[f1] == fields[f2]\

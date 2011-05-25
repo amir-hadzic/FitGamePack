@@ -31,11 +31,8 @@ Point::Point(float x, float y){
     this->y = y;
 }
 
-Point::operator std::string() const {
-    std::stringstream ss;
-    ss << "(" << x << ", " << y << ")";
-
-    return ss.str();
+Point::operator String() const {
+    return "(" + intToString(x) + ", " + intToString(y) + ")";
 }
 
 bool

@@ -20,8 +20,9 @@
 #ifndef FITGY_POINT_H
 #define FITGY_POINT_H
 
-#include <string>
-#include <sstream>
+#include "Util/String.h"
+
+using namespace Fitgy::Util;
 
 namespace Fitgy {
 
@@ -56,7 +57,7 @@ public:
     /**
      * Provides an representation of the Point readable by humans.
      */
-    operator std::string() const;
+    operator String() const;
 
     bool operator==(const Point &v) const;
     bool operator!=(const Point &v) const;

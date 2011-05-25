@@ -21,8 +21,6 @@
 #define PINGPONG_GAME_H
 
 #include "../Fitgy/Fitgy.h"
-#include <sstream>
-#include <string>
 #include <stdlib.h>
 #include <time.h>
 
