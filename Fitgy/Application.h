@@ -72,7 +72,7 @@ protected:
         bool mPaused;
 
     public:
-        Music(char* filename, short volume);
+        Music(String filename, short volume);
         ~Music();
 
         void play(int loops = -1);
@@ -172,7 +172,7 @@ public:
      * @param filename the path to the specified file.
      * @param volume the volume to be used for the background music.
      */
-    void setMusic(char* filename, short volume = MIX_MAX_VOLUME);
+    void setMusic(String filename, short volume = MIX_MAX_VOLUME);
 };
 
 }

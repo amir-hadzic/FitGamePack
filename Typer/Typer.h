@@ -34,8 +34,8 @@ using namespace Fitgy::Util;
 
 namespace Typer {
 
-const String LABEL_FONT = "fonts/DroidSans.ttf";
-const String WORD_FONT = "fonts/DroidSansMono.ttf";
+const String LABEL_FONT = "/fonts/DroidSans.ttf";
+const String WORD_FONT = "/fonts/DroidSansMono.ttf";
 const int TYPING_CHANNEL = 1;
 const int FAIL_CHANNEL = 2;
 const int MIN_START_SPEED = 20;
@@ -67,7 +67,7 @@ private:
     Sound* mFailSound;
     TyperWord* mCurrentWord;
 
-    void readWords(char* filename);
+    void readWords(String filename);
     String nextWord();
     void spawnWord();
     unsigned int getRandomSpawnTime();

@@ -58,23 +58,24 @@ Game::init()
         return false;
     }
 
+    String basePath = executablePath();
     mDisplay->setTitle("Fitgy::Typer", "Typer");
 
-	readWords("word-list.txt");
+	readWords(basePath + "/word-list.txt");
 
-	mSplashScreen = new SplashScreen(mDisplay, "gfx/splash.png", 2000);
+	mSplashScreen = new SplashScreen(mDisplay, basePath + "/gfx/splash.png", 2000);
 
-	mWordFont = TTF_OpenFont(WORD_FONT.c_str(), 18);
+	mWordFont = TTF_OpenFont((basePath + WORD_FONT).c_str(), 18);
 	if (mWordFont == NULL) {
 		throw Exception::FileNotFound(WORD_FONT);
 	}
 
-	mLabelFont = TTF_OpenFont(LABEL_FONT.c_str(), 22);
+	mLabelFont = TTF_OpenFont((basePath + LABEL_FONT).c_str(), 22);
 	if (mLabelFont == NULL) {
 		throw Exception::FileNotFound(LABEL_FONT);
 	}
 
-	mImgBackground = new ImageEntity(getDisplay(), "gfx/background.png");
+	mImgBackground = new ImageEntity(getDisplay(), basePath + "/gfx/background.png");
 	mImgBackground->position.x = 0;
 	mImgBackground->position.y = 0;
 
@@ -87,10 +88,10 @@ Game::init()
 	mTxtLives->position.x = getDisplay()->getWidth() - mTxtLives->getWidth() - 10;
 	mTxtLives->position.y = 10;
 
-	mTypingSound = new Sound("sfx/typing.ogg", MIX_MAX_VOLUME, TYPING_CHANNEL);
-	mFailSound = new Sound("sfx/fail.ogg", MIX_MAX_VOLUME / 2,	FAIL_CHANNEL);
+	mTypingSound = new Sound(basePath + "/sfx/typing.ogg", MIX_MAX_VOLUME, TYPING_CHANNEL);
+	mFailSound = new Sound(basePath + "/sfx/fail.ogg", MIX_MAX_VOLUME / 2,	FAIL_CHANNEL);
 
-	setMusic("sfx/signal.ogg", MIX_MAX_VOLUME/2);
+	setMusic(basePath + "/sfx/signal.ogg", MIX_MAX_VOLUME/2);
 
 	addEntity(mImgBackground);
     addEntity(mTxtScore);
@@ -170,7 +171,7 @@ Game::loop(){
 }
 
 void
-Game::readWords(char* filename){
+Game::readWords(String filename){
     std::ifstream wordFile(filename);
 
     if (wordFile.fail()){

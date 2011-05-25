@@ -21,10 +21,10 @@
 
 namespace Fitgy {
 
-Application::Music::Music(char* filename, short volume){
+Application::Music::Music(String filename, short volume){
     mVolume = volume;
 
-    mMixMusic = Mix_LoadMUS(filename);
+    mMixMusic = Mix_LoadMUS(filename.c_str());
     if (!mMixMusic){
         throw Exception::FileNotFound(filename);
     }
@@ -198,7 +198,7 @@ Application::music(){
 }
 
 void
-Application::setMusic(char* filename, short volume){
+Application::setMusic(String filename, short volume){
     if (mMusic != NULL){
         delete mMusic;
         mMusic = NULL;
