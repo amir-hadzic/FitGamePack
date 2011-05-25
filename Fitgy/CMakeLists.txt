@@ -23,4 +23,5 @@ add_library(Fitgy
     MessageBoxWin
     MessageBoxInt
     Util/String
+    Util/Path
 )

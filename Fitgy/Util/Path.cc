@@ -17,29 +17,25 @@
 *    Author: Amir Hadzic <amir.hadzic@randomshouting.com>
 */
 
-#ifndef FITGY_H
-#define FITGY_H
+#include "Path.h"
 
-#include "LibSDL.h"
-#include "Point.h"
-#include "Vector.h"
-#include "Entity.h"
-#include "EventHub.h"
-#include "TextEntity.h"
-#include "GridEntity.h"
-#include "Display.h"
-#include "ImageEntity.h"
-#include "FieldImageEntity.h"
-#include "SplashScreen.h"
-#include "MenuItemEntity.h"
-#include "MenuEntity.h"
-#include "Application.h"
-#include "Color.h"
-#include "Sound.h"
-#include "Exception/FileNotFound.h"
-#include "MessageBox.h"
-#include "MessageBoxInt.h"
-#include "Util/String.h"
-#include "Util/Path.h"
+namespace Fitgy { namespace Util {
 
+String executablePath() {
+	String path;
+
+#ifdef _WIN32
+	TCHAR buffer[255];
+	GetModuleFileName(NULL, buffer, 255);
+	path = String(buffer);
+#else
+	char buffer[255];
+	int readChars = readlink("/proc/self/exe", buffer, 255);
+	buffer[readChars] = '\0';
+	path = String(buffer);
 #endif
+
+	return path;
+}
+
+}}
