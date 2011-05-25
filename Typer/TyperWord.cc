@@ -18,15 +18,13 @@
 */
 
 #include "TyperWord.h"
-#include <iostream>
 
 namespace Typer {
 
-TyperWord::TyperWord(Fitgy::Entity* parent, std::string word, TTF_Font *font)
+TyperWord::TyperWord(Entity* parent, String word, TTF_Font *font)
     : Entity(parent)
 {
-    mUnfinishedLetters = new Fitgy::TextEntity(parent, word, font,
-            Fitgy::Color::green());
+    mUnfinishedLetters = new TextEntity(parent, word, font, Color::green());
 
     setWidth(mUnfinishedLetters->getWidth());
     setHeight(mUnfinishedLetters->getHeight());
@@ -44,7 +42,7 @@ TyperWord::~TyperWord(){
 
 void
 TyperWord::onLoop(){
-    Fitgy::Entity::onLoop();
+    Entity::onLoop();
 
     if (mUnfinishedLetters != NULL){
         mUnfinishedLetters->position = this->position;
@@ -76,13 +74,12 @@ TyperWord::addLetter(char letter){
 
     if (isNextLetter) {
             mFinishedCount++;
-            std::string finishedWord = mWord.substr(0, mFinishedCount);
-            std::string unfinishedWord = mWord.substr(mFinishedCount);
+            String finishedWord = mWord.substr(0, mFinishedCount);
+            String unfinishedWord = mWord.substr(mFinishedCount);
 
             if (mFinishedCount == 1){
-                mFinishedLetters = new Fitgy::TextEntity(parent, finishedWord,
-                        mFont, Fitgy::Color::blue());
-                mUnfinishedLetters->setColor(Fitgy::Color::white());
+                mFinishedLetters = new TextEntity(parent, finishedWord, mFont, Color::blue());
+                mUnfinishedLetters->setColor(Color::white());
             }
 
             mFinishedLetters->setText(finishedWord);
@@ -100,7 +97,7 @@ TyperWord::addLetter(char letter){
         delete mFinishedLetters;
         mFinishedLetters = NULL;
 
-        mUnfinishedLetters->setColor(Fitgy::Color::green());
+        mUnfinishedLetters->setColor(Color::green());
         mUnfinishedLetters->setText(mWord);
 
         return false;
@@ -112,7 +109,7 @@ TyperWord::isSolved(){
     return mFinishedCount == mWord.length();
 }
 
-std::string
+String
 TyperWord::getWord(){
     return mWord;
 }

@@ -21,27 +21,29 @@
 #define FALLINGWORD_H
 
 #include "../Fitgy/Fitgy.h"
-#include <string>
+
+using namespace Fitgy;
+using namespace Fitgy::Util;
 
 namespace Typer {
 
-class TyperWord : public Fitgy::Entity {
+class TyperWord : public Entity {
 private:
-    Fitgy::TextEntity* mFinishedLetters;
-    Fitgy::TextEntity* mUnfinishedLetters;
+    TextEntity* mFinishedLetters;
+    TextEntity* mUnfinishedLetters;
     unsigned short mFinishedCount;
-    std::string mWord;
+    String mWord;
     TTF_Font* mFont;
 
 public:
-    TyperWord(Fitgy::Entity* parent, std::string word, TTF_Font* font);
+    TyperWord(Entity* parent, String word, TTF_Font* font);
     ~TyperWord();
 
-    void onRender(Fitgy::Entity* entity);
+    void onRender(Entity* entity);
     void onLoop();
     bool addLetter(char letter);
     bool isSolved();
-    std::string getWord();
+    String getWord();
 };
 
 }
