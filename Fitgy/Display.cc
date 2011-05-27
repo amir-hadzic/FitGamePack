@@ -27,6 +27,7 @@ Display::Display(int width,int height)
     mWidth = width;
     mHeight = height;
 
+    setenv("SDL_VIDEO_CENTERED", "1", true);
     entitySurface = SDL_SetVideoMode(
         width, height, 32, SDL_HWSURFACE | SDL_DOUBLEBUF
     );
