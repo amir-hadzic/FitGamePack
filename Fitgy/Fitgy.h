@@ -20,6 +20,8 @@
 #ifndef FITGY_H
 #define FITGY_H
 
+#include "MessageBox.h"
+#include "MessageBoxInt.h"
 #include "LibSDL.h"
 #include "Point.h"
 #include "Vector.h"
@@ -37,8 +39,6 @@
 #include "Color.h"
 #include "Sound.h"
 #include "Exception/FileNotFound.h"
-#include "MessageBox.h"
-#include "MessageBoxInt.h"
 #include "Util/String.h"
 #include "Util/Path.h"
 

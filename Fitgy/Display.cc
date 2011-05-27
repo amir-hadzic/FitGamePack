@@ -19,6 +19,7 @@
 
 #include "Display.h"
 
+
 namespace Fitgy {
 
 Display::Display(int width,int height)
@@ -27,19 +28,36 @@ Display::Display(int width,int height)
     mWidth = width;
     mHeight = height;
 
+#ifdef __linux
     setenv("SDL_VIDEO_CENTERED", "1", true);
+#endif
+
     entitySurface = SDL_SetVideoMode(
         width, height, 32, SDL_HWSURFACE | SDL_DOUBLEBUF
     );
 
     if (entitySurface == NULL){
-        throw "Display couldn't be initialized.";
+        // TODO: Throw an actual exception!
+    	throw "Display couldn't be initialized.";
     }
+
+#ifdef _WIN32
+    SDL_SysWMinfo info;
+	SDL_VERSION(&info.version);
+	RECT rect;
+	GetClientRect(GetDesktopWindow(),&rect);
+	int monitorWidth = rect.right;
+	int monitorHeight = rect.bottom;
+	int x = monitorWidth / 2 - width / 2;
+	int y = monitorHeight / 2 - height / 2;
+	if (SDL_GetWMInfo(&info)){
+		SetWindowPos(info.window, HWND_TOP, x, y, 0, 0, SWP_NOSIZE);
+	}
+#endif
 }
 
 void
 Display::setTitle(String windowTitle, String iconTitle){
     SDL_WM_SetCaption(windowTitle.c_str(), iconTitle.c_str());
 }
-
 }

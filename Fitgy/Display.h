@@ -20,8 +20,15 @@
 #ifndef FITGY_DISPLAY_H
 #define FITGY_DISPLAY_H
 
+#ifdef _WIN32
+#include "LibSDL.h"
+#include "Windows.h"
+#else
+#include <stdlib.h>
+#endif
 #include "Entity.h"
 #include "Util/String.h"
+
 
 using namespace Fitgy::Util;
 
