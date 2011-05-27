@@ -65,19 +65,21 @@ Game::init()
 
     try
     {
-        mScoreFont = TTF_OpenFont(SCORE_FONT.c_str(), 54);
+    	String base = executablePath();
+    	mScoreFont = TTF_OpenFont((base + SCORE_FONT).c_str(), 54);
 
         if (mScoreFont == NULL){
             throw Exception::FileNotFound(SCORE_FONT);
         }
 
-        mSplashScreen = new SplashScreen(getDisplay(),"gfx/Splash.png", 2000);
-        mBackgroundImage = new ImageEntity(getDisplay(),"gfx/Background.png");
-        mPaddleLeft = new ImageEntity(getDisplay(), "gfx/Paddle.png");
-        mPaddleRight = new ImageEntity(getDisplay(), "gfx/Paddle.png");
-        mBall = new ImageEntity(getDisplay(), "gfx/Ball.png",SDL_ALPHA_OPAQUE, true);
-        mPluckSound = new Sound("sfx/pluck.ogg");
-        mSwipeSound = new Sound("sfx/swipe.ogg", MIX_MAX_VOLUME / 2);
+
+        mSplashScreen = new SplashScreen(getDisplay(), base + "/gfx/Splash.png", 2000);
+        mBackgroundImage = new ImageEntity(getDisplay(), base + "/gfx/Background.png");
+        mPaddleLeft = new ImageEntity(getDisplay(), base + "/gfx/Paddle.png");
+        mPaddleRight = new ImageEntity(getDisplay(), base + "/gfx/Paddle.png");
+        mBall = new ImageEntity(getDisplay(), base + "/gfx/Ball.png",SDL_ALPHA_OPAQUE, true);
+        mPluckSound = new Sound(base + "/sfx/pluck.ogg");
+        mSwipeSound = new Sound(base + "/sfx/swipe.ogg", MIX_MAX_VOLUME / 2);
     } catch (Exception::FileNotFound const &e){
         MessageBox::show("Resource not found: " + e.getFile(), "Error",
                 MessageBoxInt::MessageError, MessageBoxInt::ButtonOK);

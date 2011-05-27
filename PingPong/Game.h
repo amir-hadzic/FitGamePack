@@ -32,7 +32,7 @@ using namespace Fitgy::Util;
 
 namespace PingPong {
 
-const String SCORE_FONT = "fonts/DroidSans.ttf";
+const String SCORE_FONT = "/fonts/DroidSans.ttf";
 const float PADDLE_SPEED = 400;
 const float BALL_SPEED = 220;
 const int SPEED_CHANGE_TIME = 3500;
