@@ -32,7 +32,7 @@ using namespace Fitgy::Util;
 
 namespace TicTacToe {
 
-const String FONT = "fonts/DroidSans.ttf";
+const String FONT = "/fonts/DroidSans.ttf";
 
 class Game : public Application {
 private:

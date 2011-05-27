@@ -57,14 +57,15 @@ Game::init()
         return false;
     }
 
+    String basePath = executablePath();
+
     mDisplay->setTitle("Fitgy::TicTacToe", "TicTacToe");
 
     try
     {
-        mSplashScreen = new SplashScreen(mDisplay,
-                "gfx/Splash.png", 2000);
+        mSplashScreen = new SplashScreen(mDisplay, basePath + "/gfx/Splash.png", 2000);
 
-        mFont = TTF_OpenFont(FONT.c_str(), 22);
+        mFont = TTF_OpenFont((basePath + FONT).c_str(), 22);
 
         if (mFont == NULL){
             throw Exception::FileNotFound(FONT);
@@ -74,23 +75,23 @@ Game::init()
         gridEntity->position.x = 10;
         gridEntity->position.y = 10;
 
-        txtWinsO = new TextEntity(mDisplay, "0", mFont, Fitgy::Color::white());
+        txtWinsO = new TextEntity(mDisplay, "0", mFont, Color::white());
         txtWinsO->position.x = 429;
         txtWinsO->position.y = 260;
 
-        txtWinsX = new TextEntity(mDisplay, "0", mFont, Fitgy::Color::white());
+        txtWinsX = new TextEntity(mDisplay, "0", mFont, Color::white());
         txtWinsX->position.x = 549;
         txtWinsX->position.y = 260;
 
-        txtPlaying = new TextEntity(mDisplay, "Currently playing:", mFont, Fitgy::Color::white());
+        txtPlaying = new TextEntity(mDisplay, "Currently playing:", mFont, Color::white());
         txtPlaying->position.x = 388;
         txtPlaying->position.y = 29;
 
-        imgPlayerO = new ImageEntity(mDisplay, "gfx/PlayerO.png", SDL_ALPHA_OPAQUE/2);
+        imgPlayerO = new ImageEntity(mDisplay, basePath + "/gfx/PlayerO.png", SDL_ALPHA_OPAQUE/2);
         imgPlayerO->position.x = 390;
         imgPlayerO->position.y = 80;
 
-        imgPlayerX = new ImageEntity(mDisplay, "gfx/PlayerX.png", SDL_ALPHA_OPAQUE);
+        imgPlayerX = new ImageEntity(mDisplay, basePath + "/gfx/PlayerX.png", SDL_ALPHA_OPAQUE);
         imgPlayerX->position.x = 510;
         imgPlayerX->position.y = 80;
 
@@ -105,8 +106,8 @@ Game::init()
         mnuMain->addItem("quit", "Quit");
         mnuMain->setEventHandler(new MenuEventHandler());
 
-        soundDrawX = new Fitgy::Sound("sfx/draw-x.ogg");
-        soundDrawO = new Fitgy::Sound("sfx/draw-o.ogg");
+        soundDrawX = new Sound(basePath + "/sfx/draw-x.ogg");
+        soundDrawO = new Sound(basePath + "/sfx/draw-o.ogg");
 
         addEntity(gridEntity);
         addEntity(txtWinsO);
@@ -201,7 +202,7 @@ void Game::restart(){
 
     GridFieldEventHandler* gridFieldEventHandler = new GridFieldEventHandler();
     for (int i = 0; i < 9; i++){
-        FieldImageEntity* field = new FieldImageEntity(gridEntity, "gfx/B100.png", i);
+        FieldImageEntity* field = new FieldImageEntity(gridEntity, executablePath() + "/gfx/B100.png", i);
         field->subscribe();
         field->setEventHandler(gridFieldEventHandler);
         gridEntity->removeEntity(i);

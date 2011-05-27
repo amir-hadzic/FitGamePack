@@ -32,7 +32,7 @@ class GridFieldEventHandler : public Fitgy::EventHandler {
 
             try {
                 if (game->fields[imgField->getField()] == Game::FieldType::Free){
-                    imgField->setImage("gfx/B100_Hover.png");
+                    imgField->setImage(executablePath() + "/gfx/B100_Hover.png");
                 }
             } catch (Fitgy::Exception::FileNotFound const &e){
                 Fitgy::MessageBox::show("Resource not found: " + e.getFile(),
@@ -50,7 +50,7 @@ class GridFieldEventHandler : public Fitgy::EventHandler {
 
             try {
                 if (game->fields[imgField->getField()] == Game::FieldType::Free){
-                    imgField->setImage("gfx/B100.png");
+                    imgField->setImage(executablePath() + "/gfx/B100.png");
                 }
             } catch (Fitgy::Exception::FileNotFound const &e){
                 Fitgy::MessageBox::show("Resource not found: " + e.getFile(),
@@ -69,11 +69,11 @@ class GridFieldEventHandler : public Fitgy::EventHandler {
             try {
                 if (game->fields[imgField->getField()] == Game::FieldType::Free){
                     if (game->xPlays){
-                        imgField->setImage("gfx/X.png");
+                        imgField->setImage(executablePath() + "/gfx/X.png");
                         game->fields[imgField->getField()] = Game::FieldType::X;
                         game->soundDrawX->play();
                     } else {
-                        imgField->setImage("gfx/O.png");
+                        imgField->setImage(executablePath() + "/gfx/O.png");
                         game->fields[imgField->getField()] = Game::FieldType::O;
                         game->soundDrawO->play();
                     }
