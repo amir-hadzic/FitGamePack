@@ -172,7 +172,7 @@ Game::loop(){
 
 void
 Game::readWords(String filename){
-    std::ifstream wordFile(filename);
+    std::ifstream wordFile(filename.c_str());
 
     if (wordFile.fail()){
         throw Exception::FileNotFound(filename);
