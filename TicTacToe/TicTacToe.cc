@@ -100,11 +100,11 @@ Game::init()
         mnuMain->setBackgroundHoverColor(Color::red());
         mnuMain->setForegroundColor(Color::white());
         mnuMain->setPadding(5);
-        mnuMain->position.x = 20;
-        mnuMain->position.y = 346;
         mnuMain->addItem("restart", "Start new game");
         mnuMain->addItem("quit", "Quit");
         mnuMain->setEventHandler(new MenuEventHandler());
+        mnuMain->position.x = 10;
+        mnuMain->position.y = getDisplay()->getHeight() - mnuMain->getHeight() - 10;
 
         soundDrawX = new Sound(basePath + "/sfx/draw-x.ogg");
         soundDrawO = new Sound(basePath + "/sfx/draw-o.ogg");
