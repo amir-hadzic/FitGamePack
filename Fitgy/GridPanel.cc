@@ -17,12 +17,12 @@
 *    Author: Amir Hadzic <amir.hadzic@randomshouting.com>
 */
 
-#include "GridEntity.h"
+#include "GridPanel.h"
 #include "assert.h"
 
 namespace Fitgy {
 
-GridEntity::GridEntity(Entity* parent, int width, int height, int dimension)
+GridPanel::GridPanel(Entity* parent, int width, int height, int dimension)
     : Entity(parent)
 {
     assert(dimension > 0);
@@ -44,28 +44,13 @@ GridEntity::GridEntity(Entity* parent, int width, int height, int dimension)
     );
 }
 
-GridEntity::~GridEntity()
+GridPanel::~GridPanel()
 {
-    // TODO: Grid entity shouldn't destroy the entities in mFields as he's
-    // not the one that created them.
 
-    // Destroy created entities.
-    std::map<int, Entity*>::iterator it = mFields.begin();
-    while(it != mFields.end()){
-        delete (*it).second;
-        (*it).second = NULL;
-        ++it;
-    }
-
-    if (mBackgroundImage != NULL){
-        delete mBackgroundImage;
-    }
 }
 
 void
-GridEntity::onRender(Entity* entity){
-    // TODO: Maybe the surface shouldn't be refilled each time
-    // render() is called.
+GridPanel::onRender(Entity* entity){
     SDL_FillRect(
         entitySurface,
         NULL,
@@ -81,16 +66,17 @@ GridEntity::onRender(Entity* entity){
         mBackgroundImage->onRender(this);
     }
 
-    std::map<int, Entity*>::iterator it;
-    for(it = mFields.begin(); it != mFields.end(); it++){
-        (*it).second->onRender(this);
+    FieldContainer::iterator it = mFields.begin();
+    while (it != mFields.end()){
+        it->second->onRender(this);
+        ++it;
     }
 
     drawToEntity(entity);
 }
 
 void
-GridEntity::addEntity(Entity* entity, int field){
+GridPanel::addEntity(Entity* entity, int field){
     if (mFields.find(field) != mFields.end()){
         return;
     }
@@ -101,24 +87,25 @@ GridEntity::addEntity(Entity* entity, int field){
 }
 
 void
-GridEntity::removeEntity(int field){
-    // TODO: The GridEntity shouldn't delete the entity. That should be done
-    // by the same instance that created it.
-
+GridPanel::removeEntity(int field){
     if (mFields.find(field) != mFields.end()){
-        delete mFields[field];
         mFields.erase(field);
     }
 }
 
 void
-GridEntity::setBackground(SDL_Color color){
+GridPanel::setBackground(SDL_Color color){
     mBackgroundColor = color;
 }
 
 void
-GridEntity::setBackground(ImageEntity* imageEntity){
+GridPanel::setBackground(ImageEntity* imageEntity){
     mBackgroundImage = imageEntity;
+}
+
+Entity*
+GridPanel::at(int field) {
+	return mFields.at(field);
 }
 
 }

@@ -61,68 +61,71 @@ Game::init()
 
     mDisplay->setTitle("Fitgy::TicTacToe", "TicTacToe");
 
-    try
-    {
-        mSplashScreen = new SplashScreen(mDisplay, basePath + "/gfx/Splash.png", 2000);
+    mSplashScreen = new SplashScreen(mDisplay, basePath + SPLASH_IMAGE, 2000);
 
-        mFont = TTF_OpenFont((basePath + FONT).c_str(), 22);
+	mFont = TTF_OpenFont((basePath + FONT).c_str(), 22);
 
-        if (mFont == NULL){
-            throw Exception::FileNotFound(FONT);
-        }
+	if (mFont == NULL){
+		throw Exception::FileNotFound(FONT);
+	}
 
-        gridEntity = new GridEntity(mDisplay, 300, 300, 3);
-        gridEntity->position.x = 10;
-        gridEntity->position.y = 10;
+	gridEntity = new GridPanel(mDisplay, 300, 300, 3);
+	gridEntity->position.x = 10;
+	gridEntity->position.y = 10;
 
-        txtWinsO = new TextEntity(mDisplay, "0", mFont, Color::white());
-        txtWinsO->position.x = 429;
-        txtWinsO->position.y = 260;
+	txtWinsO = new TextEntity(mDisplay, "0", mFont, Color::white());
+	txtWinsO->position.x = 429;
+	txtWinsO->position.y = 260;
 
-        txtWinsX = new TextEntity(mDisplay, "0", mFont, Color::white());
-        txtWinsX->position.x = 549;
-        txtWinsX->position.y = 260;
+	txtWinsX = new TextEntity(mDisplay, "0", mFont, Color::white());
+	txtWinsX->position.x = 549;
+	txtWinsX->position.y = 260;
 
-        txtPlaying = new TextEntity(mDisplay, "Currently playing:", mFont, Color::white());
-        txtPlaying->position.x = 388;
-        txtPlaying->position.y = 29;
+	txtPlaying = new TextEntity(mDisplay, "Currently playing:", mFont, Color::white());
+	txtPlaying->position.x = 388;
+	txtPlaying->position.y = 29;
 
-        imgPlayerO = new ImageEntity(mDisplay, basePath + "/gfx/PlayerO.png", SDL_ALPHA_OPAQUE/2);
-        imgPlayerO->position.x = 390;
-        imgPlayerO->position.y = 80;
+	imgPlayerO = new ImageEntity(mDisplay, basePath + O_IMAGE, SDL_ALPHA_OPAQUE/2);
+	imgPlayerO->position.x = 390;
+	imgPlayerO->position.y = 80;
 
-        imgPlayerX = new ImageEntity(mDisplay, basePath + "/gfx/PlayerX.png", SDL_ALPHA_OPAQUE);
-        imgPlayerX->position.x = 510;
-        imgPlayerX->position.y = 80;
+	imgPlayerX = new ImageEntity(mDisplay, basePath + X_IMAGE, SDL_ALPHA_OPAQUE);
+	imgPlayerX->position.x = 510;
+	imgPlayerX->position.y = 80;
 
-        mnuMain = new MenuEntity(mDisplay, mFont);
-        mnuMain->setBackgroundColor(Color::fromRgb(0xaa, 0, 0));
-        mnuMain->setBackgroundHoverColor(Color::red());
-        mnuMain->setForegroundColor(Color::white());
-        mnuMain->setPadding(5);
-        mnuMain->addItem("restart", "Start new game");
-        mnuMain->addItem("quit", "Quit");
-        mnuMain->setEventHandler(new MenuEventHandler());
-        mnuMain->position.x = 10;
-        mnuMain->position.y = getDisplay()->getHeight() - mnuMain->getHeight() - 10;
+	mnuMain = new MenuEntity(mDisplay, mFont);
+	mnuMain->setBackgroundColor(Color::fromRgb(0xaa, 0, 0));
+	mnuMain->setBackgroundHoverColor(Color::red());
+	mnuMain->setForegroundColor(Color::white());
+	mnuMain->setPadding(5);
+	mnuMain->addItem("restart", "Start new game");
+	mnuMain->addItem("quit", "Quit");
+	mnuMain->setEventHandler(new MenuEventHandler());
+	mnuMain->position.x = 10;
+	mnuMain->position.y = getDisplay()->getHeight() - mnuMain->getHeight() - 10;
 
-        soundDrawX = new Sound(basePath + "/sfx/draw-x.ogg");
-        soundDrawO = new Sound(basePath + "/sfx/draw-o.ogg");
+	soundDrawX = new Sound(basePath + X_DRAW_SOUND);
+	soundDrawO = new Sound(basePath + O_DRAW_SOUND);
 
-        addEntity(gridEntity);
-        addEntity(txtWinsO);
-        addEntity(txtWinsX);
-        addEntity(txtPlaying);
-        addEntity(imgPlayerO);
-        addEntity(imgPlayerX);
-        addEntity(mnuMain);
+	addEntity(gridEntity);
+	addEntity(txtWinsO);
+	addEntity(txtWinsX);
+	addEntity(txtPlaying);
+	addEntity(imgPlayerO);
+	addEntity(imgPlayerX);
+	addEntity(mnuMain);
 
-        restart();
-    } catch (Exception::FileNotFound const &e){
-        MessageBox::show("Resource not found: " + e.getFile(), "Error",
-        		MessageBoxInt::MessageError, MessageBoxInt::ButtonOK);
-        return false;
-    }
+	GridFieldEventHandler* gridFieldEventHandler = new GridFieldEventHandler();
+	for (int i = 0; i < 9; i++) {
+		FieldImageEntity* field = new FieldImageEntity(gridEntity, basePath + BLANK_FIELD_IMAGE, i);
+		field->subscribe();
+		field->setEventHandler(gridFieldEventHandler);
+		gridEntity->addEntity(field, i);
+	}
+
+	for (int i = 0; i < 9; fields[i++] = FieldType::Free);
+
+	gameOver = false;
 
     return true;
 }
@@ -200,16 +203,19 @@ void Game::announceWin(){
 void Game::restart(){
     for (int i = 0; i < 9; fields[i++] = FieldType::Free);
 
-    GridFieldEventHandler* gridFieldEventHandler = new GridFieldEventHandler();
     for (int i = 0; i < 9; i++){
-        FieldImageEntity* field = new FieldImageEntity(gridEntity, executablePath() + "/gfx/B100.png", i);
-        field->subscribe();
-        field->setEventHandler(gridFieldEventHandler);
-        gridEntity->removeEntity(i);
-        gridEntity->addEntity(field, i);
+        ((FieldImageEntity*)gridEntity->at(i))->setImage(executablePath() + BLANK_FIELD_IMAGE);
     }
 
     gameOver = false;
+}
+
+void Game::cleanup() {
+	for (int i = 0; i < 9; i++) {
+		delete gridEntity->at(i);
+	}
+
+	Application::cleanup();
 }
 
 }

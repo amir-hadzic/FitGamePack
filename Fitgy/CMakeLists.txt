@@ -7,7 +7,7 @@ add_library(Fitgy
     EventHandler
     EventHub
     FieldImageEntity
-    GridEntity
+    GridPanel
     ImageEntity
     LibSDL
     MenuEntity

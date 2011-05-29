@@ -28,7 +28,7 @@
 #include "Entity.h"
 #include "EventHub.h"
 #include "TextEntity.h"
-#include "GridEntity.h"
+#include "GridPanel.h"
 #include "Display.h"
 #include "ImageEntity.h"
 #include "FieldImageEntity.h"

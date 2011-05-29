@@ -21,7 +21,7 @@
 
 namespace Fitgy {
 
-FieldImageEntity::FieldImageEntity(GridEntity* parent, String filename, int field, short opacity)
+FieldImageEntity::FieldImageEntity(GridPanel* parent, String filename, int field, short opacity)
     : ImageEntity(parent, filename, opacity)
 {
     mField = field;

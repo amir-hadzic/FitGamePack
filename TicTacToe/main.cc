@@ -19,8 +19,19 @@
 
 #include "TicTacToe.h"
 
+using namespace Fitgy;
+
 int
 main(int argc, char** argv){
-    TicTacToe::Game* game = TicTacToe::Game::getInstance();
-    return game->execute();
+	try {
+		TicTacToe::Game* game = TicTacToe::Game::getInstance();
+		int result = game->execute();
+		delete game;
+		return result;
+	} catch (Exception::FileNotFound const &e){
+        MessageBox::show("Resource not found: " + e.getFile(), "Error",
+        		MessageBoxInt::MessageError, MessageBoxInt::ButtonOK);
+        return false;
+    }
+
 }

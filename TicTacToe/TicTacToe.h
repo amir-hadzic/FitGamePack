@@ -33,6 +33,15 @@ using namespace Fitgy::Util;
 namespace TicTacToe {
 
 const String FONT = "/fonts/DroidSans.ttf";
+const String SPLASH_IMAGE = "/gfx/Splash.png";
+const String BLANK_FIELD_IMAGE = "/gfx/FieldBlank.png";
+const String HOVER_FIELD_IMAGE = "/gfx/FieldBlank_Hover.png";
+const String X_FIELD_IMAGE = "/gfx/FieldX.png";
+const String O_FIELD_IMAGE = "/gfx/FieldO.png";
+const String X_IMAGE = "/gfx/PlayerX.png";
+const String O_IMAGE = "/gfx/PlayerO.png";
+const String X_DRAW_SOUND = "/sfx/draw-x.ogg";
+const String O_DRAW_SOUND = "/sfx/draw-o.ogg";
 
 class Game : public Application {
 private:
@@ -59,8 +68,9 @@ public:
     void loop();
     void restart();
     void nextPlayer();
+    void cleanup();
 
-    GridEntity* gridEntity;
+    GridPanel* gridEntity;
     TextEntity* txtWinsX;
     TextEntity* txtWinsO;
     TextEntity* txtPlaying;

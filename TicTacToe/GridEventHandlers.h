@@ -22,70 +22,52 @@
 
 #include "TicTacToe.h"
 
+using namespace Fitgy;
+
 namespace TicTacToe {
 
-class GridFieldEventHandler : public Fitgy::EventHandler {
+class GridFieldEventHandler : public EventHandler {
     public:
         bool onMouseEnter(void* sender, SDL_Event*){
-            Fitgy::FieldImageEntity* imgField = (Fitgy::FieldImageEntity*)sender;
+            FieldImageEntity* imgField = (FieldImageEntity*)sender;
             Game* game = Game::getInstance();
 
-            try {
-                if (game->fields[imgField->getField()] == Game::FieldType::Free){
-                    imgField->setImage(executablePath() + "/gfx/B100_Hover.png");
-                }
-            } catch (Fitgy::Exception::FileNotFound const &e){
-                Fitgy::MessageBox::show("Resource not found: " + e.getFile(),
-                        "Error", Fitgy::MessageBoxInt::MessageError,
-                        Fitgy::MessageBoxInt::ButtonOK);
-            }
-
+			if (game->fields[imgField->getField()] == Game::FieldType::Free){
+				imgField->setImage(executablePath() + HOVER_FIELD_IMAGE);
+			}
 
             return false;
         }
 
         bool onMouseLeave(void* sender, SDL_Event*){
-            Fitgy::FieldImageEntity* imgField = (Fitgy::FieldImageEntity*)sender;
+            FieldImageEntity* imgField = (FieldImageEntity*)sender;
             Game* game = Game::getInstance();
 
-            try {
-                if (game->fields[imgField->getField()] == Game::FieldType::Free){
-                    imgField->setImage(executablePath() + "/gfx/B100.png");
-                }
-            } catch (Fitgy::Exception::FileNotFound const &e){
-                Fitgy::MessageBox::show("Resource not found: " + e.getFile(),
-                        "Error", Fitgy::MessageBoxInt::MessageError,
-                        Fitgy::MessageBoxInt::ButtonOK);
-            }
-
+            if (game->fields[imgField->getField()] == Game::FieldType::Free){
+				imgField->setImage(executablePath() + BLANK_FIELD_IMAGE);
+			}
 
             return false;
         }
 
-        bool onLMouseButtonDown(void* sender, SDL_Event*, Fitgy::Point){
-            Fitgy::FieldImageEntity* imgField = (Fitgy::FieldImageEntity*)sender;
+        bool onLMouseButtonDown(void* sender, SDL_Event*, Point){
+            FieldImageEntity* imgField = (FieldImageEntity*)sender;
             Game* game = Game::getInstance();
+            int field = imgField->getField();
 
-            try {
-                if (game->fields[imgField->getField()] == Game::FieldType::Free){
-                    if (game->xPlays){
-                        imgField->setImage(executablePath() + "/gfx/X.png");
-                        game->fields[imgField->getField()] = Game::FieldType::X;
-                        game->soundDrawX->play();
-                    } else {
-                        imgField->setImage(executablePath() + "/gfx/O.png");
-                        game->fields[imgField->getField()] = Game::FieldType::O;
-                        game->soundDrawO->play();
-                    }
+			if (game->fields[field] == Game::FieldType::Free){
+				if (game->xPlays){
+					imgField->setImage(executablePath() + X_FIELD_IMAGE);
+					game->fields[field] = Game::FieldType::X;
+					game->soundDrawX->play();
+				} else {
+					imgField->setImage(executablePath() + O_FIELD_IMAGE);
+					game->fields[field] = Game::FieldType::O;
+					game->soundDrawO->play();
+				}
 
-                    game->nextPlayer();
-                }
-            } catch (Fitgy::Exception::FileNotFound const &e){
-                Fitgy::MessageBox::show("Resource not found: " + e.getFile(),
-                        "Error", Fitgy::MessageBoxInt::MessageError,
-                        Fitgy::MessageBoxInt::ButtonOK);
-            }
-
+				game->nextPlayer();
+			}
 
             return true;
         }

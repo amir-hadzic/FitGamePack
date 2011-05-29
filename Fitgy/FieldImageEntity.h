@@ -21,7 +21,7 @@
 #define FITGY_FIELDIMAGEENTITY_H
 
 #include "ImageEntity.h"
-#include "GridEntity.h"
+#include "GridPanel.h"
 #include "Util/String.h"
 
 using namespace Fitgy::Util;
@@ -39,14 +39,13 @@ public:
     /**
      * Constructor that initializes the entity.
      *
-     * @param parent is the parent entity. This should be but doesn't have
-     * to be a GridEntity.
+     * @param parent is the parent panel.
      * @param filename path to the image file.
      * @param field is the field position of this entity inside the parent
      * grid entity.
      * @param opacity is the opacity of the image. Default is opaque.
      */
-    FieldImageEntity(GridEntity* parent, String filename, int field,
+    FieldImageEntity(GridPanel* parent, String filename, int field,
             short opacity = SDL_ALPHA_OPAQUE);
 
     /**

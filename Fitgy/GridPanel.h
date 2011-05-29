@@ -31,14 +31,15 @@ namespace Fitgy {
 /**
  * This entity can be used as a grid container for other entities.
  */
-class GridEntity : public Entity {
-private:
-    std::map<int, Entity*> mFields;
+class GridPanel : public Entity {
+protected:
+    typedef std::map<int, Entity*> FieldContainer;
+    FieldContainer mFields;
     int mFieldWidth;
     int mFieldHeight;
     int mDimension;
     SDL_Color mBackgroundColor;
-    ImageEntity *mBackgroundImage;
+    ImageEntity* mBackgroundImage;
 
 public:
     /**
@@ -50,12 +51,12 @@ public:
      * @param dimension is the number of rows and columns the grid is
      * supposed to have.
      */
-    GridEntity(Entity* parent, int width, int height, int dimension);
+    GridPanel(Entity* parent, int width, int height, int dimension);
 
     /**
      * Destructor.
      */
-    ~GridEntity();
+    ~GridPanel();
 
     /**
      * onRender() implementation.
@@ -93,6 +94,11 @@ public:
      * background.
      */
     void setBackground(ImageEntity *imageEntity);
+
+    /**
+     * Returns a pointer to the entity on the specified field;
+     */
+    Entity* at(int field);
 };
 
 }
