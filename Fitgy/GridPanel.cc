@@ -105,7 +105,7 @@ GridPanel::setBackground(ImageEntity* imageEntity){
 
 Entity*
 GridPanel::at(int field) {
-	return mFields.at(field);
+	return mFields[field];
 }
 
 }
