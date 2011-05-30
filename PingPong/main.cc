@@ -19,7 +19,17 @@
 
 #include "Game.h"
 
+using namespace Fitgy;
+
 int main(int argc, char** argv){
-    PingPong::Game* game = PingPong::Game::getInstance();
-    return game->execute();
+	try {
+		PingPong::Game* game = PingPong::Game::getInstance();
+		int result = game->execute();
+		delete game;
+		return result;
+	} catch (Exception::FileNotFound const &e){
+		MessageBox::show("Resource not found: " + e.getFile(), "Error",
+				MessageBoxInt::MessageError, MessageBoxInt::ButtonOK);
+		return false;
+	}
 }

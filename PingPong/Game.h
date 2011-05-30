@@ -40,7 +40,6 @@ const int SPEED_CHANGE_TIME = 3500;
 class Game : public Application {
 private:
     Game();
-    ~Game();
     Game(Game const&){};
     Game& operator=(Game const&){ return *this; };
     void leftWins();
@@ -62,6 +61,7 @@ private:
     int mLeftWins;
     int mRightWins;
 public:
+    ~Game();
     static Game* getInstance();
     bool init();
     void loop();
