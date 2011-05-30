@@ -24,7 +24,10 @@ namespace Typer {
 TyperWord::TyperWord(Entity* parent, String word, TTF_Font *font)
     : Entity(parent)
 {
-    mUnfinishedLetters = new TextEntity(parent, word, font, Color::green());
+    mNormalColor = Color::fromRgb(0xff, 0xdc, 0x32);
+    mTypedColor = Color::fromRgb(0xc8, 0x31, 0x31);
+
+	mUnfinishedLetters = new TextEntity(parent, word, font, mNormalColor);
 
     setWidth(mUnfinishedLetters->getWidth());
     setHeight(mUnfinishedLetters->getHeight());
@@ -78,8 +81,8 @@ TyperWord::addLetter(char letter){
             String unfinishedWord = mWord.substr(mFinishedCount);
 
             if (mFinishedCount == 1){
-                mFinishedLetters = new TextEntity(parent, finishedWord, mFont, Color::blue());
-                mUnfinishedLetters->setColor(Color::white());
+                mFinishedLetters = new TextEntity(parent, finishedWord, mFont, mTypedColor);
+                mUnfinishedLetters->setColor(mNormalColor);
             }
 
             mFinishedLetters->setText(finishedWord);
@@ -97,7 +100,7 @@ TyperWord::addLetter(char letter){
         delete mFinishedLetters;
         mFinishedLetters = NULL;
 
-        mUnfinishedLetters->setColor(Color::green());
+        mUnfinishedLetters->setColor(mNormalColor);
         mUnfinishedLetters->setText(mWord);
 
         return false;

@@ -34,6 +34,8 @@ private:
     unsigned short mFinishedCount;
     String mWord;
     TTF_Font* mFont;
+    SDL_Color mTypedColor;
+    SDL_Color mNormalColor;
 
 public:
     TyperWord(Entity* parent, String word, TTF_Font* font);
