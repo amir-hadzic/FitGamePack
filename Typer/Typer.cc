@@ -283,6 +283,8 @@ Game::gameOver() {
 
 	addEntity(txtGameOver);
 	addEntity(txtAccuracy);
+
+	mCurrentWord = NULL;
 }
 
 bool
