@@ -63,21 +63,20 @@ Game::init()
 
     getDisplay()->setTitle("Fitgy::Ping-Pong", "Ping-Pong");
 
-	String base = executablePath();
-	mScoreFont = TTF_OpenFont((base + SCORE_FONT).c_str(), 54);
-
-	if (mScoreFont == NULL){
-		throw Exception::FileNotFound(SCORE_FONT);
-	}
-
-	mSplashScreen = new SplashScreen(getDisplay(), base + "/gfx/Splash.png", 2000);
-	mBackgroundImage = new ImageEntity(getDisplay(), base + "/gfx/Background.png");
-	mPaddleLeft = new ImageEntity(getDisplay(), base + "/gfx/Paddle.png");
-	mPaddleRight = new ImageEntity(getDisplay(), base + "/gfx/Paddle.png");
-	mBall = new ImageEntity(getDisplay(), base + "/gfx/Ball.png",SDL_ALPHA_OPAQUE, true);
-	mPluckSound = new Sound(base + "/sfx/pluck.ogg");
-	mSwipeSound = new Sound(base + "/sfx/swipe.ogg", MIX_MAX_VOLUME / 2);
-
+    String base = executablePath();
+    mScoreFont = TTF_OpenFont((base + SCORE_FONT).c_str(), 54);
+    
+    if (mScoreFont == NULL){
+        throw Exception::FileNotFound(SCORE_FONT);
+    }
+    
+    mSplashScreen = new SplashScreen(getDisplay(), base + "/gfx/Splash.png", 2000);
+    mBackgroundImage = new ImageEntity(getDisplay(), base + "/gfx/Background.png");
+    mPaddleLeft = new ImageEntity(getDisplay(), base + "/gfx/Paddle.png");
+    mPaddleRight = new ImageEntity(getDisplay(), base + "/gfx/Paddle.png");
+    mBall = new ImageEntity(getDisplay(), base + "/gfx/Ball.png",SDL_ALPHA_OPAQUE, true);
+    mPluckSound = new Sound(base + "/sfx/pluck.ogg");
+    mSwipeSound = new Sound(base + "/sfx/swipe.ogg", MIX_MAX_VOLUME / 2);
 
     mPaddleLeft->position.x = 10;
     mPaddleLeft->position.y = 190;
